@@ -79,7 +79,7 @@ if(isset($_GET['siguiente'])){//Ya esta jugando
             <h3>
                 <?php echo $preguntaActual['pregunta']?>
             </h3>
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get">
+            <form id="form-pregunta" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get">
                 <div class="opciones">
                     <label for="respuesta1" onclick="seleccionar(this)" class="op1">
                         <p><?php echo $preguntaActual['opcion_a']?></p>
@@ -98,6 +98,8 @@ if(isset($_GET['siguiente'])){//Ya esta jugando
                     <input type="submit" value="Siguiente" name="siguiente">
                 </div>
             </form>
+            <br>
+            <div id="contador">10</div>
         </div>
     </div>
     <script src="juego.js"></script>
