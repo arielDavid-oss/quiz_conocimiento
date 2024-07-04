@@ -18,4 +18,26 @@ $(function() {
         lineCap: "circle",
         animate: 2000,
     });
+
 });
+
+function iniciarContador() {
+    var tiempoRestante = 10;
+    var contadorElement = document.getElementById('contador');
+    var formPregunta = document.getElementById('form-pregunta');
+
+    var intervalo = setInterval(function() {
+        tiempoRestante--;
+        contadorElement.textContent = tiempoRestante;
+
+        if (tiempoRestante <= 0) {
+            clearInterval(intervalo);
+            formPregunta.submit(); // Enviar el formulario automáticamente
+        }
+    }, 1000);
+}
+
+// Iniciar el contador al cargar la página
+window.onload = function() {
+    iniciarContador();
+};

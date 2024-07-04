@@ -10,6 +10,9 @@ if (!$_SESSION['usuario']) {
 include("admin/funciones.php");
 aumentarCompletados();
 
+
+$score = $_SESSION['score'];
+$scoreFormatted = (intval($score) == $score) ? intval($score) : number_format($score, 1);
 ?>
 
 <!DOCTYPE html>
@@ -40,10 +43,10 @@ aumentarCompletados();
             </div>
             <div class="score">
                 <div class="box">
-                    <div class="chart" data-percent="<?php echo $_SESSION['score'] ?>">
-                       <?php echo $_SESSION['score'] ?>%
+                    <div class="chart" data-percent="<?php echo $scoreFormatted; ?>">
+                       <?php echo $scoreFormatted; ?>%
                     </div>
-                    <h2>SCORE</h2>
+                    <h2>PUNTUACION</h2>
                 </div>
             </div>
 
