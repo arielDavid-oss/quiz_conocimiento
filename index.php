@@ -1,19 +1,18 @@
-
 <?php
 session_start();
-// session_destroy();
 
 include("admin/funciones.php");
+include("admin/conexion.php"); // Incluye tu archivo de conexión
 
-aumentarVisita();
-
-$categorias =  obtenerCategorias();
-
-if(isset($_GET['idCategoria'])){
-    session_start();
-    $_SESSION['usuario'] = "usuario";
-    $_SESSION['idCategoria'] = $_GET['idCategoria'];
-    header("Location: jugar.php");
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Procesar la creación del equipo
+    $nombreEquipo = $_POST["nombre_equipo"];
+    $cantidadIntegrantes = 0; // Inicialmente el equipo no tiene integrantes
+    // Insertar el nuevo equipo en la base de datos
+    $query = "INSERT INTO equipos (nombre_equipo, numerointegrantes) VALUES ('$nombreEquipo', $cantidadIntegrantes)";
+    mysqli_query($conn, $query);
+    // Redireccionar a la página de inicio o donde prefieras
+    header("Location:integrar_equipo.php");
 }
 
 ?>
@@ -24,36 +23,26 @@ if(isset($_GET['idCategoria'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="estilo.css">
-    <title>QUIZ GAME</title>
+    <title>Crear Equipo</title>
 </head>
 <body>
-    <div class="container" id="cantainer">
+    <div class="container">
         <div class="left">
             <div class="logo">
                 QUIZ GAME
             </div>
-            <h2>PON A PRUEBA TUS CONOCIMIENTOS!!</h2>
+            <h2>Crear Equipo</h2>
         </div>
         <div class="right">
-            <h3>Elige una categoría</h3>
-            <div class="categorias">
-                <?php while ($cat = mysqli_fetch_assoc($categorias)):?>
-                <div class="categoria">
-                    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" id="<?php echo $cat['tema']?>">
-                        <input type="hidden" name="idCategoria" value="<?php echo $cat['tema']?>">
-                        <a href="javascript:{}" onclick="document.getElementById(<?php echo $cat['tema']?>).submit(); return false;">
-                            <?php echo obtenerNombreTema($cat['tema'])?>
-                        </a>
-                    </form>
-                </div>
-                <?php endwhile?>
-            </div>
+            <h3>Ingresa el nombre de tu equipo</h3>
+            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
+                <input type="text" name="nombre_equipo" placeholder="Nombre del equipo" required>
+                <button type="submit">Crear Equipo</button>
+            </form>
         </div>
         <footer>
-        
         </footer>
     </div>
 </body>
