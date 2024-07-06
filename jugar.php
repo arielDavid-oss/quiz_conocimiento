@@ -54,6 +54,7 @@ if (isset($_GET['siguiente'])) { // Ya está jugando
     $_SESSION['respuesta_correcta'] = $preguntaActual['correcta'];
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -75,7 +76,11 @@ if (isset($_GET['siguiente'])) { // Ya está jugando
         </header>
         <div class="info">
             <div class="estadoPregunta">
+<<<<<<< HEAD
+                Pregunta <span class="numPregunta"><?php echo $_SESSION['numPreguntaActual'] + 1?></span> de <?php echo $totalPreguntasPorJuego ?>
+=======
                 Pregunta <span class="numPregunta"><?php echo $_SESSION['numPreguntaActual'] + 1 ?></span> de <?php echo $totalPreguntasPorJuego ?>
+>>>>>>> a242e7f69e065aac4452547174dd464a63fe074e
             </div>
             <h3>
                 <?php echo $preguntaActual['pregunta'] ?>
@@ -100,10 +105,39 @@ if (isset($_GET['siguiente'])) { // Ya está jugando
                     <input type="submit" value="Siguiente">
                 </div>
             </form>
+<<<<<<< HEAD
+        </div>
+    </div>
+    <script src="juego.js"></script>
+    <script>
+        var tiempoLimite = 10; // Tiempo en segundos
+        var contador = tiempoLimite;
+        var timerId;
+
+        // Función para actualizar el contador de tiempo
+        function actualizarContador() {
+            contador--;
+            document.getElementById('contador').textContent = contador;
+            if (contador <= 0) {
+                clearInterval(timerId);
+                document.getElementById('preguntaForm').submit(); // Enviar formulario al agotarse el tiempo
+            }
+        }
+
+        // Iniciar el contador de tiempo al cargar la página
+        timerId = setInterval(actualizarContador, 1000); // Actualizar cada segundo
+
+        // Detener el contador si se presiona el botón Siguiente antes de que se agote el tiempo
+        document.getElementById('siguienteBtn').addEventListener('click', function() {
+            clearInterval(timerId); // Detener el contador
+        });
+    </script>
+=======
             <br>
             <div id="contador">10</div>
         </div>
     </div>
     <script src="juego.js"></script>
+>>>>>>> a242e7f69e065aac4452547174dd464a63fe074e
 </body>
 </html>
