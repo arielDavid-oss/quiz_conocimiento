@@ -12,10 +12,6 @@ include("admin/funciones.php");
 $confi = obtenerConfiguracion();
 $totalPreguntasPorJuego = $confi['totalPreguntas'];
 
-// Obtener tiempo límite de la pregunta actual desde la base de datos
-$preguntaActual = obtenerPreguntaPorId($_SESSION['idPreguntas'][$_SESSION['numPreguntaActual']]);
-$tiempoLimite = $preguntaActual['contador'];
-
 if (isset($_GET['siguiente'])) {
     aumentarRespondidas();
 
@@ -31,7 +27,6 @@ if (isset($_GET['siguiente'])) {
     if ($_SESSION['numPreguntaActual'] < $totalPreguntasPorJuego) {
         $preguntaActual = obtenerPreguntaPorId($_SESSION['idPreguntas'][$_SESSION['numPreguntaActual']]);
         $_SESSION['respuesta_correcta'] = $preguntaActual['correcta'];
-        $tiempoLimite = $preguntaActual['contador'];
     } else {
         $_SESSION['incorrectas'] = $totalPreguntasPorJuego - $_SESSION['correctas'];
         $_SESSION['nombreCategoria'] = obtenerNombreTema($_SESSION['idCategoria']);
@@ -52,7 +47,6 @@ if (isset($_GET['siguiente'])) {
     shuffle($_SESSION['idPreguntas']);
     $preguntaActual = obtenerPreguntaPorId($_SESSION['idPreguntas'][0]);
     $_SESSION['respuesta_correcta'] = $preguntaActual['correcta'];
-    $tiempoLimite = $preguntaActual['contador']; 
 }
 ?>
 <!DOCTYPE html>
@@ -76,7 +70,7 @@ if (isset($_GET['siguiente'])) {
                 Pregunta <span class="numPregunta"><?php echo $_SESSION['numPreguntaActual'] + 1?></span> de <?php echo $totalPreguntasPorJuego ?>
                 
             </div>
-            <div id="tiempoRestante">Tiempo restante: <span id="contador2" class="contador-rojo"><?php echo $tiempoLimite ?></span> segundos</div>
+            <div id="tiempoRestante">Tiempo restante: <span id="contador" class="contador-rojo">5</span> segundos</div>
             <h3>
                 <?php echo $preguntaActual['pregunta']?>
             </h3>
@@ -113,7 +107,7 @@ if (isset($_GET['siguiente'])) {
         // Función para actualizar el contador de tiempo
         function actualizarContador() {
             contador--;
-            document.getElementById('contador2').textContent = contador;
+            document.getElementById('contador').textContent = contador;
             if (contador <= 0) {
                 clearInterval(timerId);
                 document.getElementById('siguienteBtn').click();

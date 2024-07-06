@@ -34,7 +34,7 @@ $categorias =  obtenerCategorias();
         <div class="contenedor-info">
             <?php include("nav.php") ?>
             <div class="panel">
-                <h2>Dashboard</h2>
+                <h2>Panel Principal</h2>
                 <hr>
                 <div id="dashboard">
                     <div class="card gradiente3">

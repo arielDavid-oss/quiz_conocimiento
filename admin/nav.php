@@ -5,7 +5,7 @@
                 <div class="icono" id="0">
                     <i class="fa-solid fa-user"></i>
                 </div>
-                Dashboard
+                Menu
             </a>
         </li>
         <li>
