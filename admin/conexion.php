@@ -1,8 +1,8 @@
 <?php
 //datos del servidor
-$server		="localhost";
-$username	="root";
-$password	="12345";
+$server		="140.84.176.234";
+$username	="socceradmin";
+$password	="Ult1m0g4n4d0r";
 $bd			="bd_quiz";
 
 //creamos una conexión
@@ -19,4 +19,3 @@ if(!$conn){
 }
 
 ?>
-
