@@ -45,6 +45,7 @@ if (isset($_POST['login'])) {
                         <input type="text" name="usuario">
                     </div>
                    
+            
                 </div>
                 <div class="fila">
                     <label for="">Contraseña</label>
