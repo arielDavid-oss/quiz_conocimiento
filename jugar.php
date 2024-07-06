@@ -3,7 +3,7 @@
 session_start();
 
 //Si el usuario no esta logeado lo enviamos al index
-if (!$_SESSION['usuario']) {
+if (!isset($_SESSION['usuario'])) {
     header("Location:index.php");
 }
 
@@ -14,19 +14,18 @@ $confi = obtenerConfiguracion();
 $totalPreguntasPorJuego = $confi['totalPreguntas'];
 
 //Variables que contral la partida
-
-
 if(isset($_GET['siguiente'])){//Ya esta jugando
     //Aumento 1 en las estadísticas
     aumentarRespondidas();
 
-    //Controlar si la respuesta esta bien
-    if($_SESSION['respuesta_correcta']==$_GET['respuesta']){
+    // Controlar si la respuesta está bien
+    if (isset($_GET['respuesta']) && $_SESSION['respuesta_correcta'] == $_GET['respuesta']) { // Cambio aquí: uso de isset para verificar si 'respuesta' está definida
         $_SESSION['correctas'] = $_SESSION['correctas'] + 1;
     }
 
-    //
+    //Aumentar el número de pregunta actual
     $_SESSION['numPreguntaActual'] = $_SESSION['numPreguntaActual'] + 1;
+    
     if($_SESSION['numPreguntaActual'] < ($totalPreguntasPorJuego)){
         $preguntaActual = obtenerPreguntaPorId($_SESSION['idPreguntas'][ $_SESSION['numPreguntaActual']]);
         $_SESSION['respuesta_correcta'] = $preguntaActual['correcta'];
@@ -38,6 +37,7 @@ if(isset($_GET['siguiente'])){//Ya esta jugando
         $_SESSION['nombreCategoria'] = obtenerNombreTema($_SESSION['idCategoria']);
         $_SESSION['score'] = ($_SESSION['correctas'] * 100)/$totalPreguntasPorJuego;
         header("Location: final.php");
+        exit();
     }
 
 }else{//comenzó a jugar
@@ -73,7 +73,8 @@ if(isset($_GET['siguiente'])){//Ya esta jugando
             <div class="categoria">
                 <?php echo obtenerNombreTema($preguntaActual['tema']) ?>
             </div>
-                 </header>
+            <a href="index.php">Quizgame.com</a>
+        </header>
         <div class="info">
             <div class="estadoPregunta">
                 Pregunta <span class="numPregunta"><?php echo $_SESSION['numPreguntaActual'] + 1?></span> de <?php echo $totalPreguntasPorJuego ?>
@@ -97,6 +98,7 @@ if(isset($_GET['siguiente'])){//Ya esta jugando
                     </label>
                 </div>
                 <div class="boton">
+                <input type="hidden" name="siguiente" value="1">
                     <input type="submit" value="Siguiente" name="siguiente">
                 </div>
             </form>
