@@ -348,7 +348,9 @@ footer a:hover {
 .container-final .info .estadistica .acierto .incorrectas {
     color: #e61610;
 }
-
+.contador-rojo {
+    color: red; /* Cambia el color del texto a rojo */
+}
 .container-final .info a {
     display: inline-block;
     background: linear-gradient(to right, #8deb58, #cef35a);
