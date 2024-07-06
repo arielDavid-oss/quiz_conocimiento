@@ -49,6 +49,7 @@ if (isset($_GET['siguiente'])) {
     $_SESSION['respuesta_correcta'] = $preguntaActual['correcta'];
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -68,7 +69,6 @@ if (isset($_GET['siguiente'])) {
         <div class="info">
             <div class="estadoPregunta">
                 Pregunta <span class="numPregunta"><?php echo $_SESSION['numPreguntaActual'] + 1?></span> de <?php echo $totalPreguntasPorJuego ?>
-                
             </div>
             <div id="tiempoRestante">Tiempo restante: <span id="contador" class="contador-rojo">5</span> segundos</div>
             <h3>
@@ -95,12 +95,11 @@ if (isset($_GET['siguiente'])) {
                     <input type="submit" value="Siguiente" name="siguiente" id="siguienteBtn">
                 </div>
             </form>
-            
         </div>
     </div>
     <script src="juego.js"></script>
     <script>
-        var tiempoLimite = 10; // 5 segundos
+        var tiempoLimite = 10; // Tiempo en segundos
         var contador = tiempoLimite;
         var timerId;
 
@@ -110,12 +109,17 @@ if (isset($_GET['siguiente'])) {
             document.getElementById('contador').textContent = contador;
             if (contador <= 0) {
                 clearInterval(timerId);
-                document.getElementById('siguienteBtn').click();
+                document.getElementById('preguntaForm').submit(); // Enviar formulario al agotarse el tiempo
             }
         }
 
-        // Iniciar el contador de tiempo
+        // Iniciar el contador de tiempo al cargar la página
         timerId = setInterval(actualizarContador, 1000); // Actualizar cada segundo
+
+        // Detener el contador si se presiona el botón Siguiente antes de que se agote el tiempo
+        document.getElementById('siguienteBtn').addEventListener('click', function() {
+            clearInterval(timerId); // Detener el contador
+        });
     </script>
 </body>
 </html>
