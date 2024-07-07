@@ -56,6 +56,7 @@ if (isset($_GET['siguiente'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUIZ GAME</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
@@ -99,23 +100,6 @@ if (isset($_GET['siguiente'])) {
         </div>
     </div>
     <script src="juego.js"></script>
-    <script>
-        var tiempoLimite = 10; // 5 segundos
-        var contador = tiempoLimite;
-        var timerId;
-
-        // Función para actualizar el contador de tiempo
-        function actualizarContador() {
-            contador--;
-            document.getElementById('contador').textContent = contador;
-            if (contador <= 0) {
-                clearInterval(timerId);
-                document.getElementById('siguienteBtn').click();
-            }
-        }
-
-        // Iniciar el contador de tiempo
-        timerId = setInterval(actualizarContador, 1000); // Actualizar cada segundo
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
