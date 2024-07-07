@@ -55,13 +55,11 @@ if(mysqli_num_rows($result) > 0) {
                     <?php endforeach; ?>
                 </select>
                 <input type="text" name="nombre" placeholder="Nombre" required>
-                <input type="number" name="edad" placeholder="Edad" required>
-                <input type="text" name="rol" placeholder="Rol">
+                <input type="text" name="edad" placeholder="Grupo" required>
                 <button type="submit">Integrarme al equipo</button>
             </form>
         </div>
         <footer>
-            <a href="https://www.youtube.com/c/CódigoWeb">By Código Web  <i class="fa-brands fa-youtube"></i> </a>
         </footer>
     </div>
 </body>
