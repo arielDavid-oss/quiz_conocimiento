@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 //Si el usuario no esta logeado lo enviamos al index
 if (!$_SESSION['usuario']) {
     header("Location:index.php");
@@ -13,6 +12,29 @@ aumentarCompletados();
 
 $score = $_SESSION['score'];
 $scoreFormatted = (intval($score) == $score) ? intval($score) : number_format($score, 1);
+
+// Guardar resultados en un objeto $_SESSION
+$_SESSION['resultados'] = array(
+    'correctas' => $_SESSION['correctas'],
+    'incorrectas' => $_SESSION['incorrectas'],
+    'preguntas' => array()
+);
+
+// Obtener y guardar las preguntas y respuestas del quiz
+foreach($_SESSION['idPreguntas'] as $idPregunta){
+    $pregunta = obtenerPreguntaPorId($idPregunta);
+    $respuestaUsuario = isset($_SESSION['respuestas'][$idPregunta]) ? $_SESSION['respuestas'][$idPregunta] : '';
+    $_SESSION['resultados']['preguntas'][] = array(
+        'pregunta' => $pregunta['pregunta'],
+        'opcion_a' => $pregunta['opcion_a'],
+        'opcion_b' => $pregunta['opcion_b'],
+        'opcion_c' => $pregunta['opcion_c'],
+        'opcion_d' => $pregunta['opcion_d'],
+        'correcta' => $pregunta['correcta'],
+        'respuesta_usuario' => $respuestaUsuario
+    );
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -52,6 +74,7 @@ $scoreFormatted = (intval($score) == $score) ? intval($score) : number_format($s
             </div>
 
             <a href="index.php">Ir al Menú</a>
+            <a href="resultados.php" type="button" class="btn btn-info">Resultados</a>
 
         </div>
     </div>

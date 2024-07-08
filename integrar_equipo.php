@@ -5,11 +5,10 @@ include("admin/conexion.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idEquipo = $_POST["equipo"];
     $nombre = $_POST["nombre"];
-    $edad = $_POST["edad"];
-    $rol = $_POST["rol"];
+    $grupo = $_POST["grupo"];
 
     // Inserta los datos en la tabla de integrantes
-    $query = "INSERT INTO integrantes (equipo_id, nombre, edad, rol) VALUES ('$idEquipo', '$nombre', '$edad', '$rol')";
+    $query = "INSERT INTO integrantes (equipo_id, nombre, grupo) VALUES ('$idEquipo', '$nombre', '$grupo')";
     
     if (mysqli_query($conn, $query)) {
         header("Location:index.php");
@@ -57,7 +56,7 @@ if(mysqli_num_rows($result) > 0) {
                 </select>
                 <input type="text" name="nombre" placeholder="Nombre" required>
                 <input type="text" name="edad" placeholder="Grupo" required>
-                <button type="submit">Integrarme al equipo</button>
+                <button class="btn btn-success" type="submit">Integrarme al equipo</button>
             </form>
         </div>
     </div>

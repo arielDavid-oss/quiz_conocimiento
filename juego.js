@@ -3,9 +3,7 @@ function seleccionar(labelSeleccionado) {
     labels[0].className = "";
     labels[1].className = "";
     labels[2].className = "";
-
     labelSeleccionado.className = "opcionSeleccionada";
-
 }
 
 $(function() {

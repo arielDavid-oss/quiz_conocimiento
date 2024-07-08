@@ -15,15 +15,16 @@ $totalPreguntasPorJuego = $confi['totalPreguntas'];
 if (isset($_GET['siguiente'])) {
     aumentarRespondidas();
 
-    if ($_SESSION['respuesta_correcta'] == $_GET['respuesta']) {
-        $_SESSION['correctas']++;
-    } elseif ($_GET['respuesta'] === 'N') {
-        // Si la respuesta es nula (tiempo agotado)
-        // Aquí podrías manejar cualquier lógica adicional si es necesario
-    }
+   
+    // Controlar si la respuesta está bien
+    if (isset($_GET['respuesta']) && $_SESSION['respuesta_correcta'] == $_GET['respuesta']) {
+        // Cambio aquí: uso de isset para verificar si 'respuesta' está definida
+       $_SESSION['correctas'] = $_SESSION['correctas'] + 1;
+   }
 
-    $_SESSION['numPreguntaActual']++;
-
+   //Aumentar el número de pregunta actual
+   $_SESSION['numPreguntaActual'] = $_SESSION['numPreguntaActual'] + 1;
+   
     if ($_SESSION['numPreguntaActual'] < $totalPreguntasPorJuego) {
         $preguntaActual = obtenerPreguntaPorId($_SESSION['idPreguntas'][$_SESSION['numPreguntaActual']]);
         $_SESSION['respuesta_correcta'] = $preguntaActual['correcta'];
@@ -56,6 +57,8 @@ if (isset($_GET['siguiente'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUIZ GAME</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.min.js" charset="utf-8"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="estilo.css">
 </head>
@@ -71,11 +74,11 @@ if (isset($_GET['siguiente'])) {
                 Pregunta <span class="numPregunta"><?php echo $_SESSION['numPreguntaActual'] + 1?></span> de <?php echo $totalPreguntasPorJuego ?>
                 
             </div>
-            <div id="tiempoRestante">Tiempo restante: <span id="contador" class="contador-rojo">5</span> segundos</div>
+            <!--div id="tiempoRestante">Tiempo restante: <span id="contador" class="contador-rojo">5</span> segundos</div-->
             <h3>
                 <?php echo $preguntaActual['pregunta']?>
             </h3>
-            <form id="preguntaForm" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get">
+            <form id="form-pregunta" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get">
                 <div class="opciones">
                     <label for="respuesta1" onclick="seleccionar(this)" class="op1">
                         <p><?php echo $preguntaActual['opcion_a']?></p>
@@ -89,14 +92,17 @@ if (isset($_GET['siguiente'])) {
                         <p><?php echo $preguntaActual['opcion_c']?></p>
                         <input type="radio" name="respuesta" value="C" id="respuesta3">
                     </label>
-                    <label for="respuestaN" style="display: none;">Respuesta Nula</label>
-                    <input type="radio" name="respuesta" value="N" id="respuestaN" style="display: none;" checked>
-                </div>
-                <div>
-                    <input type="submit" class="btn btn-success" value="Siguiente" name="siguiente" id="siguienteBtn">
+                    <label for="respuesta4" onclick="seleccionar(this)" class="op4">
+                        <p><?php echo $preguntaActual['opcion_d']?></p>
+                        <input type="radio" name="respuesta" value="D" id="respuesta4">
+                    </label>
+                    </div>
+                <div class="boton">
+                <input type="hidden" name="siguiente" value="1">
+                    <input type="submit" value="Siguiente" name="siguiente">
                 </div>
             </form>
-            
+        <div id="contador">10</div>            
         </div>
     </div>
     <script src="juego.js"></script>
