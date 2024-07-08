@@ -27,12 +27,13 @@ if (isset($_GET['guardar'])) {
     $opcion_a = htmlspecialchars($_GET['opcion_a']);
     $opcion_b = htmlspecialchars($_GET['opcion_b']);
     $opcion_c = htmlspecialchars($_GET['opcion_c']);
+    $opcion_d = htmlspecialchars($_GET['opcion_d']);
     $id_tema = $_GET['tema'];
     $correcta = $_GET['correcta'];
 
     //Armamos el query para insertar en la tabla preguntas
-    $query = "INSERT INTO preguntas (id, tema, pregunta, opcion_a, opcion_b, opcion_c, correcta)
-    VALUES (NULL, '$id_tema','$pregunta', '$opcion_a','$opcion_b','$opcion_c','$correcta')";
+    $query = "INSERT INTO preguntas (id, tema, pregunta, opcion_a, opcion_b, opcion_c, opcion_d, correcta)
+    VALUES (NULL, '$id_tema','$pregunta', '$opcion_a','$opcion_b','$opcion_c',$opcion_d ,'$correcta')";
 
     //insertamos en la tabla preguntas
     if (mysqli_query($conn, $query)) { //Se insertó correctamente
@@ -89,7 +90,7 @@ $resltado_temas = obetenerTodosLosTemas();
                         <div class="opciones">
                             <div class="opcion">
                                 <label for="">Opcion A</label>
-                                <input type="text" name="opcion_a" id="" required>
+                                <input type="text" name="opcion_a" required>
                             </div>
                             <div class="opcion">
                                 <label for="">Opcion B</label>
@@ -99,6 +100,10 @@ $resltado_temas = obetenerTodosLosTemas();
                                 <label for="">Opcion C</label>
                                 <input type="text" name="opcion_c" required>
                             </div>
+                            <div class="opcion">
+                                <label for="">Opcion D</label>
+                                <input type="text" name="opcion_d" required>
+                            </div>
                         </div>
                         <div class="opcion">
                             <label for="">Correcta</label>
@@ -106,6 +111,7 @@ $resltado_temas = obetenerTodosLosTemas();
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="C">C</option>
+                                <option value="D">D</option>
                             </select>
                         </div>
                         <hr>

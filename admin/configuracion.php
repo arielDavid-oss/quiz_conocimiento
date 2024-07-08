@@ -20,9 +20,11 @@ if (isset($_GET['actualizar'])) {
     $usuario = $_GET['usuario'];
     $password = $_GET['password'];
     $totalPreguntas = $_GET['totalPreguntas'];
+    $tiempoPregunta = $_GET['Tiempo_por-pregunta'];
 
     //Armamos el query para actualizar en la tabla configuracion
-    $query = "UPDATE config SET usuario='$usuario', password='$password', totalPreguntas='$totalPreguntas' WHERE id='1'";
+    $query = "UPDATE config SET usuario='$usuario', password='$password', 
+    totalPreguntas='$totalPreguntas', Tiempo_por-pregunta ='$tiempoPregunta' WHERE id='1'";
 
     //actualizamos en la tabla configuracion
     if (mysqli_query($conn, $query)) { //Se actualizo correctamente
@@ -102,6 +104,10 @@ if (isset($_GET['eliminarTodo'])) {
                             <label for="">Total Preguntas por Juego</label>
                             <input type="number" name="totalPreguntas" id="" value = "<?php echo $config['totalPreguntas']?>" required>
                         </div>
+                        <div class="fila">
+                            <label for="">Tiempo por Pregunta</label>
+                            <input type="number" min="5" max="20" name="Tiempo_por-pregunta" id="" value = "<?php echo $config['Tiempo_por-pregunta']?>" required>
+                        </div>
                         <hr>
                         <input type="submit" value="Actualizar Configuracion" name="actualizar" class="btn-actualizar">
                     </form>
@@ -111,8 +117,8 @@ if (isset($_GET['eliminarTodo'])) {
                 <hr>
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get" class="form-eliminar">
                     <i class="fa-solid fa-circle-exclamation"></i>
-                    <input type="submit" value="Eliminar Preguntas (Solo se eliminaran las preguntas)" name="eliminarPreguntas" class="btn-eliminar">
-                    <input type="submit" value="Eliminar Preguntas y Categorías" name="eliminarTodo" class="btn-eliminar">
+                    <input type="submit" value="Eliminar Preguntas" name="eliminarPreguntas" class="btn btn-danger btn-lg">
+                    <input type="submit" value="Eliminar Preguntas y Categorías" name="eliminarTodo" class="btn btn-danger btn-lg">
                 </form>
             </div>
         </div>

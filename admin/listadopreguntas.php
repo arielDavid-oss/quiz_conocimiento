@@ -41,7 +41,7 @@ $resultado_preguntas = obetenerTodasLasPreguntas();
                             <span class="tema"><?php echo obtenerNombreTema($row['tema'])?></span>
                             <div class="opciones">
                                 <i class="fa-solid fa-pen-to-square" onclick="editarPregunta(<?php echo $row['id']?>)"></i>
-                                <i class="fa-solid fa-trash"" onclick="abrirModalEliminar(<?php echo $row['id']?>)"></i>
+                                <i class="fa-solid fa-trash" onclick="abrirModalEliminar(<?php echo $row['id']?>)"></i>
                                 
                             </div>
                         </header>
@@ -60,8 +60,11 @@ $resultado_preguntas = obetenerTodasLasPreguntas();
                             <span class="caja <?php if($row['correcta']=='C'){ echo 'pintarVerde';}?>">C</span>
                             <span class="texto"><?php echo $row['opcion_c']?></span>
                         </div>
-                    </div>
-                    
+                        <div class="opcion">
+                            <span class="caja <?php if($row['correcta']=='D'){ echo 'pintarVerde';}?>">D</span>
+                            <span class="texto"><?php echo $row['opcion_d']?></span>
+                        </div>
+                    </div>                  
                 <?php endwhile ?>
                 </section>
             </div>

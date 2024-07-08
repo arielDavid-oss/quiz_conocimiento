@@ -109,6 +109,10 @@ $resltado_temas = obetenerTodosLosTemas();
                                 <label for="">Opcion C</label>
                                 <input type="text" name="opcion_c" required value="<?php echo $pregunta['opcion_c']?>">
                             </div>
+                            <div class="opcion">
+                                <label for="">Opcion D</label>
+                                <input type="text" name="opcion_d" required value="<?php echo $pregunta['opcion_d']?>">
+                            </div>
                         </div>
                         <div class="opcion">
                             <label for="">Correcta</label>
@@ -116,6 +120,7 @@ $resltado_temas = obetenerTodosLosTemas();
                                 <option value="A" <?php if($pregunta['correcta']=='A'){ echo "selected";}?>>A</option>
                                 <option value="B" <?php if($pregunta['correcta']=='B'){ echo "selected";}?>>B</option>
                                 <option value="C" <?php if($pregunta['correcta']=='C'){ echo "selected";}?>>C</option>
+                                <option value="D" <?php if($pregunta['correcta']=='D'){ echo "selected";}?>>D</option>
                             </select>
                         </div>
                         <hr>

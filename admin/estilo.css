@@ -409,6 +409,10 @@ hr {
     background-color: greenyellow;
 }
 
+.pintarRojo {
+    background-color: rgba(146, 14, 9, 0.765);
+}
+
 
 /* SECCION CONFIGURACION */
 
