@@ -103,6 +103,7 @@ if (isset($_GET['siguiente'])) {
                     <input type="submit" value="Siguiente" name="siguiente">
                 </div>
             </form>
+            <br>
         <div id="contador"> <?php echo $TiempoPregunta; ?></div>            
         </div>
     </div>
