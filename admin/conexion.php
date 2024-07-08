@@ -1,11 +1,8 @@
 <?php
 //datos del servidor
-/*$server	="140.84.176.234";
+$server		="140.84.176.234";
 $username	="socceradmin";
-$password	="Ult1m0g4n4d0r";*/
-$server		="localhost:3307";
-$username	="root";
-$password	="12345";
+$password	="Ult1m0g4n4d0r";
 $bd			="bd_quiz";
 
 //creamos una conexión

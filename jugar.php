@@ -1,60 +1,56 @@
 <?php
 session_start();
 
-// Si el usuario no está logueado, redirigir al index
+// Si el usuario no está logeado lo enviamos al index
 if (!isset($_SESSION['usuario'])) {
     header("Location: index.php");
-    exit();
+    exit; // Aseguramos que el script se detenga después de redirigir
 }
 
 include("admin/funciones.php");
 
 $confi = obtenerConfiguracion();
 $totalPreguntasPorJuego = $confi['totalPreguntas'];
+$TiempoPregunta = $confi['Tiempo_por_pregunta'];
 
-// Variables que controlan la partida
-if (isset($_GET['siguiente'])) { // Ya está jugando
-    // Aumentar contador de preguntas respondidas
+if (isset($_GET['siguiente'])) {
     aumentarRespondidas();
 
-    // Verificar si la respuesta es correcta
+   
+    // Controlar si la respuesta está bien
     if (isset($_GET['respuesta']) && $_SESSION['respuesta_correcta'] == $_GET['respuesta']) {
-        $_SESSION['correctas']++;
-    }
+        // Cambio aquí: uso de isset para verificar si 'respuesta' está definida
+       $_SESSION['correctas'] = $_SESSION['correctas'] + 1;
+   }
 
-    // Aumentar número de pregunta actual
-    $_SESSION['numPreguntaActual']++;
-
+   //Aumentar el número de pregunta actual
+   $_SESSION['numPreguntaActual'] = $_SESSION['numPreguntaActual'] + 1;
+   
     if ($_SESSION['numPreguntaActual'] < $totalPreguntasPorJuego) {
-        // Obtener y actualizar pregunta actual
         $preguntaActual = obtenerPreguntaPorId($_SESSION['idPreguntas'][$_SESSION['numPreguntaActual']]);
         $_SESSION['respuesta_correcta'] = $preguntaActual['correcta'];
     } else {
-        // Calcular respuestas incorrectas y redirigir a resultados finales
         $_SESSION['incorrectas'] = $totalPreguntasPorJuego - $_SESSION['correctas'];
         $_SESSION['nombreCategoria'] = obtenerNombreTema($_SESSION['idCategoria']);
-        $_SESSION['score'] = ($_SESSION['correctas'] * 100) / $totalPreguntasPorJuego;
+        $_SESSION['score'] = number_format(($_SESSION['correctas'] * 100) / $totalPreguntasPorJuego, 2);
         header("Location: final.php");
-        exit();
+        exit; // Aseguramos que el script se detenga después de redirigir
     }
-
-} else { // Comenzó a jugar
+} else {
     $_SESSION['correctas'] = 0;
     $_SESSION['numPreguntaActual'] = 0;
     $_SESSION['preguntas'] = obtenerIdsPreguntasPorCategoria($_SESSION['idCategoria']);
     $_SESSION['idPreguntas'] = array();
 
     foreach ($_SESSION['preguntas'] as $idPregunta) {
-        $_SESSION['idPreguntas'][] = $idPregunta['id'];
+        array_push($_SESSION['idPreguntas'], $idPregunta['id']);
     }
 
-    // Desordenar el arreglo de preguntas
     shuffle($_SESSION['idPreguntas']);
     $preguntaActual = obtenerPreguntaPorId($_SESSION['idPreguntas'][0]);
     $_SESSION['respuesta_correcta'] = $preguntaActual['correcta'];
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -62,9 +58,10 @@ if (isset($_GET['siguiente'])) { // Ya está jugando
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUIZ GAME</title>
-    <link rel="stylesheet" href="estilo.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.min.js" charset="utf-8"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
     <div class="container-juego" id="container-juego">
@@ -72,72 +69,47 @@ if (isset($_GET['siguiente'])) { // Ya está jugando
             <div class="categoria">
                 <?php echo obtenerNombreTema($preguntaActual['tema']) ?>
             </div>
-            <a href="index.php">Quizgame.com</a>
         </header>
         <div class="info">
             <div class="estadoPregunta">
-<<<<<<< HEAD
                 Pregunta <span class="numPregunta"><?php echo $_SESSION['numPreguntaActual'] + 1?></span> de <?php echo $totalPreguntasPorJuego ?>
-=======
-                Pregunta <span class="numPregunta"><?php echo $_SESSION['numPreguntaActual'] + 1 ?></span> de <?php echo $totalPreguntasPorJuego ?>
->>>>>>> a242e7f69e065aac4452547174dd464a63fe074e
+                
             </div>
+            <!--div id="tiempoRestante">Tiempo restante: <span id="contador" class="contador-rojo">5</span> segundos</div-->
             <h3>
-                <?php echo $preguntaActual['pregunta'] ?>
+                <?php echo $preguntaActual['pregunta']?>
             </h3>
-            <form id="form-pregunta" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get">
+            <form id="form-pregunta" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get">
                 <div class="opciones">
                     <label for="respuesta1" onclick="seleccionar(this)" class="op1">
-                        <p><?php echo $preguntaActual['opcion_a'] ?></p>
-                        <input type="radio" name="respuesta" value="A" id="respuesta1" required>
+                        <p><?php echo $preguntaActual['opcion_a']?></p>
+                        <input type="radio" name="respuesta" value="A" id="respuesta1">
                     </label>
                     <label for="respuesta2" onclick="seleccionar(this)" class="op2">
-                        <p><?php echo $preguntaActual['opcion_b'] ?></p>
-                        <input type="radio" name="respuesta" value="B" id="respuesta2" required>
+                        <p><?php echo $preguntaActual['opcion_b']?></p>
+                        <input type="radio" name="respuesta" value="B" id="respuesta2">
                     </label>
                     <label for="respuesta3" onclick="seleccionar(this)" class="op3">
-                        <p><?php echo $preguntaActual['opcion_c'] ?></p>
-                        <input type="radio" name="respuesta" value="C" id="respuesta3" required>
+                        <p><?php echo $preguntaActual['opcion_c']?></p>
+                        <input type="radio" name="respuesta" value="C" id="respuesta3">
                     </label>
-                </div>
+                    <label for="respuesta4" onclick="seleccionar(this)" class="op4">
+                        <p><?php echo $preguntaActual['opcion_d']?></p>
+                        <input type="radio" name="respuesta" value="D" id="respuesta4">
+                    </label>
+                    </div>
                 <div class="boton">
-                    <input type="hidden" name="siguiente" value="1">
-                    <input type="submit" value="Siguiente">
+                <input type="hidden" name="siguiente" value="1">
+                    <input type="submit" value="Siguiente" name="siguiente">
                 </div>
             </form>
-<<<<<<< HEAD
+        <div id="contador"> <?php echo $TiempoPregunta; ?></div>            
         </div>
     </div>
-    <script src="juego.js"></script>
     <script>
-        var tiempoLimite = 10; // Tiempo en segundos
-        var contador = tiempoLimite;
-        var timerId;
-
-        // Función para actualizar el contador de tiempo
-        function actualizarContador() {
-            contador--;
-            document.getElementById('contador').textContent = contador;
-            if (contador <= 0) {
-                clearInterval(timerId);
-                document.getElementById('preguntaForm').submit(); // Enviar formulario al agotarse el tiempo
-            }
-        }
-
-        // Iniciar el contador de tiempo al cargar la página
-        timerId = setInterval(actualizarContador, 1000); // Actualizar cada segundo
-
-        // Detener el contador si se presiona el botón Siguiente antes de que se agote el tiempo
-        document.getElementById('siguienteBtn').addEventListener('click', function() {
-            clearInterval(timerId); // Detener el contador
-        });
+        var tiempoPregunta = <?php echo $TiempoPregunta; ?>;
     </script>
-=======
-            <br>
-            <div id="contador">10</div>
-        </div>
-    </div>
     <script src="juego.js"></script>
->>>>>>> a242e7f69e065aac4452547174dd464a63fe074e
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

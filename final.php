@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 //Si el usuario no esta logeado lo enviamos al index
 if (!$_SESSION['usuario']) {
     header("Location:index.php");
@@ -13,6 +12,29 @@ aumentarCompletados();
 
 $score = $_SESSION['score'];
 $scoreFormatted = (intval($score) == $score) ? intval($score) : number_format($score, 1);
+
+// Guardar resultados en un objeto $_SESSION
+$_SESSION['resultados'] = array(
+    'correctas' => $_SESSION['correctas'],
+    'incorrectas' => $_SESSION['incorrectas'],
+    'preguntas' => array()
+);
+
+// Obtener y guardar las preguntas y respuestas del quiz
+foreach($_SESSION['idPreguntas'] as $idPregunta){
+    $pregunta = obtenerPreguntaPorId($idPregunta);
+    $respuestaUsuario = isset($_SESSION['respuestas'][$idPregunta]) ? $_SESSION['respuestas'][$idPregunta] : '';
+    $_SESSION['resultados']['preguntas'][] = array(
+        'pregunta' => $pregunta['pregunta'],
+        'opcion_a' => $pregunta['opcion_a'],
+        'opcion_b' => $pregunta['opcion_b'],
+        'opcion_c' => $pregunta['opcion_c'],
+        'opcion_d' => $pregunta['opcion_d'],
+        'correcta' => $pregunta['correcta'],
+        'respuesta_usuario' => $respuestaUsuario
+    );
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +44,8 @@ $scoreFormatted = (intval($score) == $score) ? intval($score) : number_format($s
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.min.js" charset="utf-8"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="estilo.css">
     <title>QUIZ GAME</title>
 </head>
@@ -51,9 +74,11 @@ $scoreFormatted = (intval($score) == $score) ? intval($score) : number_format($s
             </div>
 
             <a href="index.php">Ir al Menú</a>
+            <a href="resultados.php" type="button" class="btn btn-info">Resultados</a>
 
         </div>
     </div>
     <script src="juego.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

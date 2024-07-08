@@ -19,8 +19,8 @@ $resultado_preguntas = obetenerTodasLasPreguntas();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="estilo.css">
     <title>Quiz Game</title>
 </head>
@@ -41,7 +41,7 @@ $resultado_preguntas = obetenerTodasLasPreguntas();
                             <span class="tema"><?php echo obtenerNombreTema($row['tema'])?></span>
                             <div class="opciones">
                                 <i class="fa-solid fa-pen-to-square" onclick="editarPregunta(<?php echo $row['id']?>)"></i>
-                                <i class="fa-solid fa-trash"" onclick="abrirModalEliminar(<?php echo $row['id']?>)"></i>
+                                <i class="fa-solid fa-trash" onclick="abrirModalEliminar(<?php echo $row['id']?>)"></i>
                                 
                             </div>
                         </header>
@@ -60,8 +60,11 @@ $resultado_preguntas = obetenerTodasLasPreguntas();
                             <span class="caja <?php if($row['correcta']=='C'){ echo 'pintarVerde';}?>">C</span>
                             <span class="texto"><?php echo $row['opcion_c']?></span>
                         </div>
-                    </div>
-                    
+                        <div class="opcion">
+                            <span class="caja <?php if($row['correcta']=='D'){ echo 'pintarVerde';}?>">D</span>
+                            <span class="texto"><?php echo $row['opcion_d']?></span>
+                        </div>
+                    </div>                  
                 <?php endwhile ?>
                 </section>
             </div>
@@ -78,5 +81,6 @@ $resultado_preguntas = obetenerTodasLasPreguntas();
     </div>
     <script src="script.js"></script>
     <script>paginaActiva(2);</script>   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

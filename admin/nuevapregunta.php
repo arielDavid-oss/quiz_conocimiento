@@ -8,7 +8,6 @@ if (!$_SESSION['usuarioLogeado']) {
 
 include("funciones.php");
 
-
 //Se presióno el botón Nuevo Tema
 if(isset($_GET['nuevoTema'])){
     //tomamos los datos que vienen del formulario
@@ -28,12 +27,13 @@ if (isset($_GET['guardar'])) {
     $opcion_a = htmlspecialchars($_GET['opcion_a']);
     $opcion_b = htmlspecialchars($_GET['opcion_b']);
     $opcion_c = htmlspecialchars($_GET['opcion_c']);
+    $opcion_d = htmlspecialchars($_GET['opcion_d']);
     $id_tema = $_GET['tema'];
     $correcta = $_GET['correcta'];
 
     //Armamos el query para insertar en la tabla preguntas
-    $query = "INSERT INTO preguntas (id, tema, pregunta, opcion_a, opcion_b, opcion_c, correcta)
-    VALUES (NULL, '$id_tema','$pregunta', '$opcion_a','$opcion_b','$opcion_c','$correcta')";
+    $query = "INSERT INTO preguntas (id, tema, pregunta, opcion_a, opcion_b, opcion_c, opcion_d, correcta)
+    VALUES (NULL, '$id_tema','$pregunta', '$opcion_a','$opcion_b','$opcion_c',$opcion_d ,'$correcta')";
 
     //insertamos en la tabla preguntas
     if (mysqli_query($conn, $query)) { //Se insertó correctamente
@@ -55,7 +55,7 @@ $resltado_temas = obetenerTodosLosTemas();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="estilo.css">
     <title>Quiz Game</title>
 </head>
@@ -90,7 +90,7 @@ $resltado_temas = obetenerTodosLosTemas();
                         <div class="opciones">
                             <div class="opcion">
                                 <label for="">Opcion A</label>
-                                <input type="text" name="opcion_a" id="" required>
+                                <input type="text" name="opcion_a" required>
                             </div>
                             <div class="opcion">
                                 <label for="">Opcion B</label>
@@ -100,6 +100,10 @@ $resltado_temas = obetenerTodosLosTemas();
                                 <label for="">Opcion C</label>
                                 <input type="text" name="opcion_c" required>
                             </div>
+                            <div class="opcion">
+                                <label for="">Opcion D</label>
+                                <input type="text" name="opcion_d" required>
+                            </div>
                         </div>
                         <div class="opcion">
                             <label for="">Correcta</label>
@@ -107,6 +111,7 @@ $resltado_temas = obetenerTodosLosTemas();
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="C">C</option>
+                                <option value="D">D</option>
                             </select>
                         </div>
                         <hr>
@@ -138,5 +143,6 @@ $resltado_temas = obetenerTodosLosTemas();
 
     <script src="script.js"></script>
     <script>paginaActiva(1);</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

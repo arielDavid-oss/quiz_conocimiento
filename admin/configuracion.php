@@ -20,9 +20,11 @@ if (isset($_GET['actualizar'])) {
     $usuario = $_GET['usuario'];
     $password = $_GET['password'];
     $totalPreguntas = $_GET['totalPreguntas'];
+    $tiempoPregunta = $_GET['Tiempo_por_pregunta'];
 
     //Armamos el query para actualizar en la tabla configuracion
-    $query = "UPDATE config SET usuario='$usuario', password='$password', totalPreguntas='$totalPreguntas' WHERE id='1'";
+    $query = "UPDATE config SET usuario='$usuario', password='$password', 
+    totalPreguntas='$totalPreguntas', Tiempo_por_pregunta ='$tiempoPregunta' WHERE id='1'";
 
     //actualizamos en la tabla configuracion
     if (mysqli_query($conn, $query)) { //Se actualizo correctamente
@@ -74,9 +76,9 @@ if (isset($_GET['eliminarTodo'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="estilo.css">
-    <title>Document</title>
+    <title>QUIZ GAME</title>
 </head>
 <body>
     <div class="contenedor">
@@ -102,6 +104,10 @@ if (isset($_GET['eliminarTodo'])) {
                             <label for="">Total Preguntas por Juego</label>
                             <input type="number" name="totalPreguntas" id="" value = "<?php echo $config['totalPreguntas']?>" required>
                         </div>
+                        <div class="fila">
+                            <label for="">Tiempo por Pregunta</label>
+                            <input type="number" min="5" max="20" name="Tiempo_por_pregunta" id="" value = "<?php echo $config['Tiempo_por_pregunta']?>" required>
+                        </div>
                         <hr>
                         <input type="submit" value="Actualizar Configuracion" name="actualizar" class="btn-actualizar">
                     </form>
@@ -111,13 +117,14 @@ if (isset($_GET['eliminarTodo'])) {
                 <hr>
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get" class="form-eliminar">
                     <i class="fa-solid fa-circle-exclamation"></i>
-                    <input type="submit" value="Eliminar Preguntas (Solo se eliminaran las preguntas)" name="eliminarPreguntas" class="btn-eliminar">
-                    <input type="submit" value="Eliminar Preguntas y Categorías" name="eliminarTodo" class="btn-eliminar">
+                    <input type="submit" value="Eliminar Preguntas" name="eliminarPreguntas" class="btn btn-danger btn-lg">
+                    <input type="submit" value="Eliminar Preguntas y Categorías" name="eliminarTodo" class="btn btn-danger btn-lg">
                 </form>
             </div>
         </div>
     </div>
     <script src="script.js"></script>
     <script>paginaActiva(3);</script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

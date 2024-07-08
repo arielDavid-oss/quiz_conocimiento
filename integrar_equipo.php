@@ -5,11 +5,10 @@ include("admin/conexion.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idEquipo = $_POST["equipo"];
     $nombre = $_POST["nombre"];
-    $edad = $_POST["edad"];
-    $rol = $_POST["rol"];
+    $grupo = $_POST["grupo"];
 
     // Inserta los datos en la tabla de integrantes
-    $query = "INSERT INTO integrantes (equipo_id, nombre, edad, rol) VALUES ('$idEquipo', '$nombre', '$edad', '$rol')";
+    $query = "INSERT INTO integrantes (equipo_id, nombre, grupo) VALUES ('$idEquipo', '$nombre', '$grupo')";
     
     if (mysqli_query($conn, $query)) {
         header("Location:index.php");
@@ -35,6 +34,7 @@ if(mysqli_num_rows($result) > 0) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="estilo.css">
     <title>Integrar Equipo</title>
 </head>
@@ -55,14 +55,11 @@ if(mysqli_num_rows($result) > 0) {
                     <?php endforeach; ?>
                 </select>
                 <input type="text" name="nombre" placeholder="Nombre" required>
-                <input type="number" name="edad" placeholder="Edad" required>
-                <input type="text" name="rol" placeholder="Rol">
-                <button type="submit">Integrarme al equipo</button>
+                <input type="text" name="edad" placeholder="Grupo" required>
+                <button class="btn btn-success" type="submit">Integrarme al equipo</button>
             </form>
         </div>
-        <footer>
-            <a href="https://www.youtube.com/c/CódigoWeb">By Código Web  <i class="fa-brands fa-youtube"></i> </a>
-        </footer>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

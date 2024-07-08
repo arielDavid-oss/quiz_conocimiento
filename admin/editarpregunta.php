@@ -59,7 +59,7 @@ $resltado_temas = obetenerTodosLosTemas();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="estilo.css">
     <title>Document</title>
 </head>
@@ -109,6 +109,10 @@ $resltado_temas = obetenerTodosLosTemas();
                                 <label for="">Opcion C</label>
                                 <input type="text" name="opcion_c" required value="<?php echo $pregunta['opcion_c']?>">
                             </div>
+                            <div class="opcion">
+                                <label for="">Opcion D</label>
+                                <input type="text" name="opcion_d" required value="<?php echo $pregunta['opcion_d']?>">
+                            </div>
                         </div>
                         <div class="opcion">
                             <label for="">Correcta</label>
@@ -116,6 +120,7 @@ $resltado_temas = obetenerTodosLosTemas();
                                 <option value="A" <?php if($pregunta['correcta']=='A'){ echo "selected";}?>>A</option>
                                 <option value="B" <?php if($pregunta['correcta']=='B'){ echo "selected";}?>>B</option>
                                 <option value="C" <?php if($pregunta['correcta']=='C'){ echo "selected";}?>>C</option>
+                                <option value="D" <?php if($pregunta['correcta']=='D'){ echo "selected";}?>>D</option>
                             </select>
                         </div>
                         <hr>
@@ -142,5 +147,6 @@ $resltado_temas = obetenerTodosLosTemas();
     </div>
 
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
