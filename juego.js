@@ -19,8 +19,7 @@ $(function() {
 
 });
 
-function iniciarContador() {
-    var tiempoRestante = 10;
+function iniciarContador(tiempoRestante) {
     var contadorElement = document.getElementById('contador');
     var formPregunta = document.getElementById('form-pregunta');
 
@@ -35,7 +34,7 @@ function iniciarContador() {
     }, 1000);
 }
 
-// Iniciar el contador al cargar la página
+// Iniciar el contador al cargar la página con el tiempo de pregunta desde PHP
 window.onload = function() {
-    iniciarContador();
+    iniciarContador(tiempoPregunta);
 };

@@ -20,11 +20,11 @@ if (isset($_GET['actualizar'])) {
     $usuario = $_GET['usuario'];
     $password = $_GET['password'];
     $totalPreguntas = $_GET['totalPreguntas'];
-    $tiempoPregunta = $_GET['Tiempo_por-pregunta'];
+    $tiempoPregunta = $_GET['Tiempo_por_pregunta'];
 
     //Armamos el query para actualizar en la tabla configuracion
     $query = "UPDATE config SET usuario='$usuario', password='$password', 
-    totalPreguntas='$totalPreguntas', Tiempo_por-pregunta ='$tiempoPregunta' WHERE id='1'";
+    totalPreguntas='$totalPreguntas', Tiempo_por_pregunta ='$tiempoPregunta' WHERE id='1'";
 
     //actualizamos en la tabla configuracion
     if (mysqli_query($conn, $query)) { //Se actualizo correctamente
@@ -106,7 +106,7 @@ if (isset($_GET['eliminarTodo'])) {
                         </div>
                         <div class="fila">
                             <label for="">Tiempo por Pregunta</label>
-                            <input type="number" min="5" max="20" name="Tiempo_por-pregunta" id="" value = "<?php echo $config['Tiempo_por-pregunta']?>" required>
+                            <input type="number" min="5" max="20" name="Tiempo_por_pregunta" id="" value = "<?php echo $config['Tiempo_por_pregunta']?>" required>
                         </div>
                         <hr>
                         <input type="submit" value="Actualizar Configuracion" name="actualizar" class="btn-actualizar">
