@@ -92,8 +92,8 @@ if (isset($_GET['siguiente'])) {
                     <label for="respuestaN" style="display: none;">Respuesta Nula</label>
                     <input type="radio" name="respuesta" value="N" id="respuestaN" style="display: none;" checked>
                 </div>
-                <div class="boton">
-                    <input type="submit" value="Siguiente" name="siguiente" id="siguienteBtn">
+                <div>
+                    <input type="submit" class="btn btn-success" value="Siguiente" name="siguiente" id="siguienteBtn">
                 </div>
             </form>
             

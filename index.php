@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h3>Ingresa el nombre de tu equipo</h3>
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
                 <input type="text" name="nombre_equipo" placeholder="Nombre del equipo" required>
-                <button type="submit">Crear Equipo</button>
+                <button class="btn btn-success" type="submit">Crear Equipo</button>
             </form>
         </div>
     </div>
