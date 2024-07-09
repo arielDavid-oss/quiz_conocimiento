@@ -5,11 +5,18 @@
 }
 
 body {
-    background-color: #314056;
-    padding: 50px;
-    color: #2e417b;
+    /*background-color: #314056;
+      padding: 50px;
+    color: #2e417b;*/
+    margin: 0;
+    height: 100vh;
+    background: url(img/fondo_2.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding: 100px 10px 0 10px;
 }
-
 
 /* SECCION LOGIN */
 
