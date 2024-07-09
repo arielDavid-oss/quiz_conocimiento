@@ -11,6 +11,7 @@ aumentarCompletados();
 
 
 $score = $_SESSION['score'];
+$tema =  $_SESSION['nombreCategoria'];
 $scoreFormatted = (intval($score) == $score) ? intval($score) : number_format($score, 1);
 
 // Guardar resultados en un objeto $_SESSION
@@ -31,10 +32,8 @@ foreach($_SESSION['idPreguntas'] as $idPregunta){
         'opcion_c' => $pregunta['opcion_c'],
         'opcion_d' => $pregunta['opcion_d'],
         'correcta' => $pregunta['correcta'],
-        'respuesta_usuario' => $respuestaUsuario,
-        'tema' => $pregunta['tema'] 
+        'respuesta_usuario' => $respuestaUsuario
     );
-
 }
 ?>
 
@@ -55,6 +54,10 @@ foreach($_SESSION['idPreguntas'] as $idPregunta){
     <div class="container-final" id="container-final">
         <div class="info">
             <h2>RESULTADO FINAL</h2>
+            <br>
+            <div class="categoria">
+             <h3><?php echo $tema; ?></h3>
+            </div>
             <div class="estadistica">
                 <div class="acierto">
                     <span class="correctas numero"> <?php echo $_SESSION['correctas'] ?></span>
@@ -70,6 +73,7 @@ foreach($_SESSION['idPreguntas'] as $idPregunta){
                     <div class="chart" data-percent="<?php echo $scoreFormatted; ?>">
                        <?php echo $scoreFormatted; ?>%
                     </div>
+                    <br>
                     <h2>PUNTUACION</h2>
                 </div>
             </div>

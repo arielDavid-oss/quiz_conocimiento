@@ -1,3 +1,4 @@
+Copy code
 <?php 
 session_start();
 // Si el usuario no está logeado lo enviamos al index
@@ -5,6 +6,7 @@ if (!$_SESSION['usuario']) {
     header("Location:index.php");
     exit;
 }
+$tema =  $_SESSION['nombreCategoria'];
 include("admin/funciones.php");
 ?>
 <!DOCTYPE html>
@@ -15,6 +17,10 @@ include("admin/funciones.php");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Resultados</title>
     <link rel="stylesheet" href="admin/estilo.css">
+    <style>
+        .pintarVerde {background-color: greenyellow;}
+        .pintarRojo {background-color: rgba(146, 14, 9, 0.765);}
+    </style>
 </head>
 <body>
 <div class="contenedor">
@@ -23,11 +29,13 @@ include("admin/funciones.php");
     </header>
     <div class="contenedor-info">
         <div class="panel">
-            <h2>Resultados del Quiz</h2>
+            <div class="text-center"><h2><?php echo $tema; ?></h2></div>
             <hr>
             <section id="listadoPreguntas">
-                <span>Respuestas Correctas:<?php echo $_SESSION['resultados']['correctas']; ?></span>
-                <span>Respuestas Incorrectas: <?php echo $_SESSION['resultados']['incorrectas']; ?></span>              
+                <div class="text-center">
+                    <h5>Correctas: <?php echo $_SESSION['resultados']['correctas']; ?></h5>
+                    <h5>Incorrectas: <?php echo $_SESSION['resultados']['incorrectas']; ?></h5>
+                </div>
                 <?php foreach ($_SESSION['resultados']['preguntas'] as $pregunta): ?>
                     <div class="contenedor-pregunta">
                         <p class="pregunta"><?php echo $pregunta['pregunta']; ?></p>
@@ -41,7 +49,7 @@ include("admin/funciones.php");
                                     $clase = 'pintarRojo';
                                 }
                         ?>
-                        <div class="opcion <?php $clase; ?>">
+                        <div class="opcion <?php echo $clase; ?>">
                             <span class="caja"><?php echo strtoupper($opcion); ?></span>
                             <span class="texto"><?php echo $pregunta['opcion_' . $opcion]; ?></span>
                         </div>
