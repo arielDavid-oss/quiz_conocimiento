@@ -31,7 +31,8 @@ foreach($_SESSION['idPreguntas'] as $idPregunta){
         'opcion_c' => $pregunta['opcion_c'],
         'opcion_d' => $pregunta['opcion_d'],
         'correcta' => $pregunta['correcta'],
-        'respuesta_usuario' => $respuestaUsuario
+        'respuesta_usuario' => $respuestaUsuario,
+        'tema' => $pregunta['tema'] 
     );
 
 }

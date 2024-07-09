@@ -398,6 +398,14 @@ footer a:hover {
     color: #fff;
 }
 
+.pintarVerde {
+    background-color: greenyellow;
+}
+
+.pintarRojo {
+    background-color: rgba(146, 14, 9, 0.765);
+}
+
 .score .box canvas {
     position: absolute;
     top: 0;
