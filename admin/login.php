@@ -55,7 +55,9 @@ if (isset($_POST['login'])) {
                     </div>
                 </div>
                 <hr>
+                <div class="text-center">
                 <input type="submit" name="login" value="Ingresar" class="btn">
+                </div>
             </form>
 
             <!-- Mensaje que se mostrará cuando se haya procesado la solicitud en el servidor -->
