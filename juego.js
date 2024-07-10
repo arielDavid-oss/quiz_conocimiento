@@ -19,9 +19,26 @@ $(function() {
 
 });
 
+// Habilitar botón después de seleccionar una respuesta
+document.addEventListener("DOMContentLoaded", function() {
+    // Obtener todos los elementos del radioButton
+    const opciones = document.querySelectorAll('input[name="respuesta"]');
+    const btnsiguinete = document.querySelector('#btn_siguiente');
+    // Agregar un eventListener a cada radioButton
+    opciones.forEach(element => {
+        element.addEventListener('change', function() {
+            // Habilitar botón después de seleccionar una respuesta
+            if (this.checked) {
+                btnsiguinete.disabled = false;
+            }
+        });
+    });
+});
+
 function iniciarContador(tiempoRestante) {
     var contadorElement = document.getElementById('contador');
     var formPregunta = document.getElementById('form-pregunta');
+
 
     var intervalo = setInterval(function() {
         tiempoRestante--;
