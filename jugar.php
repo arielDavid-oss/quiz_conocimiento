@@ -80,8 +80,10 @@ if (isset($_GET['siguiente'])) {
         </header>
         <div class="info">
             <div class="estadoPregunta">
-                Pregunta <span class="numPregunta"><?php echo $_SESSION['numPreguntaActual'] + 1?></span> de <?php echo $totalPreguntasPorJuego ?>                
+                Pregunta <span class="numPregunta"><?php echo $_SESSION['numPreguntaActual'] + 1?></span> de <?php echo $totalPreguntasPorJuego ?>
+                
             </div>
+            <!--div id="tiempoRestante">Tiempo restante: <span id="contador" class="contador-rojo">5</span> segundos</div-->
             <h3>
                 <?php echo $preguntaActual['pregunta']?>
             </h3>
@@ -105,13 +107,8 @@ if (isset($_GET['siguiente'])) {
                     </label>
                 </div>
                 <div class="boton">
-<<<<<<< HEAD
                     <input type="hidden" name="siguiente" value="1">
                     <input type="submit" value="Siguiente" name="siguiente">
-=======
-                <input type="hidden" name="siguiente" value="1">
-                    <input type="submit" id="btn_siguiente" value="Siguiente" name="siguiente" disabled>
->>>>>>> 205a0e50a27af3cc7fbebaa93065e4b99d8191ba
                 </div>
             </form>
             <br>
