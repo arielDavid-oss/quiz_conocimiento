@@ -41,8 +41,9 @@ $respuesta = $_SESSION['respuesta_usuario'];
                         <p class="pregunta"><?php echo $pregunta['pregunta']; ?></p>
                         <?php 
                             $opciones = ['a', 'b', 'c', 'd'];
-                            //$opcionUsuario = $pregunta['respuesta_usuario'];
+                            $opcionUsuario = $pregunta['respuesta_usuario'];
                             $opcionCorrecta = $pregunta['correcta'];
+                            
                             foreach ($opciones as $opcion):
                         ?>
                         <div class="opciones_Resultados">
@@ -51,7 +52,7 @@ $respuesta = $_SESSION['respuesta_usuario'];
                         </div>
                         <?php endforeach; ?>
                         <p><strong>Respuesta Correcta:</strong> <?php echo $pregunta['opcion_' . strtolower($opcionCorrecta)]; ?></p>
-                        <p><strong>Tu Respuesta:</strong> <?php echo $pregunta['opcion_' . strtolower($respuesta)]; ?></p>
+                        <p><strong>Tu Respuesta:</strong> <?php echo $pregunta['opcion_' . strtolower($opcionUsuario)]; ?></p>
                     </div>                  
                 <?php endforeach; ?>
             </section>
