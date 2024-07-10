@@ -16,7 +16,13 @@ body {
     /* display: flex;
     align-items: center; */
 }
+.pintarVerde {
+    background-color: greenyellow;
+}
 
+.pintarRojo {
+    background-color: rgba(146, 14, 9, 0.765);
+}
 .container {
     position: relative;
     overflow: hidden;

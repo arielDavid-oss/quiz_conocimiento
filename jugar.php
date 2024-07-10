@@ -16,16 +16,19 @@ $TiempoPregunta = $confi['Tiempo_por_pregunta'];
 if (isset($_GET['siguiente'])) {
     aumentarRespondidas();
 
-   
+    // Guardar la respuesta seleccionada por el usuario
+    if (isset($_GET['respuesta'])) {
+        $_SESSION['respuestas_usuario'][$_SESSION['numPreguntaActual']] = $_GET['respuesta'];
+    }
+
     // Controlar si la respuesta está bien
     if (isset($_GET['respuesta']) && $_SESSION['respuesta_correcta'] == $_GET['respuesta']) {
-        // Cambio aquí: uso de isset para verificar si 'respuesta' está definida
-       $_SESSION['correctas'] = $_SESSION['correctas'] + 1;
-   }
+        $_SESSION['correctas']++;
+    }
 
-   //Aumentar el número de pregunta actual
-   $_SESSION['numPreguntaActual'] = $_SESSION['numPreguntaActual'] + 1;
-   
+    // Aumentar el número de pregunta actual
+    $_SESSION['numPreguntaActual']++;
+
     if ($_SESSION['numPreguntaActual'] < $totalPreguntasPorJuego) {
         $preguntaActual = obtenerPreguntaPorId($_SESSION['idPreguntas'][$_SESSION['numPreguntaActual']]);
         $_SESSION['respuesta_correcta'] = $preguntaActual['correcta'];
@@ -33,6 +36,8 @@ if (isset($_GET['siguiente'])) {
         $_SESSION['incorrectas'] = $totalPreguntasPorJuego - $_SESSION['correctas'];
         $_SESSION['nombreCategoria'] = obtenerNombreTema($_SESSION['idCategoria']);
         $_SESSION['score'] = number_format(($_SESSION['correctas'] * 100) / $totalPreguntasPorJuego, 2);
+
+        // Redirigir a la página de resultados
         header("Location: final.php");
         exit; // Aseguramos que el script se detenga después de redirigir
     }
@@ -49,6 +54,9 @@ if (isset($_GET['siguiente'])) {
     shuffle($_SESSION['idPreguntas']);
     $preguntaActual = obtenerPreguntaPorId($_SESSION['idPreguntas'][0]);
     $_SESSION['respuesta_correcta'] = $preguntaActual['correcta'];
+
+    // Inicializar arreglo de respuestas del usuario
+    $_SESSION['respuestas_usuario'] = array();
 }
 ?>
 <!DOCTYPE html>
@@ -97,14 +105,14 @@ if (isset($_GET['siguiente'])) {
                         <p><?php echo $preguntaActual['opcion_d']?></p>
                         <input type="radio" name="respuesta" value="D" id="respuesta4">
                     </label>
-                    </div>
+                </div>
                 <div class="boton">
-                <input type="hidden" name="siguiente" value="1">
+                    <input type="hidden" name="siguiente" value="1">
                     <input type="submit" value="Siguiente" name="siguiente">
                 </div>
             </form>
             <br>
-        <div id="contador"> <?php echo $TiempoPregunta; ?></div>            
+            <div id="contador"> <?php echo $TiempoPregunta; ?></div>            
         </div>
     </div>
     <script>

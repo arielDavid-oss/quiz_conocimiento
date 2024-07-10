@@ -8,13 +8,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $grupo = $_POST["grupo"];
 
     // Inserta los datos en la tabla de integrantes
-    $query = "INSERT INTO integrantes (equipo_id, nombre, grupo) VALUES ('$idEquipo', '$nombre', '$grupo')";
+    $query = "INSERT INTO miembros (equipo_id, nombre, grupo) VALUES ('$idEquipo', '$nombre', '$grupo')";
     
     if (mysqli_query($conn, $query)) {
         header("Location:index.php");
     } else {
         echo "Error: " . $query . "<br>" . mysqli_error($conn);
     }
+    
 }
 
 $query = "SELECT id, nombre_equipo FROM equipos";

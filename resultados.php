@@ -1,25 +1,83 @@
-Copy code
-<?php 
+<?php
 session_start();
-// Si el usuario no está logeado lo enviamos al index
-if (!$_SESSION['usuario']) {
-    header("Location:index.php");
-    exit;
+
+// Si el usuario no está logueado lo enviamos al index
+if (!isset($_SESSION['usuario'])) {
+    header("Location: index.php");
+    exit();
 }
-$tema =  $_SESSION['nombreCategoria'];
-include("admin/funciones.php");
+
+$tema = $_SESSION['nombreCategoria'];
+
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>Resultados</title>
+    <title>Resultados del Quiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="admin/estilo.css">
     <style>
-        .pintarVerde {background-color: greenyellow;}
-        .pintarRojo {background-color: rgba(146, 14, 9, 0.765);}
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .contenedor {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .panel {
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        .pregunta {
+            font-weight: bold;
+        }
+        .opcion {
+            display: block;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .pintarVerde {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .pintarRojo {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .opcion span {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .caja {
+            font-weight: bold;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .texto {
+            margin-left: 10px;
+        }
+        .btn {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -40,12 +98,16 @@ include("admin/funciones.php");
                     <div class="contenedor-pregunta">
                         <p class="pregunta"><?php echo $pregunta['pregunta']; ?></p>
                         <?php 
+                            $opcionUsuario = $pregunta['respuesta_usuario'];
+                            $opcionCorrecta = $pregunta['correcta'];
+
                             $opciones = ['a', 'b', 'c', 'd'];
                             foreach ($opciones as $opcion):
                                 $clase = '';
-                                if ($pregunta['correcta'] == $pregunta['opcion_' . $opcion]) {
+                                // Marcar la respuesta correcta en verde y la incorrecta en rojo
+                                if ($pregunta['opcion_' . $opcion] == $opcionCorrecta) {
                                     $clase = 'pintarVerde';
-                                } elseif ($pregunta['respuesta_usuario'] == $pregunta['opcion_' . $opcion] && $pregunta['respuesta_usuario'] != $pregunta['correcta']) {
+                                } elseif ($pregunta['opcion_' . $opcion] == $opcionUsuario && $pregunta['opcion_' . $opcion] != $opcionCorrecta) {
                                     $clase = 'pintarRojo';
                                 }
                         ?>
@@ -54,6 +116,8 @@ include("admin/funciones.php");
                             <span class="texto"><?php echo $pregunta['opcion_' . $opcion]; ?></span>
                         </div>
                         <?php endforeach; ?>
+                        <p><strong>Respuesta Correcta:</strong> <?php echo $pregunta['opcion_' . strtolower($opcionCorrecta)]; ?></p>
+                        <p><strong>Tu Respuesta:</strong> <?php echo $pregunta['opcion_' . strtolower($opcionUsuario)]; ?></p>
                     </div>                  
                 <?php endforeach; ?>
             </section>
@@ -64,6 +128,7 @@ include("admin/funciones.php");
         <a type="button" class="btn btn-success" href="index.php">Ir al Menú</a>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
