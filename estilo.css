@@ -288,6 +288,29 @@ footer a:hover {
     width: 20px;
 }
 
+.opciones_Resultados {
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cajas {
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: inline-block;
+    border: 1px solid #888;
+}
+
 .opcionSeleccionada {
     background: linear-gradient(to right, #8deb58, #cef35a);
     color: #000;

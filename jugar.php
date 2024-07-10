@@ -108,7 +108,7 @@ if (isset($_GET['siguiente'])) {
                 </div>
                 <div class="boton">
                     <input type="hidden" name="siguiente" value="1">
-                    <input type="submit" value="Siguiente" name="siguiente">
+                    <input type="submit" id="btn_siguiente" value="Siguiente" name="siguiente" disabled>
                 </div>
             </form>
             <br>
