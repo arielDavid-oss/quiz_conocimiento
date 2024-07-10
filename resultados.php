@@ -8,9 +8,8 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 $tema = $_SESSION['nombreCategoria'];
-$respuesta = $_SESSION['respuesta_usuario'];
+$respuestasUsuario = $_SESSION['respuestas_usuario'];
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,7 +19,6 @@ $respuesta = $_SESSION['respuesta_usuario'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="admin/estilo.css">
     <link rel="stylesheet" href="estilo.css">
-</head>
 </head>
 <body>
 <div class="contenedor">
@@ -36,12 +34,11 @@ $respuesta = $_SESSION['respuesta_usuario'];
                     <h5>Correctas: <?php echo $_SESSION['resultados']['correctas']; ?></h5>
                     <h5>Incorrectas: <?php echo $_SESSION['resultados']['incorrectas']; ?></h5>
                 </div>
-                <?php foreach ($_SESSION['resultados']['preguntas'] as $pregunta): ?>
+                <?php foreach ($_SESSION['resultados']['preguntas'] as $index => $pregunta): ?>
                     <div class="contenedor-pregunta">
                         <p class="pregunta"><?php echo $pregunta['pregunta']; ?></p>
                         <?php 
                             $opciones = ['a', 'b', 'c', 'd'];
-                            $opcionUsuario = $pregunta['respuesta_usuario'];
                             $opcionCorrecta = $pregunta['correcta'];
                             
                             foreach ($opciones as $opcion):
@@ -52,7 +49,7 @@ $respuesta = $_SESSION['respuesta_usuario'];
                         </div>
                         <?php endforeach; ?>
                         <p><strong>Respuesta Correcta:</strong> <?php echo $pregunta['opcion_' . strtolower($opcionCorrecta)]; ?></p>
-                        <p><strong>Tu Respuesta:</strong> <?php echo $pregunta['opcion_' . strtolower($opcionUsuario)]; ?></p>
+                        <p><strong>Tu Respuesta:</strong> <?php echo $pregunta['opcion_' . strtolower($respuestasUsuario[$index])]; ?></p>
                     </div>                  
                 <?php endforeach; ?>
             </section>
