@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 $tema = $_SESSION['nombreCategoria'];
-
+$respuesta = $_SESSION['respuesta_usuario'];
 ?>
 
 <!DOCTYPE html>
@@ -19,66 +19,8 @@ $tema = $_SESSION['nombreCategoria'];
     <title>Resultados del Quiz</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="admin/estilo.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
-        .contenedor {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .panel {
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-        .pregunta {
-            font-weight: bold;
-        }
-        .opcion {
-            display: block;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .pintarVerde {
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-        }
-        .pintarRojo {
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-        }
-        .opcion span {
-            display: inline-block;
-            vertical-align: middle;
-        }
-        .caja {
-            font-weight: bold;
-            width: 30px;
-            height: 30px;
-            text-align: center;
-            line-height: 30px;
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-        .texto {
-            margin-left: 10px;
-        }
-        .btn {
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="estilo.css">
+</head>
 </head>
 <body>
 <div class="contenedor">
@@ -98,26 +40,18 @@ $tema = $_SESSION['nombreCategoria'];
                     <div class="contenedor-pregunta">
                         <p class="pregunta"><?php echo $pregunta['pregunta']; ?></p>
                         <?php 
-                            $opcionUsuario = $pregunta['respuesta_usuario'];
-                            $opcionCorrecta = $pregunta['correcta'];
-
                             $opciones = ['a', 'b', 'c', 'd'];
+                            //$opcionUsuario = $pregunta['respuesta_usuario'];
+                            $opcionCorrecta = $pregunta['correcta'];
                             foreach ($opciones as $opcion):
-                                $clase = '';
-                                // Marcar la respuesta correcta en verde y la incorrecta en rojo
-                                if ($pregunta['opcion_' . $opcion] == $opcionCorrecta) {
-                                    $clase = 'pintarVerde';
-                                } elseif ($pregunta['opcion_' . $opcion] == $opcionUsuario && $pregunta['opcion_' . $opcion] != $opcionCorrecta) {
-                                    $clase = 'pintarRojo';
-                                }
                         ?>
-                        <div class="opcion <?php echo $clase; ?>">
-                            <span class="caja"><?php echo strtoupper($opcion); ?></span>
+                        <div class="opciones_Resultados">
+                            <span class="cajas"><?php echo strtoupper($opcion); ?></span>
                             <span class="texto"><?php echo $pregunta['opcion_' . $opcion]; ?></span>
                         </div>
                         <?php endforeach; ?>
                         <p><strong>Respuesta Correcta:</strong> <?php echo $pregunta['opcion_' . strtolower($opcionCorrecta)]; ?></p>
-                        <p><strong>Tu Respuesta:</strong> <?php echo $pregunta['opcion_' . strtolower($opcionUsuario)]; ?></p>
+                        <p><strong>Tu Respuesta:</strong> <?php echo $pregunta['opcion_' . strtolower($respuesta)]; ?></p>
                     </div>                  
                 <?php endforeach; ?>
             </section>
