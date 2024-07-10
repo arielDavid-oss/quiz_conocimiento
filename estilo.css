@@ -173,7 +173,7 @@ footer a:hover {
     padding: 30px 20px 60px 10px;
     color: #fff;
     /* From https://css.glass */
-    background: rgba(76, 40, 166, 0.7);
+    background: rgba(31, 3, 103, 0.7);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
