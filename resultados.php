@@ -6,8 +6,9 @@ if (!isset($_SESSION['usuario'])) {
     header("Location: index.php");
     exit();
 }
-
+// Obtener el nombre de la categoría de tema escogido
 $tema = $_SESSION['nombreCategoria'];
+// Obtener las respuestas del usuario
 $respuestasUsuario = $_SESSION['respuestas_usuario'];
 ?>
 <!DOCTYPE html>
@@ -19,6 +20,10 @@ $respuestasUsuario = $_SESSION['respuestas_usuario'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="admin/estilo.css">
     <link rel="stylesheet" href="estilo.css">
+    <style>
+        .caja-correcta { background-color: green; color: white; }
+        .caja-incorrecta { background-color: red; color: white; }
+    </style>
 </head>
 <body>
 <div class="contenedor">
@@ -39,17 +44,33 @@ $respuestasUsuario = $_SESSION['respuestas_usuario'];
                         <p class="pregunta"><?php echo $pregunta['pregunta']; ?></p>
                         <?php 
                             $opciones = ['a', 'b', 'c', 'd'];
-                            $opcionCorrecta = $pregunta['correcta'];
-                            
+                            $opcionCorrecta = strtolower($pregunta['correcta']);
                             foreach ($opciones as $opcion):
+                                $clase = '';
+                                if (isset($respuestasUsuario[$index])) {
+                                    if ($opcion === $opcionCorrecta) {
+                                        $clase = 'caja-correcta';
+                                    } elseif (strtolower($respuestasUsuario[$index]) === $opcion) {
+                                        $clase = 'caja-incorrecta';
+                                    }
+                                }
                         ?>
                         <div class="opciones_Resultados">
-                            <span class="cajas"><?php echo strtoupper($opcion); ?></span>
+                            <span class="cajas <?php echo $clase; ?>"><?php echo strtoupper($opcion); ?></span>
                             <span class="texto"><?php echo $pregunta['opcion_' . $opcion]; ?></span>
                         </div>
                         <?php endforeach; ?>
-                        <p><strong>Respuesta Correcta:</strong> <?php echo $pregunta['opcion_' . strtolower($opcionCorrecta)]; ?></p>
-                        <p><strong>Tu Respuesta:</strong> <?php echo $pregunta['opcion_' . strtolower($respuestasUsuario[$index])]; ?></p>
+                        <p><strong>Respuesta Correcta:</strong> <?php echo $pregunta['opcion_' . $opcionCorrecta]; ?></p>
+                        <!-- Manejar un condicional si no se contestó la pregunta -->
+                        <p><strong>Tu Respuesta:</strong> 
+                            <?php
+                            if ($respuestasUsuario[$index] == 'no_contestada') {
+                                echo "No respondiste esta pregunta.";
+                            } else {
+                                echo $pregunta['opcion_' . strtolower($respuestasUsuario[$index])];
+                            }
+                            ?>
+                        </p>
                     </div>                  
                 <?php endforeach; ?>
             </section>

@@ -1,3 +1,4 @@
+//Animacion para seleccionar solo una opcion y cambie el color
 function seleccionar(labelSeleccionado) {
     var labels = document.getElementsByTagName("label");
     labels[0].className = "";
@@ -36,18 +37,19 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+// Función para cambiar de pregunta si se acaba el tiempo asignado
 function iniciarContador(tiempoRestante) {
+    //Obtener elementos = id del formulario 
     var contadorElement = document.getElementById('contador');
     var formPregunta = document.getElementById('form-pregunta');
-
 
     var intervalo = setInterval(function() {
         tiempoRestante--;
         contadorElement.textContent = tiempoRestante;
-
         if (tiempoRestante <= 0) {
             clearInterval(intervalo);
-            formPregunta.submit(); // Enviar el formulario automáticamente
+            // Enviar el formulario automáticamente cuando se termine el tiempo
+            formPregunta.submit(); 
         }
     }, 1000);
 }
