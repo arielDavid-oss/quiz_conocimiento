@@ -35,6 +35,7 @@ if(isset($_GET['idCategoria'])){
             <div class="logo">
                 QUIZ GAME
             </div>
+            <br>
             <h2>PON A PRUEBA TUS CONOCIMIENTOS!!</h2>
         </div>
         <div class="right">

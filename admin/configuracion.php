@@ -106,7 +106,7 @@ if (isset($_GET['eliminarTodo'])) {
                         </div>
                         <div class="fila">
                             <label for="">Tiempo por Pregunta</label>
-                            <input type="number" min="5" max="20" name="Tiempo_por_pregunta" id="" value = "<?php echo $config['Tiempo_por_pregunta']?>" required>
+                            <input type="number" placeholder="Digite el tiempo en segundos" min="5" max="20" name="Tiempo_por_pregunta" id="" value = "<?php echo $config['Tiempo_por_pregunta']?>" required>
                         </div>
                         <hr>
                         <input type="submit" value="Actualizar Configuracion" name="actualizar" class="btn-actualizar">
