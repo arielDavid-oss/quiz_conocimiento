@@ -5,9 +5,8 @@ session_start();
 if (!$_SESSION['usuario']) {
     header("Location:index.php");
 }
-//Aumentamos la estadistica
+
 include("admin/funciones.php");
-aumentarCompletados();
 
 
 $score = $_SESSION['score'];

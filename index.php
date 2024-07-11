@@ -5,8 +5,6 @@ session_start();
 
 include("admin/funciones.php");
 
-aumentarVisita();
-
 $categorias =  obtenerCategorias();
 
 if(isset($_GET['idCategoria'])){

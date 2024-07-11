@@ -38,7 +38,7 @@ if (isset($_GET['actualizar'])) {
 if (isset($_GET['eliminarPreguntas'])) {
     //nos conectamos a la base de datos
     include("conexion.php");
-    //sentiencia para eliminar los datos de la tabla
+    //sentiencia para eliminar los datos de toda la tabla
     $query ="TRUNCATE TABLE preguntas";
     //eliminamos los datos de la tabla preguntas
     if (mysqli_query($conn, $query)) { //Se eliminó correctamente
@@ -102,7 +102,7 @@ if (isset($_GET['eliminarTodo'])) {
                         </div>
                         <div class="fila">
                             <label for="">Total Preguntas por Juego</label>
-                            <input type="number" name="totalPreguntas" id="" value = "<?php echo $config['totalPreguntas']?>" required>
+                            <input type="number" placeholder="Digite el numero de preguntas por juego" name="totalPreguntas" id="" value = "<?php echo $config['totalPreguntas']?>" required>
                         </div>
                         <div class="fila">
                             <label for="">Tiempo por Pregunta</label>

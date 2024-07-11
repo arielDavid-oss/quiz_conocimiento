@@ -14,7 +14,6 @@ $totalPreguntasPorJuego = $confi['totalPreguntas'];
 $TiempoPregunta = $confi['Tiempo_por_pregunta'];
 
 if (isset($_GET['siguiente'])) {
-    aumentarRespondidas();
 
     // Guardar la respuesta seleccionada por el usuario
     if (isset($_GET['respuesta'])) {
