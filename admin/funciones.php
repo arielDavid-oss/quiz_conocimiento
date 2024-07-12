@@ -79,6 +79,14 @@ function obtenerPreguntaPorId($id){
     return $pregunta;
 }
 
+function obtenerPreguntasPorTema($tema){
+    include("conexion.php");
+    $query = "SELECT * FROM preguntas WHERE tema = $tema";
+    $result = mysqli_query($conn, $query);
+    $preguntas = mysqli_fetch_array($result);
+    return $preguntas;
+}
+
 function obtenerTotalPreguntas(){
     include("conexion.php");
     //Añadimos un alias AS total para identificar mas facil
