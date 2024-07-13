@@ -16,16 +16,14 @@ $TiempoPregunta = $confi['Tiempo_por_pregunta'];
 if (isset($_GET['siguiente'])) {
     aumentarRespondidas();
 
-   
     // Controlar si la respuesta está bien
     if (isset($_GET['respuesta']) && $_SESSION['respuesta_correcta'] == $_GET['respuesta']) {
-        // Cambio aquí: uso de isset para verificar si 'respuesta' está definida
-       $_SESSION['correctas'] = $_SESSION['correctas'] + 1;
-   }
+        $_SESSION['correctas'] = $_SESSION['correctas'] + 1;
+    }
 
-   //Aumentar el número de pregunta actual
-   $_SESSION['numPreguntaActual'] = $_SESSION['numPreguntaActual'] + 1;
-   
+    // Aumentar el número de pregunta actual
+    $_SESSION['numPreguntaActual'] = $_SESSION['numPreguntaActual'] + 1;
+
     if ($_SESSION['numPreguntaActual'] < $totalPreguntasPorJuego) {
         $preguntaActual = obtenerPreguntaPorId($_SESSION['idPreguntas'][$_SESSION['numPreguntaActual']]);
         $_SESSION['respuesta_correcta'] = $preguntaActual['correcta'];
@@ -73,9 +71,7 @@ if (isset($_GET['siguiente'])) {
         <div class="info">
             <div class="estadoPregunta">
                 Pregunta <span class="numPregunta"><?php echo $_SESSION['numPreguntaActual'] + 1?></span> de <?php echo $totalPreguntasPorJuego ?>
-                
             </div>
-            <!--div id="tiempoRestante">Tiempo restante: <span id="contador" class="contador-rojo">5</span> segundos</div-->
             <h3>
                 <?php echo $preguntaActual['pregunta']?>
             </h3>
@@ -97,20 +93,16 @@ if (isset($_GET['siguiente'])) {
                         <p><?php echo $preguntaActual['opcion_d']?></p>
                         <input type="radio" name="respuesta" value="D" id="respuesta4">
                     </label>
-                    </div>
+                </div>
                 <div class="boton">
-                <input type="hidden" name="siguiente" value="1">
+                    <input type="hidden" name="siguiente" value="1">
                     <input type="submit" value="Siguiente" name="siguiente">
                 </div>
             </form>
             <br>
-        <div id="contador"> <?php echo $TiempoPregunta; ?></div>            
+            <div id="contador"><?php echo $TiempoPregunta; ?></div>
         </div>
     </div>
-    <script>
-        var tiempoPregunta = <?php echo $TiempoPregunta; ?>;
-    </script>
-    <script src="juego.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

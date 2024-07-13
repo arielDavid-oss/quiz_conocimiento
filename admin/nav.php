@@ -34,12 +34,12 @@
         </li>
         <li>
 
-            <a href="../index.php" target="_blank">
-                <div class="icono" id="4">
-                    <i class="fa-solid fa-globe"></i>
-                </div>
-                Quiz.com
-            </a>
+        <a href="../crear_equipo2.php" target="_blank">
+    <div class="icono" id="4">
+        <i class="fa-solid fa-globe"></i>
+    </div>
+    Quiz.com
+</a>
         </li>
         <li>
             <a href="cerrar-sesion.php">
@@ -50,4 +50,6 @@
             </a>
         </li>
     </ul>
+
+    
 </nav>

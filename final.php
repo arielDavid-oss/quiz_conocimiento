@@ -3,12 +3,10 @@ session_start();
 
 //Si el usuario no esta logeado lo enviamos al index
 if (!$_SESSION['usuario']) {
-    header("Location:index.php");
+    header("Location: index.php");
 }
-//Aumentamos la estadistica
 include("admin/funciones.php");
 aumentarCompletados();
-
 
 $score = $_SESSION['score'];
 $tema =  $_SESSION['nombreCategoria'];
@@ -35,6 +33,9 @@ foreach($_SESSION['idPreguntas'] as $idPregunta){
         'respuesta_usuario' => $respuestaUsuario
     );
 }
+
+// Verificar si quedan equipos por jugar
+$siguienteEquipoDisponible = isset($_SESSION['equipoActualIndex']) && $_SESSION['equipoActualIndex'] + 1 < count($_SESSION['equipos']);
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +57,7 @@ foreach($_SESSION['idPreguntas'] as $idPregunta){
             <h2>RESULTADO FINAL</h2>
             <br>
             <div class="categoria">
-             <h3><?php echo $tema; ?></h3>
+            <h3><?php echo $tema; ?></h3>
             </div>
             <div class="estadistica">
                 <div class="acierto">
@@ -71,16 +72,20 @@ foreach($_SESSION['idPreguntas'] as $idPregunta){
             <div class="score">
                 <div class="box">
                     <div class="chart" data-percent="<?php echo $scoreFormatted; ?>">
-                       <?php echo $scoreFormatted; ?>%
+                    <?php echo $scoreFormatted; ?>%
                     </div>
                     <br>
                     <h2>PUNTUACION</h2>
                 </div>
             </div>
 
-            <a href="index.php">Ir al Menú</a>
-            <a href="resultados.php" type="button" class="btn btn-info">Resultados</a>
-
+            <?php if ($siguienteEquipoDisponible): ?>
+                <?php $_SESSION['equipoActualIndex']++; ?>
+                <a href="index.php" class="btn btn-primary">Siguiente Equipo</a>
+            <?php else: ?>
+                <a href="index.php" class="btn btn-primary">Ir al Menú</a>
+            <?php endif; ?>
+            <a href="resultados.php" class="btn btn-info">Resultados</a>
         </div>
     </div>
     <script src="juego.js"></script>

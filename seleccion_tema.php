@@ -19,7 +19,7 @@ if (isset($_GET['idCategoria'])) {
 // Verificar si existen equipos registrados en la sesión
 if (!isset($_SESSION['equipos']) || empty($_SESSION['equipos'])) {
     // Redirigir a la página de crear_equipo.php si no hay equipos registrados
-    header("Location: ../admin/crear_equipo.php");
+    header("Location: crear_equipo.php");
     exit();
 }
 
@@ -75,6 +75,7 @@ if (isset($_POST['seleccionar_tema'])) {
                 <?php endwhile ?>
             </div>
 
+            <h3>Equipos registrados:</h3>
             <?php if ($equipoActualIndex < count($_SESSION['equipos'])): ?>
                 <h4 class="equipo-actual">Es el turno del equipo: <?php echo $_SESSION['equipos'][$equipoActualIndex]['nombre_equipo']; ?></h4>
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
