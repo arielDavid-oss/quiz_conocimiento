@@ -72,7 +72,7 @@ $resultado_preguntas = obetenerTodasLasPreguntas();
     </div>
     <!-- The Modal para la eliminación de una Pregunta -->
     <div id="modalPregunta" class="modal">
-        <!-- Modal content -->
+        <!-- Modal content clase del CSS -->
         <div class="modal-content">
             <p>¿Esta seguro que desea eliminar la Pregunta?</p>
             <button onclick="eliminarPregunta()" class="btn">Si</button>

@@ -126,8 +126,6 @@ $resltado_temas = obetenerTodosLosTemas();
         </div>
     </div>
 
-
-
     <!-- Ventana Modal para nuevo Tema -->
     <div id="modalTema" class="modal">
         <!-- Modal content -->

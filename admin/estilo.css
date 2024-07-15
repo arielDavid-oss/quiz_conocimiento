@@ -19,7 +19,13 @@ body {
 }
 
 /* SECCION LOGIN */
+.pintarVerde {
+    background-color: greenyellow;
+}
 
+.pintarRojo {
+    background-color: rgba(146, 14, 9, 0.765);
+}
 .contenedor-login {
     max-width: 600px;
     width: 100%;

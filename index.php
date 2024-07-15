@@ -1,37 +1,31 @@
 <?php
 session_start();
-
 include("admin/funciones.php");
 
-// Aumentar la visita cada vez que se carga la página
-aumentarVisita();
+if (!isset($_SESSION['equipos']) || !isset($_SESSION['equipoActualIndex'])) {
+    header("Location: admin/crear_equipo.php");
+    exit();
+}
 
-// Obtener las categorías disponibles
+$equipos = $_SESSION['equipos'];
+$equipoActualIndex = $_SESSION['equipoActualIndex'];
+
+if ($equipoActualIndex >= count($equipos)) {
+    // Todos los equipos han seleccionado un tema, redirigir al juego
+    header("Location: jugar.php");
+    exit();
+}
+
+$equipoActual = $equipos[$equipoActualIndex];
+$nombreEquipo = $equipoActual['nombre_equipo'];
+
 $categorias = obtenerCategorias();
 
-// Verificar si se ha seleccionado una categoría para jugar
-if (isset($_GET['idCategoria'])) {
+if(isset($_GET['idCategoria'])){
+    $_SESSION['usuario'] = "usuario";
     $_SESSION['idCategoria'] = $_GET['idCategoria'];
-    header("Location: jugar.php"); // Redirigir al archivo de juego
-    exit();
-}
-
-// Verificar si existen equipos registrados en la sesión
-if (!isset($_SESSION['equipos']) || empty($_SESSION['equipos'])) {
-    // Redirigir a la página de crear_equipo.php si no hay equipos registrados
-    header("Location: ../admin/crear_equipo.php");
-    exit();
-}
-
-// Obtener el índice del equipo actual que está jugando
-$equipoActualIndex = isset($_SESSION['equipoActualIndex']) ? $_SESSION['equipoActualIndex'] : 0;
-
-// Verificar si se ha seleccionado un tema para el equipo actual
-if (isset($_POST['seleccionar_tema'])) {
-    // Aquí deberías procesar la selección del tema y avanzar al siguiente equipo si es necesario
-    // Por simplicidad, aquí solo avanzaremos al siguiente equipo
     $_SESSION['equipoActualIndex']++;
-    header("Location: index.php"); // Redirigir para mostrar el siguiente equipo
+    header("Location: index.php");
     exit();
 }
 ?>
@@ -40,20 +34,15 @@ if (isset($_POST['seleccionar_tema'])) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible"="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="estilo.css">
     <title>QUIZ GAME</title>
-    <style>
-        .equipo-actual {
-            color: white;
-        }
-    </style>
 </head>
 <body>
-    <div class="container" id="container">
+    <div class="container" id="cantainer">
         <div class="left">
             <div class="logo">
                 QUIZ GAME
@@ -61,30 +50,39 @@ if (isset($_POST['seleccionar_tema'])) {
             <h2>PON A PRUEBA TUS CONOCIMIENTOS!!</h2>
         </div>
         <div class="right">
+            <h3>Equipo Actual: <?php echo $nombreEquipo; ?></h3>
             <h3>Elige una categoría</h3>
+            <!-- <div id="timer">Tiempo restante: 6</div> -->
             <div class="categorias">
-                <?php while ($cat = mysqli_fetch_assoc($categorias)): ?>
-                    <div class="categoria">
-                        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET" id="<?php echo $cat['tema'] ?>">
-                            <input type="hidden" name="idCategoria" value="<?php echo $cat['tema'] ?>">
-                            <a href="javascript:{}" onclick="document.getElementById('<?php echo $cat['tema'] ?>').submit(); return false;">
-                                <?php echo obtenerNombreTema($cat['tema']) ?>
-                            </a>
-                        </form>
-                    </div>
-                <?php endwhile ?>
+                <?php while ($cat = mysqli_fetch_assoc($categorias)):?>
+                <div class="categoria">
+                    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" id="<?php echo $cat['tema']?>">
+                        <input type="hidden" name="idCategoria" value="<?php echo $cat['tema']?>">
+                        <a href="javascript:{}" onclick="document.getElementById(<?php echo $cat['tema']?>).submit(); return false;">
+                            <?php echo obtenerNombreTema($cat['tema'])?>
+                        </a>
+                    </form>
+                </div>
+                <?php endwhile?>
             </div>
-
-            <?php if ($equipoActualIndex < count($_SESSION['equipos'])): ?>
-                <h4 class="equipo-actual">Es el turno del equipo: <?php echo $_SESSION['equipos'][$equipoActualIndex]['nombre_equipo']; ?></h4>
-                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-                    <button type="submit" name="seleccionar_tema" style="display:none;"></button>
-                </form>
-            <?php else: ?>
-                <p>Todos los equipos han jugado. Puedes reiniciar el proceso si deseas.</p>
-            <?php endif; ?>
         </div>
     </div>
+    <script>
+        // // Temporizador
+        // let timerElement = document.getElementById('timer');
+        // let timeLeft = 6;
+
+        // function updateTimer() {
+        //     timeLeft--;
+        //     timerElement.textContent = 'Tiempo restante: ' + timeLeft;
+        //     if (timeLeft <= 0) {
+        //         clearInterval(timerInterval);
+        //         location.reload(); // Recargar la página cuando el tiempo se agote
+        //     }
+        // }
+
+        // let timerInterval = setInterval(updateTimer, 1000);
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
