@@ -11,8 +11,7 @@ $equipos = $_SESSION['equipos'];
 $equipoActualIndex = $_SESSION['equipoActualIndex'];
 
 if ($equipoActualIndex >= count($equipos)) {
-    // Todos los equipos han seleccionado un tema, redirigir al juego
-    header("Location: jugar.php");
+    header("Location: resultados_finales.php"); // Cambia esto si deseas mostrar resultados finales
     exit();
 }
 
@@ -21,11 +20,9 @@ $nombreEquipo = $equipoActual['nombre_equipo'];
 
 $categorias = obtenerCategorias();
 
-if(isset($_GET['idCategoria'])){
-    $_SESSION['usuario'] = "usuario";
+if (isset($_GET['idCategoria'])) {
     $_SESSION['idCategoria'] = $_GET['idCategoria'];
-    $_SESSION['equipoActualIndex']++;
-    header("Location: index.php");
+    header("Location: jugar.php"); // Redirigir al archivo de juego para que el equipo actual conteste las preguntas
     exit();
 }
 ?>
@@ -34,7 +31,7 @@ if(isset($_GET['idCategoria'])){
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible"="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -42,7 +39,7 @@ if(isset($_GET['idCategoria'])){
     <title>QUIZ GAME</title>
 </head>
 <body>
-    <div class="container" id="cantainer">
+    <div class="container" id="container">
         <div class="left">
             <div class="logo">
                 QUIZ GAME
@@ -52,7 +49,6 @@ if(isset($_GET['idCategoria'])){
         <div class="right">
             <h3>Equipo Actual: <?php echo $nombreEquipo; ?></h3>
             <h3>Elige una categoría</h3>
-            <!-- <div id="timer">Tiempo restante: 6</div> -->
             <div class="categorias">
                 <?php while ($cat = mysqli_fetch_assoc($categorias)):?>
                 <div class="categoria">
@@ -67,22 +63,6 @@ if(isset($_GET['idCategoria'])){
             </div>
         </div>
     </div>
-    <script>
-        // // Temporizador
-        // let timerElement = document.getElementById('timer');
-        // let timeLeft = 6;
-
-        // function updateTimer() {
-        //     timeLeft--;
-        //     timerElement.textContent = 'Tiempo restante: ' + timeLeft;
-        //     if (timeLeft <= 0) {
-        //         clearInterval(timerInterval);
-        //         location.reload(); // Recargar la página cuando el tiempo se agote
-        //     }
-        // }
-
-        // let timerInterval = setInterval(updateTimer, 1000);
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
