@@ -247,4 +247,27 @@ function borrarEquipo($equipo_id) {
     mysqli_query($conexion, $query);
 }
 
+function obtenerPreguntasPorCategoria($idCategoria) {
+    global $conexion;
+    $query = "SELECT * FROM preguntas WHERE tema = '$idCategoria'";
+    $result = mysqli_query($conexion, $query);
+    $preguntas = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        // Obtenemos las opciones de respuesta para cada pregunta
+        $queryOpciones = "SELECT * FROM opciones WHERE pregunta_id = " . $row['id'];
+        $resultOpciones = mysqli_query($conexion, $queryOpciones);
+        $opciones = array();
+        while ($opcion = mysqli_fetch_assoc($resultOpciones)) {
+            $opciones[] = array(
+                'id' => $opcion['id'],
+                'texto' => $opcion['texto']
+            );
+        }
+        $row['opciones'] = $opciones;
+        $preguntas[] = $row;
+    }
+    return $preguntas;
+}
+
+
 ?>
