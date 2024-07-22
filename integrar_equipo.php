@@ -1,32 +1,28 @@
 <?php
 session_start();
 include("admin/conexion.php");
+include("admin/funciones.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idEquipo = $_POST["equipo"];
     $nombres = $_POST["nombre"];
-    $grupos = $_POST["grupo"];
+    $grupo = $_POST["grupo"];
 
-    foreach ($nombres as $index => $nombre) {
-        $grupo = $grupos[$index];
-        // Inserta los datos en la tabla de integrantes
-        $query = "INSERT INTO miembros (equipo_id, nombre, grupo) VALUES ('$idEquipo', '$nombre', '$grupo')";
-        
-        if (!mysqli_query($conn, $query)) {
-            echo "Error: " . $query . "<br>" . mysqli_error($conn);
+    
+    if (count($nombres) >= 2 && count($nombres) <= 5) {
+        $_SESSION['equipo_id'] = $idEquipo;
+        foreach ($nombres as $index => $nombre) {
+            agregarJugador($idEquipo, $nombre, $grupo);
         }
+        header("Location:index.php");
+    } else {
+        echo "<script>alert('Debes agregar entre 2 y 5 jugadores.');</script>";
     }
-    header("Location:index.php");
 }
+ 
+    //Mandar a llamar la funcion de obtener equipos disponibles
+    $equiposDisponibles = obtenerEquipos();
 
-$query = "SELECT id, nombre_equipo FROM equipos";
-$result = mysqli_query($conn, $query);
-
-if (mysqli_num_rows($result) > 0) {
-    $equiposDisponibles = mysqli_fetch_all($result, MYSQLI_ASSOC);
-} else {
-    $equiposDisponibles = array();
-}
 ?>
 
 <!DOCTYPE html>
@@ -36,19 +32,10 @@ if (mysqli_num_rows($result) > 0) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
     <link rel="stylesheet" href="estilo.css">
     <title>Integrar Equipo</title>
-    <script>
-        function addPlayer() {
-            const playerFields = `
-                <div class="player-group">
-                    <input type="text" name="nombre[]" placeholder="Nombre" required>
-                    <input type="text" name="grupo[]" placeholder="Grupo" required>
-                </div>`;
-            document.getElementById('player-list').insertAdjacentHTML('beforeend', playerFields);
-        }
-    </script>
 </head>
 <body>
     <div class="container">
@@ -59,24 +46,37 @@ if (mysqli_num_rows($result) > 0) {
             <h2>Integrar Equipo</h2>
         </div>
         <div class="right">
-            <h3>Elige un equipo para integrarte</h3>
+            <h3><i class="fa-solid fa-user-shield"></i> Agregar integrantes</h3>
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
                 <select name="equipo" required>
                     <?php foreach ($equiposDisponibles as $equipo): ?>
-                        <option value="<?php echo $equipo['id']; ?>"><?php echo $equipo['nombre_equipo']; ?></option>
+                        <option value="<?php echo $equipo['nombre_equipo']; ?>"><?php echo $equipo['nombre_equipo']; ?></option>
                     <?php endforeach; ?>
                 </select>
-                <div id="player-list">
-                    <div class="player-group">
-                        <input type="text" name="nombre[]" placeholder="Nombre" required>
-                        <input type="text" name="grupo[]" placeholder="Grupo" required>
+                <input class="text-center" type="text" name="grupo" placeholder="Grupo" required>
+                <div id="player-list" class="text-center">
+                    <br>
+                    <div class="input-container">
+                 <i class="bi bi-person-circle"></i> 
+                 <input class="text-center" type="text" name="nombre[]" placeholder="Nombre completo" required>
+                 </div>
+                 <div class="input-container">
+                        <i class="bi bi-person-circle"></i> 
+                        <input class="text-center" type="text" name="nombre[]" placeholder="Nombre completo" required>
                     </div>
                 </div>
-                <button type="button" class="btn btn-secondary" onclick="addPlayer()">Agregar otro jugador</button>
-                <button class="btn btn-success" type="submit">Integrarme al equipo</button>
+                <br>
+                <button type="button" class="btn btn-primary" onclick="agregarJugador()"><i class="bi bi-person-add"></i> Agregar jugador</button>
+                <button class="btn btn-success" type="submit"><i class="bi bi-person-check"></i> Integrar al equipo</button>
+                <br>
+                <br>
+                <div class="text-center">
+                <button type="button" class="btn btn-danger" onclick="removerJugador()"><i class="bi bi-person-add"></i> Eliminar jugador</button>
+                </div>
             </form>
         </div>
     </div>
+    <script src="juego.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

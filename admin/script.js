@@ -4,7 +4,7 @@ function agregarTema() {
     modalTema = document.getElementById("modalTema");
     modalTema.style.display = "block";
 }
-// Cuando se hace click en Cerrar el modal de la noticia
+// Cuando se hace click en Cerrar el modal del tema
 function cerrarTema() {
     modalTema = document.getElementById("modalTema");
     modalTema.style.display = "none";

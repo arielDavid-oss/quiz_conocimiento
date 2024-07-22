@@ -331,6 +331,23 @@ footer a:hover {
     cursor: pointer;
 }
 
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-container input {
+    padding-left: 30px; /* Espacio para el ícono */
+    width: 100%; /* O ajusta el ancho según sea necesario */
+}
+
+.input-container i {
+    position: absolute;
+    left: 10px; /* Ajusta según sea necesario */
+    font-size: 16px; /* Ajusta el tamaño del ícono según sea necesario */
+    color: #333; /* Cambia el color según sea necesario */
+}
 
 /* PANTALLA FINAL */
 

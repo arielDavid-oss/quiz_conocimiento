@@ -1,30 +1,25 @@
+
 <?php
 session_start();
+// session_destroy();
+
 include("admin/funciones.php");
 
-if (!isset($_SESSION['equipos']) || !isset($_SESSION['equipoActualIndex'])) {
-    header("Location: admin/crear_equipo.php");
-    exit();
+$categorias =  obtenerCategorias();
+// Verificar si 'equipo_id' está en la sesión
+if (empty($_SESSION['equipo_id'])) {
+    header("Location: crear_equipo.php");
 }
+$nombreEquipo = $_SESSION['equipo_id'];
 
-$equipos = $_SESSION['equipos'];
-$equipoActualIndex = $_SESSION['equipoActualIndex'];
 
-if ($equipoActualIndex >= count($equipos)) {
-    header("Location: resultados_finales.php"); // Cambia esto si deseas mostrar resultados finales
-    exit();
-}
-
-$equipoActual = $equipos[$equipoActualIndex];
-$nombreEquipo = $equipoActual['nombre_equipo'];
-
-$categorias = obtenerCategorias();
-
-if (isset($_GET['idCategoria'])) {
+if(isset($_GET['idCategoria'])){
+    //session_start();
+    //$_SESSION['usuario'] = "usuario";
     $_SESSION['idCategoria'] = $_GET['idCategoria'];
-    header("Location: jugar.php"); // Redirigir al archivo de juego para que el equipo actual conteste las preguntas
-    exit();
+    header("Location: jugar.php");
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -39,16 +34,16 @@ if (isset($_GET['idCategoria'])) {
     <title>QUIZ GAME</title>
 </head>
 <body>
-    <div class="container" id="container">
+    <div class="container" id="cantainer">
         <div class="left">
             <div class="logo">
                 QUIZ GAME
             </div>
+            <br>
             <h2>PON A PRUEBA TUS CONOCIMIENTOS!!</h2>
         </div>
         <div class="right">
-            <h3>Equipo Actual: <?php echo $nombreEquipo; ?></h3>
-            <h3>Elige una categoría</h3>
+            <h3>Elige una categoría <?php echo $nombreEquipo ?></h3>
             <div class="categorias">
                 <?php while ($cat = mysqli_fetch_assoc($categorias)):?>
                 <div class="categoria">

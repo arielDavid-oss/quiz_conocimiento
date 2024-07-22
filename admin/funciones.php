@@ -1,273 +1,151 @@
 <?php
-$conexion;
+//Función para obtener el registro de la configuración del sitio
+function obtenerConfiguracion()
+{
+    include("conexion.php");
+    //Comprobamos si existe el registro 1 que mantiene la configuraciòn
+    //Añadimos un alias AS total para identificar mas facil
+    $query = "SELECT COUNT(*) AS total FROM config";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
 
-function conectarBaseDatos() {
-    global $conexion;
-    $servidor = "localhost:3306";
-    $usuario = "root";
-    $password = "12345";
-    $baseDatos = "bd_quiz";
 
-    $conexion = new mysqli($servidor, $usuario, $password, $baseDatos);
+    if ($row['total'] == '0') {
+        //No existe el registro 1 - DEBO INSERTAR el registro por primera vez
+        $query = "INSERT INTO config (id,usuario,password,totalPreguntas,Tiempo_por-pregunta)
+        VALUES (NULL, 'admin', 'admin','3','10')";
 
-    if ($conexion->connect_error) {
-        die("Conexión fallida: " . $conexion->connect_error);
+        if (mysqli_query($conn, $query)) { //Se insertó correctamente
+
+        } else {
+            echo "No se pudo insertar en la BD" .mysqli_errno($conn);
+        }
     }
-}
 
-// Llama a la función para establecer la conexión a la base de datos
-conectarBaseDatos();
-
-// Función para obtener temas disponibles
-function obtenerTemasDisponibles() {
-    global $conexion;
-    $query = "SELECT * FROM temas WHERE usado = 0";
-    $resultado = mysqli_query($conexion, $query);
-    $temas = array();
-    while ($row = mysqli_fetch_assoc($resultado)) {
-        $temas[] = $row;
-    }
-    return $temas;
-}
-
-// Función para marcar un tema como usado
-function marcarTemaComoUsado($idTema) {
-    global $conexion;
-    $query = "UPDATE temas SET usado = 1 WHERE id = $idTema";
-    mysqli_query($conexion, $query);
-}
-
-// Función para obtener el registro de la configuración del sitio
-function obtenerConfiguracion() {
-    global $conexion;
-    $query = "SELECT * FROM config WHERE id='1'";
-    $result = mysqli_query($conexion, $query);
+    //Selecciono el registro dela configuración
+    $query = "SELECT * FROM config  WHERE id='1'";
+    $result = mysqli_query($conn, $query);
     $config = mysqli_fetch_assoc($result);
-
-    // Si no existe el registro de configuración, insertarlo por primera vez
-    if (!$config) {
-        $queryInsert = "INSERT INTO config (id, usuario, password, totalPreguntas, Tiempo_por_pregunta)
-                        VALUES (NULL, 'admin', 'admin', '3', '10')";
-        mysqli_query($conexion, $queryInsert);
-        // Obtener la configuración después de insertar
-        $result = mysqli_query($conexion, $query);
-        $config = mysqli_fetch_assoc($result);
-    }
-
     return $config;
 }
 
-// Función para agregar un nuevo tema a la BD
-function agregarNuevoTema($tema) {
-    global $conexion;
-    $query = "INSERT INTO temas (nombre) VALUES ('$tema')";
-    if (mysqli_query($conexion, $query)) {
-        $mensaje = "El tema fue agregado correctamente";
+//funcion para agrear un nuevo tema a la BD
+function agregarNuevoTema($tema){
+    include("conexion.php");
+    //armamos el query para insertar en la tabla temas
+    $query = "INSERT INTO temas (id, nombre)
+    VALUES (NULL, '$tema')";
+
+    //insertamos en la tabla temas
+    if (mysqli_query($conn, $query)) { //Se insertó correctamente
+        $mensaje = "El fue agregado correctamente";
+        header("Location: index.php");
     } else {
-        $mensaje = "No se pudo insertar en la BD: " . mysqli_error($conexion);
+        $mensaje = "No se pudo insertar en la BD" . mysqli_errno($conn);
     }
     return $mensaje;
 }
 
-function obtenerTodosLosTemas() {
-    global $conexion;
+
+function obetenerTodosLosTemas()
+{
+    include("conexion.php");
     $query = "SELECT * FROM temas";
-    $result = mysqli_query($conexion, $query);
+    $result = mysqli_query($conn, $query);
     return $result;
 }
-
-function obtenerNombreTema($id) {
-    global $conexion;
-    $query = "SELECT nombre FROM temas WHERE id = '$id'";
-    $result = mysqli_query($conexion, $query);
-    $tema = mysqli_fetch_assoc($result);
+function obtenerNombreTema($id){
+    include("conexion.php");
+    $query = "SELECT * FROM temas WHERE id = '$id'";
+    $result = mysqli_query($conn, $query);
+    $tema = mysqli_fetch_array($result);
+    
     return $tema['nombre'];
 }
 
-function obtenerTodasLasPreguntas() {
-    global $conexion;
+function obetenerTodasLasPreguntas()
+{
+    include("conexion.php");
     $query = "SELECT * FROM preguntas";
-    $result = mysqli_query($conexion, $query);
+    $result = mysqli_query($conn, $query);
     return $result;
 }
 
-function obtenerPreguntaPorId($id) {
-    global $conexion;
+function obtenerPreguntaPorId($id){
+    include("conexion.php");
     $query = "SELECT * FROM preguntas WHERE id = $id";
-    $result = mysqli_query($conexion, $query);
-    $pregunta = mysqli_fetch_assoc($result);
+    $result = mysqli_query($conn, $query);
+    $pregunta = mysqli_fetch_array($result);
     return $pregunta;
 }
 
-function obtenerTotalPreguntas() {
-    global $conexion;
-    // Añadimos un alias AS total para identificar más fácil
-    $query = "SELECT COUNT(*) AS total FROM preguntas";
-    $result = mysqli_query($conexion, $query);
-    $row = mysqli_fetch_assoc($result);
-    return $row['total'];
-}
-
-function totalPreguntasPorCategoria($tema) {
-    global $conexion;
-    $query = "SELECT COUNT(*) AS total FROM preguntas WHERE tema = '$tema'";
-    $result = mysqli_query($conexion, $query);
-    $row = mysqli_fetch_assoc($result);
-    return $row['total'];
-}
-
-function obtenerCategorias() {
-    global $conexion;
-    // Contamos la cantidad de cada categoría
-    $query = "SELECT tema, COUNT(DISTINCT tema) FROM preguntas GROUP BY tema";
-    $result = mysqli_query($conexion, $query);
-    return $result;
-}
-
-function obtenerIdsPreguntasPorCategoria($tema) {
-    global $conexion;
-    $query = "SELECT id FROM preguntas WHERE tema = $tema";
-    $result = mysqli_query($conexion, $query);
-    return $result;
-}
-
-function aumentarVisita() {
-    global $conexion;
-    // Selecciono el registro de la estadística
-    $query = "SELECT visitas FROM estadisticas WHERE id='1'";
-    $result = mysqli_query($conexion, $query);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        $estadistica = mysqli_fetch_assoc($result);
-        $visitas = $estadistica['visitas'] + 1;
-        $query = "UPDATE estadisticas SET visitas = '$visitas' WHERE id='1'";
-        mysqli_query($conexion, $query);
-    } else {
-        echo "No se encontró el registro de estadísticas.";
-    }
-}
-
-function aumentarRespondidas() {
-    global $conexion;
-    // Selecciono el registro de la estadística
-    $query = "SELECT respondidas FROM estadisticas WHERE id='1'";
-    $result = mysqli_query($conexion, $query);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        $estadistica = mysqli_fetch_assoc($result);
-        $respondidas = $estadistica['respondidas'] + 1;
-        $query = "UPDATE estadisticas SET respondidas = '$respondidas' WHERE id='1'";
-        mysqli_query($conexion, $query);
-    } else {
-        echo "No se encontró el registro de estadísticas.";
-    }
-}
-
-function aumentarCompletados() {
-    global $conexion;
-    // Selecciono el registro de la estadística
-    $query = "SELECT completados FROM estadisticas WHERE id='1'";
-    $result = mysqli_query($conexion, $query);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        $estadistica = mysqli_fetch_assoc($result);
-        $completados = $estadistica['completados'] + 1;
-        $query = "UPDATE estadisticas SET completados = '$completados' WHERE id='1'";
-        mysqli_query($conexion, $query);
-    } else {
-        echo "No se encontró el registro de estadísticas.";
-    }
-}
-
-function crearEquipo($nombre_equipo) {
-    global $conexion;
-    $query = "INSERT INTO equipos (nombre_equipo) VALUES ('$nombre_equipo')";
-    mysqli_query($conexion, $query);
-}
-
-function agregarJugador($equipo_id, $nombre_jugador) {
-    global $conexion;
-    $query = "INSERT INTO miembros (equipo_id, nombre) VALUES ('$equipo_id', '$nombre_jugador')";
-    mysqli_query($conexion, $query);
-}
-
-function obtenerEquipos() {
-    global $conexion;
-    $query = "SELECT * FROM equipos";
-    $result = mysqli_query($conexion, $query);
-    return $result;
-}
-
-// Función para seleccionar el tema por equipo
-function seleccionarTemaEquipo($equipo_id, $tema_id) {
-    global $conexion;
-    $query = "UPDATE equipos SET tema_seleccionado = '$tema_id' WHERE id = '$equipo_id'";
-    mysqli_query($conexion, $query);
-}
-
-// Función para avanzar al siguiente equipo que debe seleccionar tema
-function siguienteEquipoSeleccionarTema() {
-    global $conexion;
-    $query = "SELECT id FROM equipos WHERE tema_seleccionado IS NULL ORDER BY id ASC LIMIT 1";
-    $result = mysqli_query($conexion, $query);
-    if ($result && mysqli_num_rows($result) > 0) {
-        $equipo = mysqli_fetch_assoc($result);
-        $_SESSION['equipo_id'] = $equipo['id'];
-        return true;
-    } else {
-        // Todos los equipos han seleccionado tema
-        return false;
-    }
-}
-
-// Función para obtener información de un equipo por su ID
-function obtenerEquipoPorId($equipo_id) {
-    global $conexion;
-    $query = "SELECT * FROM equipos WHERE id = '$equipo_id'";
-    $result = mysqli_query($conexion, $query);
-    $equipo = mysqli_fetch_assoc($result);
-    return $equipo;
-}
-
-function reactivarTemas() {
-    global $conexion;
-    $query = "UPDATE temas SET usado = 0";
-    mysqli_query($conexion, $query);
-}
-
-function marcarTodosLosTemasComoDisponibles() {
-    global $conexion;
-    $query = "UPDATE temas SET usado = 0";
-    mysqli_query($conexion, $query);
-}
-
-function borrarEquipo($equipo_id) {
-    global $conexion;
-    $query = "DELETE FROM equipos WHERE id = $equipo_id";
-    mysqli_query($conexion, $query);
-}
-
-function obtenerPreguntasPorCategoria($idCategoria) {
-    global $conexion;
-    $query = "SELECT * FROM preguntas WHERE tema = '$idCategoria'";
-    $result = mysqli_query($conexion, $query);
-    $preguntas = array();
-    while ($row = mysqli_fetch_assoc($result)) {
-        // Obtenemos las opciones de respuesta para cada pregunta
-        $queryOpciones = "SELECT * FROM opciones WHERE pregunta_id = " . $row['id'];
-        $resultOpciones = mysqli_query($conexion, $queryOpciones);
-        $opciones = array();
-        while ($opcion = mysqli_fetch_assoc($resultOpciones)) {
-            $opciones[] = array(
-                'id' => $opcion['id'],
-                'texto' => $opcion['texto']
-            );
-        }
-        $row['opciones'] = $opciones;
-        $preguntas[] = $row;
-    }
+function obtenerPreguntasPorTema($tema){
+    include("conexion.php");
+    $query = "SELECT * FROM preguntas WHERE tema = $tema";
+    $result = mysqli_query($conn, $query);
+    $preguntas = mysqli_fetch_array($result);
     return $preguntas;
 }
 
+function obtenerTotalPreguntas(){
+    include("conexion.php");
+    //Añadimos un alias AS total para identificar mas facil
+    $query = "SELECT COUNT(*) AS total FROM preguntas";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);  
+    return $row['total'];
+}
 
-?>
+function totalPreguntasPorCategoria($tema){
+    include("conexion.php");
+    $query = "SELECT COUNT(*) AS total FROM preguntas WHERE tema = '$tema'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);  
+    return $row['total'];
+}
+
+function obtenerCategorias(){
+    include("conexion.php");
+    //ACOntamos la cantidad de cada categoria
+    $query = "SELECT tema, COUNT(DISTINCT tema) FROM preguntas GROUP BY tema";
+    $result = mysqli_query($conn, $query);
+    return $result;
+}
+function obtenerIdsPreguntasPorCategoria($tema){
+    include("conexion.php");
+    $query = "SELECT id FROM preguntas WHERE tema = $tema";
+    $result = mysqli_query($conn, $query);
+    return $result;
+}
+
+function crearEquipo($nombre_equipo) {
+    include("conexion.php");
+    $query = "INSERT INTO equipos (nombre_equipo) VALUES ('$nombre_equipo')";
+    mysqli_query($conn, $query);
+}
+
+function agregarJugador($equipo_id, $nombre_jugador, $grupo) {
+    include("conexion.php");
+    $query = "INSERT INTO miembros (equipo_id, nombre, grupo) VALUES ('$equipo_id', '$nombre_jugador','$grupo')";
+    mysqli_query($conn, $query);
+}
+
+function cambiar_estado($nombreEquipo){
+    include("conexion.php");
+    $query = "UPDATE `equipos`SET `estado` = true WHERE `nombre_equipo` = '$nombreEquipo'";
+    mysqli_query($conn, $query);
+}
+
+function buscar_miembros($nombreEquipo){
+    include("conexion.php");
+    $query = "SELECT `nombre`,`grupo` FROM `miembros` WHERE `equipo_id` = '$nombreEquipo'";
+    $result = mysqli_query($conn, $query);
+    return $result;
+}
+
+function obtenerEquipos() {
+    include("conexion.php");
+    $query = "SELECT * FROM equipos where estado = false";
+    $result = mysqli_query($conn, $query);
+    return $result;
+}

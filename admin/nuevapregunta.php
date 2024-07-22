@@ -75,7 +75,7 @@ $resltado_temas = obetenerTodosLosTemas();
                             <label for="">Tema: </label>
                             <select name="tema" id="tema">
                                 <?php while ($row = mysqli_fetch_assoc($resltado_temas)) : ?>
-                                    <option value="<?php echo $row['id'] ?>">
+                                    <option value="<?php echo $row['nombre'] ?>">
                                         <?php echo $row['nombre'] ?>
                                     </option>
                                 <?php endwhile ?>

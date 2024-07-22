@@ -1,13 +1,12 @@
 <?php
 session_start();
 
-// Si el usuario no está logueado lo enviamos al index
-if (!isset($_SESSION['usuario'])) {
-    header("Location: index.php");
-    exit();
-}
+include ("admin/funciones.php");
+
 // Obtener el nombre de la categoría de tema escogido
 $tema = $_SESSION['nombreCategoria'];
+$nombreEquipo = $_SESSION['equipo_id'];
+$miembros = buscar_miembros($nombreEquipo);
 // Obtener las respuestas del usuario
 $respuestasUsuario = $_SESSION['respuestas_usuario'];
 ?>
@@ -33,11 +32,23 @@ $respuestasUsuario = $_SESSION['respuestas_usuario'];
     <div class="contenedor-info">
         <div class="panel">
             <div class="text-center"><h2><?php echo $tema; ?></h2></div>
-            <hr>
+            <div class="text-center"><h3> Equipo: <?php echo $nombreEquipo; ?>
+            <?php $gruposMostrados = [];
+            foreach ($miembros as $miembro): 
+            if (!in_array($miembro['grupo'], $gruposMostrados)): 
+            $gruposMostrados[] = $miembro['grupo'];?>
+            <?php echo $miembro['grupo']; ?></h3>
+            <?php endif; ?>
+            <?php endforeach; ?>
+            <h4>Integrantes</h4>
+            <?php // Mostrar los integrantes de este grupo
+            foreach ($miembros as $miembroGrupo): ?>
+            <h5><?php echo $miembroGrupo['nombre']; ?></h5><?php endforeach; ?>
+                </div>
             <section id="listadoPreguntas">
                 <div class="text-center">
-                    <h5>Correctas: <?php echo $_SESSION['resultados']['correctas']; ?></h5>
-                    <h5>Incorrectas: <?php echo $_SESSION['resultados']['incorrectas']; ?></h5>
+                    <h5>Correctas: <?php echo $_SESSION['resultados']['correctas']; ?>
+                    Incorrectas: <?php echo $_SESSION['resultados']['incorrectas']; ?></h5>
                 </div>
                 <?php foreach ($_SESSION['resultados']['preguntas'] as $index => $pregunta): ?>
                     <div class="contenedor-pregunta">
@@ -78,7 +89,7 @@ $respuestasUsuario = $_SESSION['respuestas_usuario'];
     </div>
     <br>
     <div class="text-center">
-        <a type="button" class="btn btn-success" href="index.php">Ir al Menú</a>
+        <a type="button" class="btn btn-success" href="crear_equipo.php">Ir al Menú</a>
     </div>
 </div>
 

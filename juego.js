@@ -1,9 +1,36 @@
+let numJugadores = 2; // Inicialmente hay 2 jugadores
+//Agregar nuevo campo para los jugadores
+function agregarJugador() {
+    if (numJugadores < 5) {
+        const listaJugadores = document.getElementById('player-list');
+        const nuevoJugador = document.createElement('div');
+        nuevoJugador.classList.add('input-container');
+        nuevoJugador.innerHTML = `<i class="bi bi-person-circle"></i>
+            <input class="text-center" type="text" name="nombre[]" placeholder="Nombre completo" required>`;
+        listaJugadores.appendChild(nuevoJugador);
+        numJugadores++;
+    } else {
+        alert('No puedes agregar más de 5 jugadores');
+}
+}
+//Eliminar campo por si se equivocan
+function removerJugador(button) {
+    if (numJugadores > 2) {
+        const listaJugadores = document.getElementById('player-list');
+        listaJugadores.removeChild(listaJugadores.lastElementChild);
+        numJugadores--;
+    } else {
+        alert('Debes tener al menos 2 jugadores.');
+    }
+}
+
 //Animacion para seleccionar solo una opcion y cambie el color
 function seleccionar(labelSeleccionado) {
     var labels = document.getElementsByTagName("label");
-    for (var i = 0; i < labels.length; i++) {
-        labels[i].className = "";
-    }
+    labels[0].className = "";
+    labels[1].className = "";
+    labels[2].className = "";
+    labels[3].className = "";
     labelSeleccionado.className = "opcionSeleccionada";
 }
 
@@ -17,6 +44,7 @@ $(function() {
         lineCap: "circle",
         animate: 2000,
     });
+
 });
 
 // Habilitar botón después de seleccionar una respuesta

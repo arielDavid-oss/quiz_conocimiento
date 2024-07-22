@@ -4,7 +4,6 @@ session_start();
 
 include("admin/funciones.php");
 
-aumentarVisita();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST["decision"] == "crear_equipo") {
