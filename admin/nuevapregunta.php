@@ -31,9 +31,9 @@ if (isset($_GET['guardar'])) {
     $id_tema = $_GET['tema'];
     $correcta = $_GET['correcta'];
 
-    //Armamos el query para insertar en la tabla preguntas
-    $query = "INSERT INTO preguntas (id, tema, pregunta, opcion_a, opcion_b, opcion_c, opcion_d, correcta)
-    VALUES (NULL, '$id_tema','$pregunta', '$opcion_a','$opcion_b','$opcion_c',$opcion_d ,'$correcta')";
+   //Armamos el query para insertar en la tabla preguntas
+   $query = "INSERT INTO preguntas (id, tema, pregunta, opcion_a, opcion_b, opcion_c, opcion_d, correcta)
+   VALUES (NULL, '$id_tema','$pregunta', '$opcion_a','$opcion_b','$opcion_c','$opcion_d','$correcta')";
 
     //insertamos en la tabla preguntas
     if (mysqli_query($conn, $query)) { //Se insertó correctamente
@@ -75,7 +75,7 @@ $resltado_temas = obetenerTodosLosTemas();
                             <label for="">Tema: </label>
                             <select name="tema" id="tema">
                                 <?php while ($row = mysqli_fetch_assoc($resltado_temas)) : ?>
-                                    <option value="<?php echo $row['nombre'] ?>">
+                                    <option value="<?php echo $row['id'] ?>">
                                         <?php echo $row['nombre'] ?>
                                     </option>
                                 <?php endwhile ?>
