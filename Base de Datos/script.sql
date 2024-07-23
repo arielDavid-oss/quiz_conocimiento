@@ -24,8 +24,7 @@ CREATE TABLE `miembros` (
   FOREIGN KEY (`equipo_id`) REFERENCES `equipos`(`nombre_equipo`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `config` (`usuario`, `password`) VALUES
-('edgar', '123');
+INSERT INTO `config` (`usuario`, `password`,`totalPreguntas`,`Tiempo_por_pregunta`) VALUES ('1', 'admin', 'admin','10','10');
 
 CREATE TABLE `preguntas` (
   `id` int(11) primary key auto_increment NOT NULL,
