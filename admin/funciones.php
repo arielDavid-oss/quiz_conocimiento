@@ -12,8 +12,8 @@ function obtenerConfiguracion()
 
     if ($row['total'] == '0') {
         //No existe el registro 1 - DEBO INSERTAR el registro por primera vez
-        $query = "INSERT INTO config (id,usuario,password,totalPreguntas,Tiempo_por_pregunta)
-        VALUES (NULL, 'admin', 'admin','3','10')";
+      $query = "INSERT INTO config (id,usuario,password,totalPreguntas,Tiempo_por_pregunta)
+        VALUES ('1', 'admin', 'admin','10','10')";
 
         if (mysqli_query($conn, $query)) { //Se insertó correctamente
 
