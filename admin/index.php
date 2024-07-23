@@ -3,7 +3,7 @@ session_start();
 
 //Si el usuario no esta logeado lo enviamos al login
 if (!$_SESSION['usuarioLogeado']) {
-    header("Location:../crear_equipo.php");
+    header("Location:login.php");
 }
 
 include("funciones.php");
