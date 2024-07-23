@@ -55,6 +55,7 @@ if(isset($_GET['idCategoria'])){
                     </form>
                 </div>
                 <?php endwhile?>
+
             </div>
         </div>
     </div>
