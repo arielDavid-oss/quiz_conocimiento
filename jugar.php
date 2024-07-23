@@ -85,6 +85,7 @@ if (isset($_GET['siguiente'])) {
         <div class="info">
             <div class="estadoPregunta">
                 Pregunta <span class="numPregunta"><?php echo $_SESSION['numPreguntaActual'] + 1?></span> de <?php echo $totalPreguntasPorJuego ?>
+                <br>
                 Equipo: <span class="numPregunta"><?php echo $nombreEquipo?> </span>
             </div>
             <h3>
