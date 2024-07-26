@@ -9,7 +9,9 @@ if (!$_SESSION['usuarioLogeado']) {
 include("funciones.php");
 
 $config = obtenerConfiguracion();
-
+$temas = obteneNombreTemas();
+// Obtener la fecha actual en formato DD-MM-YYYY
+$fechaActual = date('Y-m-d');
 /******************************************************* */
 //ACTUALIZAMOSS LA CONFIGURACION
 if (isset($_GET['actualizar'])) {
@@ -19,53 +21,32 @@ if (isset($_GET['actualizar'])) {
     //tomamos los datos que vienen del formulario
     $usuario = $_GET['usuario'];
     $password = $_GET['password'];
-    $totalPreguntas = $_GET['totalPreguntas'];
-    $tiempoPregunta = $_GET['Tiempo_por_pregunta'];
 
     //Armamos el query para actualizar en la tabla configuracion
-    $query = "UPDATE config SET usuario='$usuario', password='$password', 
-    totalPreguntas='$totalPreguntas', Tiempo_por_pregunta ='$tiempoPregunta' WHERE id='1'";
+    $query = "UPDATE config SET usuario='$usuario', password='$password' WHERE id='1'";
 
     //actualizamos en la tabla configuracion
     if (mysqli_query($conn, $query)) { //Se actualizo correctamente
         $mensaje = "La configuración se actualizo correctamente";
-        header("Location: index.php");
+        header("Location: configuracion.php");
     } else {
         $mensaje = "No se pudo actualizar en la BD" . mysqli_error($conn);
     }
 }
-//ELIMINAR PREGUNTAS
-if (isset($_GET['eliminarPreguntas'])) {
+
+//Insertamos una nueva partida
+if (isset($_GET['Alta'])) {
     //nos conectamos a la base de datos
     include("conexion.php");
-    //sentiencia para eliminar los datos de toda la tabla
-    $query ="TRUNCATE TABLE preguntas";
-    //eliminamos los datos de la tabla preguntas
-    if (mysqli_query($conn, $query)) { //Se eliminó correctamente
-        $mensaje = "Se eliminaron los datos de la tabla preguntas";
-        header("Location: index.php");
-    } else {
-        $mensaje = "No se pudo eliminar en la BD" . mysqli_error($conn);
-    }
-}
-//ELIMINAMOS LAS PREGUNTAS Y LAS CATEGORIAS
-if (isset($_GET['eliminarTodo'])) {
-    //nos conectamos a la base de datos
-    include("conexion.php");
-    //sentiencia para eliminar los datos de la tabla
-    $query1 ="TRUNCATE TABLE preguntas";
-    $query2 ="TRUNCATE TABLE temas";
-    //eliminamos los datos de la tabla preguntas
-    if (mysqli_query($conn, $query1)) { //Se eliminó correctamente
-        if (mysqli_query($conn, $query2)) { //Se eliminó correctamente
-            $mensaje = "Se eliminaron las preguntas y las categorias";
-            header("Location: index.php");
-        } else {
-            $mensaje = "No se pudo eliminar las categorias en la BD" . mysqli_error($conn);
-        }
-    } else {
-        $mensaje = "No se pudo eliminar en la BD" . mysqli_error($conn);
-    }
+    //Recuperamos los parametros del formulario Configurar quiz
+    $nombre = $_GET['nombre_partida'];
+    $tema = $_GET['tema'];
+    $fecha = $_GET['fecha'];
+    $totalPreguntas = $_GET['total_preguntas'];
+    $Tiempo_por_pregunta = $_GET['Tiempo_por_pregunta'];
+    //Mnadar a llamr el metodo
+    agregarNuevaPartida($nombre,$tema,$fecha,$totalPreguntas,$Tiempo_por_pregunta);
+    header("Location: configuracion.php");
 }
 
 ?>
@@ -92,34 +73,49 @@ if (isset($_GET['eliminarTodo'])) {
                 <hr>
                 <section id="configuracion">
                     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get">
-                        <div class="fila">
-                            <label for="">Usuario:</label>
-                            <input type="text" name="usuario" id="" value = "<?php echo $config['usuario']?>" required>
+                        <div class="form-group">
+                            <label for="">Usuario</label>
+                            <input type="text" name="usuario" value = "<?php echo $config['usuario']?>" required>
                         </div>
-                        <div class="fila">
+                        <div class="form-group">
                             <label for="">Password</label>
-                            <input type="text" name="password" id="" value = "<?php echo $config['password']?>" required>
-                        </div>
-                        <div class="fila">
-                            <label for="">Total Preguntas por Juego</label>
-                            <input type="number" placeholder="Digite el numero de preguntas por juego" name="totalPreguntas" id="" value = "<?php echo $config['totalPreguntas']?>" required>
-                        </div>
-                        <div class="fila">
-                            <label for="">Tiempo por Pregunta</label>
-                            <input type="number" placeholder="Digite el tiempo en segundos" min="5" max="20" name="Tiempo_por_pregunta" id="" value = "<?php echo $config['Tiempo_por_pregunta']?>" required>
+                            <input type="text" name="password" value = "<?php echo $config['password']?>" required>
                         </div>
                         <hr>
-                        <input type="submit" value="Actualizar Configuracion" name="actualizar" class="btn-actualizar">
+                        <button name="actualizar" class="btn btn-primary ">Actualizar Credenciales</button>
                     </form>
-                </section>
-
-                <h2>Preguntas y Categorías</h2>
-                <hr>
-                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get" class="form-eliminar">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    <input type="submit" value="Eliminar Preguntas" name="eliminarPreguntas" class="btn btn-danger btn-lg">
-                    <input type="submit" value="Eliminar Preguntas y Categorías" name="eliminarTodo" class="btn btn-danger btn-lg">
+                    <br>
+                <form action="<?php echo $_SERVER['PHP_SELF']?>" method="get">
+                    <h2>Configurar nuevo Quiz</h2>
+                    <div class="form-group">
+                         <label class="text-center">Nombre</label>
+                         <input class="text-center" placeholder="Nombre de Partida" name="nombre_partida" required>
+                    </div> 
+                    <div class="form-group">
+                         <label class="text-center" style="margin-left: 18px;">Tema</label>
+                         <select class="form-select text-center" name="tema" id="tema">
+                         <option selected>Eliga el Tema</option>
+                         <?php while ($row = mysqli_fetch_assoc($temas)) : ?>
+                            <option value = "<?php echo $row['nombre']?>"><?php echo $row['nombre']?></option>
+                            <?php endwhile?>
+                         </select>
+                    </div>
+                    <div class="form-group">
+                         <label class="text-center">Fecha</label>
+                         <input class="text-center" type="date" min="<?php echo htmlspecialchars($fechaActual); ?>" value ="<?php echo $fechaActual; ?>" name="fecha" required>
+                    </div>
+                    <div class="form-group">
+                         <label class="text-center">Número de Preguntas</label>
+                         <input class="text-center" type="number" placeholder="Digite el número total de preguntas" min="1" name="total_preguntas" required>
+                    </div>
+                    <div class="form-group">
+                         <label class="text-center">Tiempo por Pregunta</label>
+                         <input class="text-center" type="number" placeholder="Digite el tiempo en segundos" min="5" max="20" name="Tiempo_por_pregunta" required>
+                    </div>
+                    <hr>
+                    <button name ="Alta" class="btn btn-primary text-center">Crear Partida</button>
                 </form>
+            </section>
             </div>
         </div>
     </div>

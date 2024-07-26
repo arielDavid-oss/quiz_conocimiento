@@ -12,8 +12,8 @@ function obtenerConfiguracion()
 
     if ($row['total'] == '0') {
         //No existe el registro 1 - DEBO INSERTAR el registro por primera vez
-      $query = "INSERT INTO config (id,usuario,password,totalPreguntas,Tiempo_por_pregunta)
-        VALUES ('1', 'admin', 'admin','10','10')";
+      $query = "INSERT INTO config (id,usuario,password)
+        VALUES ('1', 'admin')";
 
         if (mysqli_query($conn, $query)) { //Se insertó correctamente
 
@@ -46,10 +46,32 @@ function agregarNuevoTema($tema){
     return $mensaje;
 }
 
+//funcion para agregar una nueva partida
+function agregarNuevaPartida($nombre,$tema,$fecha,$totalPreguntas,$Tiempo_por_pregunta){
+    include('conexion.php');
+    $query = "INSERT INTO partida(nombre, tema, fecha, totalPreguntas, Tiempo_por_pregunta)
+    VALUES ('$nombre','$tema','$fecha','$totalPreguntas','$Tiempo_por_pregunta')";
+   
+    //insertamos en la tabla partida
+    if (mysqli_query($conn, $query)) { //Se insertó correctamente
+        $mensaje = "Partida creada con exito";
+    } else {
+        $mensaje = "No se pudo insertar en la BD" . mysqli_errno($conn);
+    }
+    return $mensaje;
+}
+
 // Recupera todos los temas de la tabla 'temas'.
 function obetenerTodosLosTemas() {
     include("conexion.php");
     $query = "SELECT * FROM temas";
+    $result = mysqli_query($conn, $query);
+    return $result;
+}
+
+function obteneNombreTemas() {
+    include("conexion.php");
+    $query = "SELECT nombre FROM temas";
     $result = mysqli_query($conn, $query);
     return $result;
 }

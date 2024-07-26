@@ -72,14 +72,14 @@ $resltado_temas = obetenerTodosLosTemas();
                 <section id="nuevaPregunta">
                     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get">
                         <div class="fila">
-                            <label for="">Tema: </label>
+                        <label for="">Tema: </label>
                             <select name="tema" id="tema">
                                 <?php while ($row = mysqli_fetch_assoc($resltado_temas)) : ?>
                                     <option value="<?php echo $row['id'] ?>">
                                         <?php echo $row['nombre'] ?>
                                     </option>
                                 <?php endwhile ?>
-                            </select>
+                        </select>
                             <span class="agregarTema" onclick="agregarTema()">
                             <i class="fa-solid fa-circle-plus"></i></span>
                         </div>
