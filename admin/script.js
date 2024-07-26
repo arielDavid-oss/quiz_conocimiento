@@ -43,3 +43,46 @@ function paginaActiva(id) {
     }
     paginas[id].className = "icono selected";
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const mensajeExito = urlParams.get('mensaje_exito');
+    const mensajeError = urlParams.get('mensaje_error');
+
+    if (mensajeExito) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: mensajeExito,
+            confirmButtonText: 'OK'
+        });
+    }
+
+    if (mensajeError) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: mensajeError,
+            confirmButtonText: 'OK'
+        });
+    }
+});
+
+// Mensaje de confirmación para la creación de una partida
+document.querySelector('button[name="Alta"]').addEventListener('click', function(event) {
+    event.preventDefault();
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¿Quieres crear esta nueva partida?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, crearla'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('crear-partida-form').submit();
+        }
+    });
+
+});
