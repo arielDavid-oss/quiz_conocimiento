@@ -8,8 +8,16 @@ if (!$_SESSION['usuarioLogeado']) {
 
 include("funciones.php");
 
+if(isset($_GET['seleccionar_tema'])){
+    $tema = $_GET['tema'];
+    $temas = obtenerPreguntasPorTema($tema);
+    header("Location: listadopreguntas.php");
+}
+
+
 //Obtengo todos los temas de la bd
-$resultado_preguntas = obetenerTodasLasPreguntas();
+$resltado_temas = obetenerTodosLosTemas();
+
 ?>
 
 
@@ -34,8 +42,23 @@ $resultado_preguntas = obetenerTodasLasPreguntas();
             <div class="panel">
                 <h2>Listado de Preguntas</h2>
                 <hr>
+                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get">
+                        <div class="form-group">
+                        <label for="tema" class="text-center" style="margin-left: 15px;">Tema</label>
+                            <select class="form-select text-center" name="tema" id="tema">
+                            <option selected>Eliga el Tema</option>
+                                <?php while ($row = mysqli_fetch_assoc($resltado_temas)) : ?>
+                                    <option value="<?php echo $row['id'] ?>">
+                                        <?php echo $row['nombre'] ?>
+                                    </option>
+                                <?php endwhile ?>
+                        </select>
+                        <br>
+                        <button class="btn btn-info" name="seleccionar_tema">Consultar</button>
+                        </div>
+                </form>
                 <section id="listadoPreguntas">
-                <?php while ($row = mysqli_fetch_assoc($resultado_preguntas)) : ?>
+                <?php while ($row = mysqli_fetch_assoc($temas)) : ?>
                     <div class="contenedor-pregunta">
                         <header>
                             <span class="tema"><?php echo obtenerNombreTema($row['tema'])?></span>
@@ -45,6 +68,7 @@ $resultado_preguntas = obetenerTodasLasPreguntas();
                                 
                             </div>
                         </header>
+                        <p class="pregunta"><?php echo $row['pregunta']?></p>
                         <p class="pregunta"><?php echo $row['pregunta']?></p>
                         <div class="opcion">
                             <div class="caja <?php if($row['correcta']=='A'){ echo 'pintarVerde';}?>">
