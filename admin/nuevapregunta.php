@@ -13,7 +13,16 @@ if(isset($_GET['nuevoTema'])){
     //tomamos los datos que vienen del formulario
     $tema = $_GET['nombreTema'];
     $mensaje = agregarNuevoTema($tema);
-    header("Location: nuevapregunta.php");
+    $mensaje_exito = "Tema nuevo agrego con exito";
+    header("Location: nuevapregunta.php?mensaje_exito=" . urldecode($mensaje_exito));
+}
+//Se presióno el botón Eliminar Tema
+if(isset($_GET['eliminarTema'])){
+    //tomamos los datos que vienen del formulario
+    $tema = $_GET['nombreTema'];
+    $mensaje = eliminarTema($tema);
+    $mensaje_exito = "Tema eliminnado con exito";
+    header("Location: nuevapregunta.php?mensaje_exito=" . urldecode($mensaje_exito));
 }
 /******************************************************* */
 //GUARDAMOS LA PREGUNTA
@@ -37,9 +46,11 @@ if (isset($_GET['guardar'])) {
 
     //insertamos en la tabla preguntas
     if (mysqli_query($conn, $query)) { //Se insertó correctamente
-        $mensaje = "La pregunta se inserto correctamente";
+        $mensaje_exito = "La pregunta se inserto correctamente";
+        header("Location: nuevapregunta.php?mensaje_exito= ". urlencode($mensaje_exito));
     } else {
-        $mensaje = "No se pudo insertar en la BD" . mysqli_error($conn);
+        $mensaje_error = "No se pudo insertar en la BD";
+        header("Location: nuevapregunta.php?mensaje_error= ". urlencode($mensaje_error));
     }
 }
 
@@ -56,7 +67,9 @@ $resltado_temas = obetenerTodosLosTemas();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="estilo.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Quiz Game</title>
 </head>
 <body>
@@ -82,6 +95,8 @@ $resltado_temas = obetenerTodosLosTemas();
                         </select>
                             <span class="agregarTema" onclick="agregarTema()">
                             <i class="fa-solid fa-circle-plus"></i></span>
+                            <span class="agregarTema" onclick="eliminarTema()">
+                            <i class="bi bi-dash-circle"></i></span>
                         </div>
                         <div class="fila">
                             <label for="">Pregunta:</label>
@@ -139,7 +154,23 @@ $resltado_temas = obetenerTodosLosTemas();
         </div>
     </div>
 
+    <div id="eliminaTema" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" onclick="cerrar_Tema()">&times;</span>
+            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get">
+                <label for="">Eliminar Tema</label>
+                <input type="text"   name="nombreTema" required>
+                <input type="submit" name="eliminarTema" value="Eliminar Tema" class="btn">
+            </form>
+        </div>
+    </div>
+
     <script src="script.js"></script>
+    <script>
+          const mensajeError = "<?php echo isset($_GET['mensaje_error']) ? $_GET['mensaje_error'] : ''; ?>";
+          const mensajeExito = "<?php echo isset($_GET['mensaje_exito']) ? $_GET['mensaje_exito'] : ''; ?>";
+    </script>
     <script>paginaActiva(1);</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

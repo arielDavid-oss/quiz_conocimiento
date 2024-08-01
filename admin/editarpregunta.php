@@ -30,10 +30,11 @@ if (isset($_GET['actualizar'])) {
 
     //actualizamos en la tabla preguntas
     if (mysqli_query($conn, $query)) { //Se insertó correctamente
-        $mensaje = "La pregunta se actulizo correctamente";
-        header("Location: listadopreguntas.php");
+        $mensaje_exito = "La pregunta se actualizo correctamente";
+        header("Location: listadopreguntas.php?mensaje_exito= " . urldecode($mensaje_exito));
     } else {
-        $mensaje = "No se pudo insertar en la BD" . mysqli_error($conn);
+        $mensaje_error = "No se pudo insertar en la BD";
+        header("Location: listadopreguntas.php?mensaje_error= " . urldecode($mensaje_error));
     }
 }
 
@@ -63,6 +64,7 @@ $resltado_temas = obetenerTodosLosTemas();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="estilo.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Document</title>
 </head>
 <body>
@@ -149,6 +151,10 @@ $resltado_temas = obetenerTodosLosTemas();
     </div>
 
     <script src="script.js"></script>
+    <script>
+        const mensajeError = "<?php echo isset($_GET['mensaje_error']) ? $_GET['mensaje_error'] : ''; ?>";
+        const mensajeExito = "<?php echo isset($_GET['mensaje_exito']) ? $_GET['mensaje_exito'] : ''; ?>";
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

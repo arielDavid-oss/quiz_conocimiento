@@ -5,10 +5,17 @@ function agregarTema() {
     modalTema = document.getElementById("modalTema");
     modalTema.style.display = "block";
 }
-
+function eliminarTema() {
+    modalTema = document.getElementById("eliminaTema");
+    modalTema.style.display = "block";
+}
 // Cierra el modal del tema.
 function cerrarTema() {
     modalTema = document.getElementById("modalTema");
+    modalTema.style.display = "none";
+}
+function cerrar_Tema() {
+    modalTema = document.getElementById("eliminaTema");
     modalTema.style.display = "none";
 }
 

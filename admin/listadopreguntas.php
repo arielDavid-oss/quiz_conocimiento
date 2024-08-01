@@ -9,11 +9,10 @@ if (!isset($_SESSION['usuarioLogeado'])) {
 
 include("funciones.php");
 
-$preguntas = [];
-
 if (isset($_GET['seleccionar_tema']) && isset($_GET['tema'])) {
     $tema = intval($_GET['tema']); // Asegurarse de que el valor sea un entero
     if ($tema > 0) {
+        // Variable que guarda los resultados de las preguntas del tema elegido
         $preguntas = obtenerPreguntasPorTema($tema);
     }
 }
@@ -31,6 +30,7 @@ $resultado_temas = obetenerTodosLosTemas();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="estilo.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Quiz Game</title>
 </head>
 <body>
@@ -47,7 +47,7 @@ $resultado_temas = obetenerTodosLosTemas();
                     <div class="form-group">
                         <label for="tema" class="text-center" style="margin-left: 15px;">Tema</label>
                         <select class="form-select text-center" name="tema" id="tema">
-                            <option selected>Elija el Tema</option>
+                            <option value="none" selected></option>
                             <?php while ($row = mysqli_fetch_assoc($resultado_temas)) : ?>
                                 <option value="<?php echo htmlspecialchars($row['id']); ?>">
                                     <?php echo htmlspecialchars($row['nombre']); ?>
@@ -104,6 +104,7 @@ $resultado_temas = obetenerTodosLosTemas();
         </div>
     </div>
     <script src="script.js"></script>
+    <script src="mensajes.js"></script>
     <script>paginaActiva(2);</script>   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

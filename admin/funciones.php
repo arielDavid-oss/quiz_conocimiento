@@ -46,6 +46,12 @@ function agregarNuevoTema($tema){
     return $mensaje;
 }
 
+function eliminarTema($tema){
+    include("conexion.php");
+    $query = "DELETE FROM temas where nombre = '$tema'";
+    mysqli_query($conn, $query);
+} 
+
 //funcion para agregar una nueva partida
 function agregarNuevaPartida($nombre,$tema,$fecha,$totalPreguntas,$Tiempo_por_pregunta){
     include('conexion.php');
@@ -102,6 +108,7 @@ function obtenerPreguntaPorId($id) {
     return $pregunta;
 }
 
+// Obtener todas las preguntas del tema seleccionada
 function obtenerPreguntasPorTema($tema) {
     include("conexion.php");
     $query = "SELECT * FROM preguntas WHERE tema = $tema";
