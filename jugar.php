@@ -1,12 +1,6 @@
 <?php
 session_start();
 
-// Si el usuario no está logeado lo enviamos al index
-//if (!isset($_SESSION['usuario'])) {
-  //  header("Location: index.php");
-    //exit; // Aseguramos que el script se detenga después de redirigir
-//}
-
 include("admin/funciones.php");
 
 $confi = obtenerConfiguracion();
