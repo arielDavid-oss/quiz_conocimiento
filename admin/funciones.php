@@ -102,14 +102,19 @@ function obtenerPreguntaPorId($id) {
     return $pregunta;
 }
 
-// Recupera preguntas asociadas a un tema específico de la tabla 'preguntas'.
 function obtenerPreguntasPorTema($tema) {
     include("conexion.php");
     $query = "SELECT * FROM preguntas WHERE tema = $tema";
     $result = mysqli_query($conn, $query);
-    $preguntas = mysqli_fetch_array($result);
+    $preguntas = [];
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $preguntas[] = $row;
+    }
+
     return $preguntas;
 }
+
 
 // Devuelve el número total de preguntas en la tabla 'preguntas'.
 function obtenerTotalPreguntas() {

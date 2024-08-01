@@ -9,7 +9,6 @@ if (!isset($_SESSION['usuarioLogeado'])) {
 
 include("funciones.php");
 
-// Inicializo la variable $preguntas como un arreglo vacío
 $preguntas = [];
 
 if (isset($_GET['seleccionar_tema']) && isset($_GET['tema'])) {
@@ -55,44 +54,41 @@ $resultado_temas = obetenerTodosLosTemas();
                                 </option>
                             <?php endwhile; ?>
                         </select>
-                        <br>
-                        <button class="btn btn-info" name="seleccionar_tema">Consultar</button>
                     </div>
+                    <div class="text-center" style="margin-bottom: 5px;"><button class="btn btn-info" name="seleccionar_tema">Consultar</button></div>
                 </form>
                 <section id="listadoPreguntas">
                 <?php if (!empty($preguntas)) : ?>
-                    <?php foreach ($preguntas as $row) : ?>
+                    <?php foreach ($preguntas as $columna) : ?>
                         <div class="contenedor-pregunta">
                             <header>
-                                <span class="tema"><?php echo obtenerNombreTema($row['tema']); ?></span>
+                                <span class="tema"><?php echo obtenerNombreTema($columna['tema']); ?></span>
                                 <div class="opciones">
-                                    <i class="fa-solid fa-pen-to-square" onclick="editarPregunta(<?php echo $row['id']; ?>)"></i>
-                                    <i class="fa-solid fa-trash" onclick="abrirModalEliminar(<?php echo $row['id']; ?>)"></i>                
+                                    <i class="fa-solid fa-pen-to-square" onclick="editarPregunta(<?php echo $columna['id']; ?>)"></i>
+                                    <i class="fa-solid fa-trash" onclick="abrirModalEliminar(<?php echo $columna['id']; ?>)"></i>                
                                 </div>
                             </header>
-                            <p class="pregunta"><?php echo htmlspecialchars($row['pregunta']); ?></p>
+                            <p class="pregunta"><?php echo htmlspecialchars($columna['pregunta']); ?></p>
                             <div class="opcion">
-                                <div class="caja <?php echo ($row['correcta'] == 'A') ? 'pintarVerde' : ''; ?>">
+                                <div class="caja <?php echo ($columna['correcta'] == 'A') ? 'pintarVerde' : ''; ?>">
                                     A
                                 </div>
-                                <span class="texto"><?php echo htmlspecialchars($row['opcion_a']); ?></span>
+                                <span class="texto"><?php echo htmlspecialchars($columna['opcion_a']); ?></span>
                             </div>
                             <div class="opcion">
-                                <span class="caja <?php echo ($row['correcta'] == 'B') ? 'pintarVerde' : ''; ?>">B</span>
-                                <span class="texto"><?php echo htmlspecialchars($row['opcion_b']); ?></span>
+                                <span class="caja <?php echo ($columna['correcta'] == 'B') ? 'pintarVerde' : ''; ?>">B</span>
+                                <span class="texto"><?php echo htmlspecialchars($columna['opcion_b']); ?></span>
                             </div>
                             <div class="opcion">
-                                <span class="caja <?php echo ($row['correcta'] == 'C') ? 'pintarVerde' : ''; ?>">C</span>
-                                <span class="texto"><?php echo htmlspecialchars($row['opcion_c']); ?></span>
+                                <span class="caja <?php echo ($columna['correcta'] == 'C') ? 'pintarVerde' : ''; ?>">C</span>
+                                <span class="texto"><?php echo htmlspecialchars($columna['opcion_c']); ?></span>
                             </div>
                             <div class="opcion">
-                                <span class="caja <?php echo ($row['correcta'] == 'D') ? 'pintarVerde' : ''; ?>">D</span>
-                                <span class="texto"><?php echo htmlspecialchars($row['opcion_d']); ?></span>
+                                <span class="caja <?php echo ($columna['correcta'] == 'D') ? 'pintarVerde' : ''; ?>">D</span>
+                                <span class="texto"><?php echo htmlspecialchars($columna['opcion_d']); ?></span>
                             </div>
-                        </div>                  
+                        </div>   
                     <?php endforeach; ?>
-                <?php else : ?>
-                    <p>No hay preguntas disponibles para el tema seleccionado.</p>
                 <?php endif; ?>
                 </section>                
             </div>
