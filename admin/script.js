@@ -45,6 +45,24 @@ function paginaActiva(id) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    if (mensajeError) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: mensajeError
+        });
+    }
+
+    if (mensajeExito) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: mensajeExito
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const mensajeExito = urlParams.get('mensaje_exito');
     const mensajeError = urlParams.get('mensaje_error');

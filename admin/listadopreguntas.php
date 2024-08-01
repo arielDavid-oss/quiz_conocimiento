@@ -1,25 +1,27 @@
 <?php
 session_start();
 
-//Si el usuario no esta logeado lo enviamos al login
-if (!$_SESSION['usuarioLogeado']) {
-    header("Location:login.php");
+// Si el usuario no está logueado lo enviamos al login
+if (!isset($_SESSION['usuarioLogeado'])) {
+    header("Location: login.php");
+    exit();
 }
 
 include("funciones.php");
 
-if(isset($_GET['seleccionar_tema'])){
-    $tema = $_GET['tema'];
-    $temas = obtenerPreguntasPorTema($tema);
-    header("Location: listadopreguntas.php");
+// Inicializo la variable $preguntas como un arreglo vacío
+$preguntas = [];
+
+if (isset($_GET['seleccionar_tema']) && isset($_GET['tema'])) {
+    $tema = intval($_GET['tema']); // Asegurarse de que el valor sea un entero
+    if ($tema > 0) {
+        $preguntas = obtenerPreguntasPorTema($tema);
+    }
 }
 
-
-//Obtengo todos los temas de la bd
-$resltado_temas = obetenerTodosLosTemas();
-
+// Obtengo todos los temas de la BD
+$resultado_temas = obetenerTodosLosTemas();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -42,55 +44,57 @@ $resltado_temas = obetenerTodosLosTemas();
             <div class="panel">
                 <h2>Listado de Preguntas</h2>
                 <hr>
-                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="get">
-                        <div class="form-group">
+                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get">
+                    <div class="form-group">
                         <label for="tema" class="text-center" style="margin-left: 15px;">Tema</label>
-                            <select class="form-select text-center" name="tema" id="tema">
-                            <option selected>Eliga el Tema</option>
-                                <?php while ($row = mysqli_fetch_assoc($resltado_temas)) : ?>
-                                    <option value="<?php echo $row['id'] ?>">
-                                        <?php echo $row['nombre'] ?>
-                                    </option>
-                                <?php endwhile ?>
+                        <select class="form-select text-center" name="tema" id="tema">
+                            <option selected>Elija el Tema</option>
+                            <?php while ($row = mysqli_fetch_assoc($resultado_temas)) : ?>
+                                <option value="<?php echo htmlspecialchars($row['id']); ?>">
+                                    <?php echo htmlspecialchars($row['nombre']); ?>
+                                </option>
+                            <?php endwhile; ?>
                         </select>
                         <br>
                         <button class="btn btn-info" name="seleccionar_tema">Consultar</button>
-                        </div>
+                    </div>
                 </form>
                 <section id="listadoPreguntas">
-                <?php while ($row = mysqli_fetch_assoc($temas)) : ?>
-                    <div class="contenedor-pregunta">
-                        <header>
-                            <span class="tema"><?php echo obtenerNombreTema($row['tema'])?></span>
-                            <div class="opciones">
-                                <i class="fa-solid fa-pen-to-square" onclick="editarPregunta(<?php echo $row['id']?>)"></i>
-                                <i class="fa-solid fa-trash" onclick="abrirModalEliminar(<?php echo $row['id']?>)"></i>
-                                
+                <?php if (!empty($preguntas)) : ?>
+                    <?php foreach ($preguntas as $row) : ?>
+                        <div class="contenedor-pregunta">
+                            <header>
+                                <span class="tema"><?php echo obtenerNombreTema($row['tema']); ?></span>
+                                <div class="opciones">
+                                    <i class="fa-solid fa-pen-to-square" onclick="editarPregunta(<?php echo $row['id']; ?>)"></i>
+                                    <i class="fa-solid fa-trash" onclick="abrirModalEliminar(<?php echo $row['id']; ?>)"></i>                
+                                </div>
+                            </header>
+                            <p class="pregunta"><?php echo htmlspecialchars($row['pregunta']); ?></p>
+                            <div class="opcion">
+                                <div class="caja <?php echo ($row['correcta'] == 'A') ? 'pintarVerde' : ''; ?>">
+                                    A
+                                </div>
+                                <span class="texto"><?php echo htmlspecialchars($row['opcion_a']); ?></span>
                             </div>
-                        </header>
-                        <p class="pregunta"><?php echo $row['pregunta']?></p>
-                        <p class="pregunta"><?php echo $row['pregunta']?></p>
-                        <div class="opcion">
-                            <div class="caja <?php if($row['correcta']=='A'){ echo 'pintarVerde';}?>">
-                                A
+                            <div class="opcion">
+                                <span class="caja <?php echo ($row['correcta'] == 'B') ? 'pintarVerde' : ''; ?>">B</span>
+                                <span class="texto"><?php echo htmlspecialchars($row['opcion_b']); ?></span>
                             </div>
-                            <span class="texto"><?php echo $row['opcion_a']?></span>
-                        </div>
-                        <div class="opcion">
-                            <span class="caja <?php if($row['correcta']=='B'){ echo 'pintarVerde';}?>">B</span>
-                            <span class="texto"><?php echo $row['opcion_b']?></span>
-                        </div>
-                        <div class="opcion">
-                            <span class="caja <?php if($row['correcta']=='C'){ echo 'pintarVerde';}?>">C</span>
-                            <span class="texto"><?php echo $row['opcion_c']?></span>
-                        </div>
-                        <div class="opcion">
-                            <span class="caja <?php if($row['correcta']=='D'){ echo 'pintarVerde';}?>">D</span>
-                            <span class="texto"><?php echo $row['opcion_d']?></span>
-                        </div>
-                    </div>                  
-                <?php endwhile ?>
-                </section>
+                            <div class="opcion">
+                                <span class="caja <?php echo ($row['correcta'] == 'C') ? 'pintarVerde' : ''; ?>">C</span>
+                                <span class="texto"><?php echo htmlspecialchars($row['opcion_c']); ?></span>
+                            </div>
+                            <div class="opcion">
+                                <span class="caja <?php echo ($row['correcta'] == 'D') ? 'pintarVerde' : ''; ?>">D</span>
+                                <span class="texto"><?php echo htmlspecialchars($row['opcion_d']); ?></span>
+                            </div>
+                        </div>                  
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <p>No hay preguntas disponibles para el tema seleccionado.</p>
+                <?php endif; ?>
+                </section>                
             </div>
         </div>
     </div>
@@ -98,8 +102,8 @@ $resltado_temas = obetenerTodosLosTemas();
     <div id="modalPregunta" class="modal">
         <!-- Modal content clase del CSS -->
         <div class="modal-content">
-            <p>¿Esta seguro que desea eliminar la Pregunta?</p>
-            <button onclick="eliminarPregunta()" class="btn">Si</button>
+            <p>¿Está seguro que desea eliminar la Pregunta?</p>
+            <button onclick="eliminarPregunta()" class="btn">Sí</button>
             <button onclick="cerrarEliminar()" class="btn">Cancelar</button>
         </div>
     </div>

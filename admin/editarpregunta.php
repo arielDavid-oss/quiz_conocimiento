@@ -21,10 +21,12 @@ if (isset($_GET['actualizar'])) {
     $opcion_a = htmlspecialchars($_GET['opcion_a']);
     $opcion_b = htmlspecialchars($_GET['opcion_b']);
     $opcion_c = htmlspecialchars($_GET['opcion_c']);
+    $opcion_d = htmlspecialchars($_GET['opcion_d']);
     $correcta = $_GET['correcta'];
 
     //Armamos el query para insertar en la tabla preguntas
-    $query = "UPDATE preguntas SET tema='$id_tema', pregunta='$pregunta', opcion_a='$opcion_a', opcion_b='$opcion_b', opcion_c='$opcion_c', correcta = '$correcta' WHERE id='$id_pregunta'";
+    $query = "UPDATE preguntas SET tema='$id_tema', pregunta='$pregunta', opcion_a='$opcion_a', opcion_b='$opcion_b', 
+    opcion_c='$opcion_c', opcion_d='$opcion_d', correcta = '$correcta' WHERE id='$id_pregunta'";
 
     //actualizamos en la tabla preguntas
     if (mysqli_query($conn, $query)) { //Se insertó correctamente
