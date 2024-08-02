@@ -49,15 +49,15 @@ foreach($_SESSION['idPreguntas'] as $idPregunta){
     <title>QUIZ GAME</title>
 </head>
 <body>
-    <div class="container-final" id="container-final">
-        <div class="info">
+    <div class="container" id="container-final">
+        <div class="info left">
             <h2>RESULTADO FINAL</h2>
             <br>
-            <div class="categoria">
-            <h3> Equipo: <?php echo $nombreEquipo; ?></h3>
-             <h3><?php echo $tema; ?></h3>
+            <div class="categoria text-center">
+            <h3 style=" color:white"> Equipo: <?php echo $nombreEquipo; ?></h3>
+             <h3 style=" color:white"><?php echo $tema; ?></h3>
             </div>
-            <div class="estadistica">
+            <div style=" color:white" class="estadistica">
                 <div class="acierto">
                     <span class="correctas numero"> <?php echo $_SESSION['correctas'] ?></span>
                     CORRECTAS
@@ -79,12 +79,12 @@ foreach($_SESSION['idPreguntas'] as $idPregunta){
 
             <a href="resultados.php" type="button" class="btn btn-info">Resultados</a>
         </div>
-        <div class="derecha">
+        <div class="derecha text-center">
             <ul class="list-group">
-                <h2>Ranking de Equipos</h2>
+                <h2 style=" color:white">Ranking de Equipos</h2>
                 <?php foreach ($rankig_equipos as $index => $equipo) : ?>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <?php echo htmlspecialchars($equipo['nombre_equipo']); 
+                        <?php 
                         if ($index == 0) {
                             echo ' <i class="bi bi-trophy-fill text-warning"></i>';
                         } elseif ($index == 1) {
@@ -92,6 +92,7 @@ foreach($_SESSION['idPreguntas'] as $idPregunta){
                         } elseif ($index == 2) {
                             echo ' <i class="bi bi-trophy-fill text-danger"></i>';
                         }
+                        echo htmlspecialchars($equipo['nombre_equipo']); 
                         ?>
                         <span class="badge bg-primary rounded-pill"><?php echo htmlspecialchars($equipo['puntuacion']); ?></span>
                     </li>
