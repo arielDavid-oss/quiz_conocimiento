@@ -12,7 +12,7 @@ $mensaje_error = "";
 include("funciones.php");
 
 $config = obtenerConfiguracion();
-$temas = obteneNombreTemas();
+$temas = obetenerTodosLosTemas();
 $fechaActual = date('Y-m-d');
 
 /******************************************************* */
@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </form>
                     <br>
                     <form id="crear-partida-form" action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
-                        <h2>Configurar nuevo Quiz</h2>
+                        <h2>Configurar nueva Partida</h2>
                         <div class="form-group">
                             <label for="nombre" class="text-center">Nombre</label>
                             <input id="nombre" class="text-center" placeholder="Nombre de Partida" name="nombre_partida" required>
@@ -107,7 +107,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <select class="form-select text-center" name="tema" id="tema">
                                 <option selected>Eliga el Tema</option>
                                 <?php while ($row = mysqli_fetch_assoc($temas)) : ?>
-                                    <option value="<?php echo $row['nombre']?>"><?php echo $row['nombre']?></option>
+                                    <option value="<?php echo $row['id'] ?>">
+                                        <?php echo $row['nombre'] ?>
+                                    </option>
                                 <?php endwhile ?>
                             </select>
                         </div>

@@ -29,6 +29,10 @@ function obtenerConfiguracion()
     return $config;
 }
 
+function obtenerPartida(){
+
+}
+
 //funcion para agrear un nuevo tema a la BD
 function agregarNuevoTema($tema){
     include("conexion.php");
@@ -89,7 +93,7 @@ function obtenerNombreTema($id) {
     $result = mysqli_query($conn, $query);
     $tema = mysqli_fetch_array($result);
     return $tema['nombre'];
-}
+ }
 
 // Recupera todas las preguntas de la tabla 'preguntas'.
 function obetenerTodasLasPreguntas() {
@@ -176,6 +180,14 @@ function cambiar_estado($nombreEquipo) {
     include("conexion.php");
     $query = "UPDATE `equipos`SET `estado` = true WHERE `nombre_equipo` = '$nombreEquipo'";
     mysqli_query($conn, $query);
+}
+
+//Busca las partidas dadas de alta en la plataforma
+function partidas_disponibles (){
+    include("conexion.php");
+    $query = "SELECT nombre, tema from partida where estado = 'false'";
+    $result = mysqli_query($conn, $query);
+    return $result;
 }
 
 // Busca los miembros de un equipo específico por su nombre.
