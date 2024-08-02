@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <h2>Integrar Equipo</h2>
         </div>
-        <div class="right">
+        <div class="derecha text-center">
             <h3><i class="fa-solid fa-user-shield"></i> Agregar integrantes</h3>
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
                 <select name="equipo" required>

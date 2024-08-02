@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <h2>Crear Equipo</h2>
         </div>
-        <div class="right text-center">
+        <div class="derecha text-center">
             <h3><i class="fa-solid fa-user-shield"></i> Ingresa el nombre del equipo</h3>
             <br>
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">

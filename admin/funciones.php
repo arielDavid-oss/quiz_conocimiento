@@ -29,8 +29,12 @@ function obtenerConfiguracion()
     return $config;
 }
 
-function obtenerPartida(){
-
+function obtenerPartida($nombre){
+    include("conexion.php");
+    $query = "SELECT * from partida where nombre = '$nombre'";
+    $result = mysqli_query($conn, $query);
+    $config = mysqli_fetch_assoc($result);
+    return $config;
 }
 
 //funcion para agrear un nuevo tema a la BD
@@ -175,11 +179,25 @@ function agregarJugador($equipo_id, $nombre_jugador, $grupo) {
     mysqli_query($conn, $query);
 }
 
-// Cambia el estado de un equipo a verdadero.
-function cambiar_estado($nombreEquipo) {
+// Cambia el estado de un equipo a verdadero y asignar puntuacion.
+function cambiar_estado($nombreEquipo,$score) {
     include("conexion.php");
-    $query = "UPDATE `equipos`SET `estado` = true WHERE `nombre_equipo` = '$nombreEquipo'";
+    $query = "UPDATE `equipos`SET `estado` = true, `puntuacion` = '$score' WHERE `nombre_equipo` = '$nombreEquipo'";
     mysqli_query($conn, $query);
+}
+
+// Unirse a partida.
+function unirse_partida($partida,$equipo) {
+    include("conexion.php");
+    $query = "UPDATE `equipos`SET `partida` = '$partida' WHERE `nombre_equipo` = '$equipo'";
+    mysqli_query($conn, $query);
+}
+
+function puntuaciones(){
+    include("conexion.php");
+    $query = "SELECT * FROM `equipos` WHERE `estado` = TRUE ORDER BY `puntuacion` DESC";
+    $result = mysqli_query($conn, $query);
+    return $result;
 }
 
 //Busca las partidas dadas de alta en la plataforma

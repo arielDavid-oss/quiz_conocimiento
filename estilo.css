@@ -99,6 +99,19 @@ body {
     overflow: scroll;
 }
 
+.container .derecha{
+    width: 50%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container .derecha h3 {
+    color: #fff;
+}
+
+
 .container .right h3 {
     color: #fff;
 }

@@ -2,12 +2,12 @@
 session_start();
 
 include("admin/funciones.php");
-
-$confi = obtenerConfiguracion();
+$nombre = $_SESSION['idPartida'];
+$confi = obtenerPartida($nombre);
 $totalPreguntasPorJuego = $confi['totalPreguntas'];
 $TiempoPregunta = $confi['Tiempo_por_pregunta'];
 $nombreEquipo = $_SESSION['equipo_id'];
-
+unirse_partida($nombre,$nombreEquipo);
 if (isset($_GET['siguiente'])) {
     // Guardar la respuesta seleccionada por el usuario o marcar como no contestada
     if (isset($_GET['respuesta'])) {

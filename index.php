@@ -1,11 +1,9 @@
-
 <?php
 session_start();
 // session_destroy();
 
 include("admin/funciones.php");
 
-//$categorias =  obtenerCategorias();
 $partida = partidas_disponibles();
 // Verificar si 'equipo_id' está en la sesión
 if (empty($_SESSION['equipo_id'])) {
@@ -14,9 +12,11 @@ if (empty($_SESSION['equipo_id'])) {
 $nombreEquipo = $_SESSION['equipo_id'];
 
 
+
 if(isset($_GET['idCategoria'])){
     //session_start();
     //$_SESSION['usuario'] = "usuario";
+    $_SESSION['idPartida'] = $_GET['idPartida'];
     $_SESSION['idCategoria'] = $_GET['idCategoria'];
     header("Location: jugar.php");
 }
@@ -51,10 +51,11 @@ if(isset($_GET['idCategoria'])){
                 <div class="categoria">
                     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" id="<?php echo $cat['tema']?>">
                         <input type="hidden" name="idCategoria" value="<?php echo $cat['tema']?>">
+                        <input type="hidden" name="idPartida" value="<?php echo $cat['nombre']?>">
                         <a href="javascript:{}" onclick="document.getElementById(<?php echo $cat['tema']?>).submit(); return false;">
                         <?php echo $cat['nombre']; ?>
                         <br>    
-                        <?php echo $cat['tema']?>
+                        <?php echo obtenerNombreTema($cat['tema'])?>
                         </a>
                     </form>
                 </div>
