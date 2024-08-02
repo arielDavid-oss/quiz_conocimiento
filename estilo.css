@@ -490,6 +490,9 @@ footer a:hover {
     .container .right {
         width: 100%;
     }
+    .container .derecha{
+        width: 100%;
+    }
     .container-juego header {
         display: flex;
         justify-content: space-between;

@@ -6,9 +6,25 @@ include ("admin/funciones.php");
 // Obtener el nombre de la categoría de tema escogido
 $tema = $_SESSION['nombreCategoria'];
 $nombreEquipo = $_SESSION['equipo_id'];
+$partida = $_SESSION['idPartida'];
 $miembros = buscar_miembros($nombreEquipo);
 // Obtener las respuestas del usuario
 $respuestasUsuario = $_SESSION['respuestas_usuario'];
+
+// Guardar las respuestas del usuario en la base de datos
+$resultados = $_SESSION['resultados'];
+$correctas = $resultados['correctas'];
+$incorrectas = $resultados['incorrectas'];
+$preguntas = $resultados['preguntas'];
+
+foreach ($preguntas as $index => $pregunta) {
+    //$pregunta_id = $pregunta['id'];
+    $respuesta_usuario = isset($respuestasUsuario[$index]) ? $respuestasUsuario[$index] : 'no_contestada';
+    $es_correcta = strtolower($respuesta_usuario) === strtolower($pregunta['correcta']) ? 1 : 0;
+
+    // Llamar a la función guardar_resultados
+    guardar_resultados($tema, $nombreEquipo, $partida, $respuesta_usuario, $es_correcta);
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -89,7 +105,7 @@ $respuestasUsuario = $_SESSION['respuestas_usuario'];
     </div>
     <br>
     <div class="text-center">
-        <a type="button" class="btn btn-success" href="crear_equipo.php">Ir al Menú</a>
+        <a type="button" class="btn btn-success" href="crear_equipo.php">Jugar otra vez</a>
     </div>
 </div>
 

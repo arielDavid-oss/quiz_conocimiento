@@ -45,7 +45,7 @@ if(isset($_GET['idCategoria'])){
             <h2>PON A PRUEBA TUS CONOCIMIENTOS!!</h2>
         </div>
         <div class="right">
-            <h3>Elige una categoría <?php echo $nombreEquipo ?></h3>
+            <h3>Elige una partida <?php echo $nombreEquipo ?></h3>
             <div class="categorias">
                 <?php while ($cat = mysqli_fetch_assoc($partida)):?>
                 <div class="categoria">

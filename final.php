@@ -2,7 +2,10 @@
 session_start();
 
 include("admin/funciones.php");
-
+// Verificar si 'equipo_id' está en la sesión
+if (empty($_SESSION['equipo_id'])) {
+    header("Location: crear_equipo.php");
+}
 
 $score = $_SESSION['score'];
 //$puntuacion = $score / 10;
@@ -10,7 +13,7 @@ $tema =  $_SESSION['nombreCategoria'];
 $nombreEquipo = $_SESSION['equipo_id'];
 $scoreFormatted = (intval($score) == $score) ? intval($score) : number_format($score, 1);
 cambiar_estado($nombreEquipo, $scoreFormatted);
-$rankig_equipos = puntuaciones();
+$rankig_equipos = puntuaciones($_SESSION['idPartida']);
 // Guardar resultados en un objeto $_SESSION
 $_SESSION['resultados'] = array(
     'correctas' => $_SESSION['correctas'],

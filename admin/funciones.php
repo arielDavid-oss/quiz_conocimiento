@@ -172,6 +172,14 @@ function crearEquipo($nombre_equipo) {
     mysqli_query($conn, $query);
 }
 
+//Ingresar datos de los resultados finales 
+function guardar_resultados($tema, $equipo, $partida, $respuestas, $correcta) {
+    include("conexion.php");
+    $query = "INSERT INTO resultados (tema, equipo, partida, respuestas, correcta) VALUES 
+              ('$tema', '$equipo', '$partida', '$respuestas', '$correcta')";
+    mysqli_query($conn, $query);
+} 
+
 // Agrega un jugador a un equipo específico.
 function agregarJugador($equipo_id, $nombre_jugador, $grupo) {
     include("conexion.php");
@@ -193,9 +201,9 @@ function unirse_partida($partida,$equipo) {
     mysqli_query($conn, $query);
 }
 
-function puntuaciones(){
+function puntuaciones($partida){
     include("conexion.php");
-    $query = "SELECT * FROM `equipos` WHERE `estado` = TRUE ORDER BY `puntuacion` DESC";
+    $query = "SELECT * FROM `equipos` WHERE `estado` = TRUE AND `partida` = '$partida' ORDER BY `puntuacion` DESC";
     $result = mysqli_query($conn, $query);
     return $result;
 }
