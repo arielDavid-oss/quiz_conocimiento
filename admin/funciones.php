@@ -28,13 +28,44 @@ function obtenerConfiguracion()
     $config = mysqli_fetch_assoc($result);
     return $config;
 }
-
+//Consulta para obtener partida especifica
 function obtenerPartida($nombre){
     include("conexion.php");
     $query = "SELECT * from partida where nombre = '$nombre'";
     $result = mysqli_query($conn, $query);
     $config = mysqli_fetch_assoc($result);
     return $config;
+}
+
+//Obtener a los equipos de la partida
+function obtener_equipos_partidas($partida){
+    include("conexion.php");
+    $query = "SELECT nombre_equipo, puntuacion from equipos where partida = '$partida'";
+    $result = mysqli_query($conn, $query);
+    $partidas = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $partidas[] = $row;
+    }
+    return $partidas;
+}
+
+//Actualiza las partidas como ya jugada
+function actualizar_estado($partida){
+    include("conexion.php");
+    $query = "UPDATE `partida`SET `estado` = true where nombre = '$partida'";
+    mysqli_query($conn, $query);
+}
+
+//Consulta para obtener todas las partidas
+function obtenerPartidas(){
+    include("conexion.php");
+    $query = "SELECT tema, nombre, fecha FROM partida ORDER BY `fecha` DESC";
+    $result = mysqli_query($conn, $query);
+    $partidas = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $partidas[] = $row;
+    }
+    return $partidas;
 }
 
 //funcion para agrear un nuevo tema a la BD

@@ -25,17 +25,24 @@
             </a>
         </li>
         <li>
-            <a href="configuracion.php">
+            <a href="partidas.php">
                 <div class="icono" id="3">
+                    <i class="bi bi-clipboard2-check-fill"></i>
+                </div>
+                Consultas
+            </a>
+        </li>
+        <li>
+            <a href="configuracion.php">
+                <div class="icono" id="4">
                     <i class="fa-solid fa-gear"></i>
                 </div>
                 Configuración
             </a>
         </li>
         <li>
-
             <a href="../crear_equipo.php" target="_blank">
-                <div class="icono" id="4">
+                <div class="icono" id="5">
                     <i class="fa-solid fa-globe"></i>
                 </div>
                 Quiz.com
@@ -43,7 +50,7 @@
         </li>
         <li>
             <a href="cerrar-sesion.php">
-                <div class="icono" id="5">
+                <div class="icono" id="6">
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </div>
                 Salir

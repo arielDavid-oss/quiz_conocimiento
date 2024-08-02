@@ -18,7 +18,6 @@ $incorrectas = $resultados['incorrectas'];
 $preguntas = $resultados['preguntas'];
 
 foreach ($preguntas as $index => $pregunta) {
-    //$pregunta_id = $pregunta['id'];
     $respuesta_usuario = isset($respuestasUsuario[$index]) ? $respuestasUsuario[$index] : 'no_contestada';
     $es_correcta = strtolower($respuesta_usuario) === strtolower($pregunta['correcta']) ? 1 : 0;
 
@@ -70,7 +69,16 @@ foreach ($preguntas as $index => $pregunta) {
                     <div class="contenedor-pregunta">
                         <p class="pregunta"><?php echo $pregunta['pregunta']; ?></p>
                         <?php 
-                            $opciones = ['a', 'b', 'c', 'd'];
+                             $opciones = ['a', 'b', 'c', 'd'];
+                             $opcionCorrecta = strtolower($pregunta['correcta']);
+                             foreach ($opciones as $opcion):
+                                 $clase = '';
+                                 if (isset($respuestasUsuario[$index])) {
+                                     if ($opcion === strtolower($respuestasUsuario[$index])) {
+                                         $clase = $opcion === $opcionCorrecta ? 'caja-correcta' : 'caja-incorrecta';
+                                     }
+                                 }
+                            /*$opciones = ['a', 'b', 'c', 'd'];
                             $opcionCorrecta = strtolower($pregunta['correcta']);
                             foreach ($opciones as $opcion):
                                 $clase = '';
@@ -80,24 +88,24 @@ foreach ($preguntas as $index => $pregunta) {
                                     } elseif (strtolower($respuestasUsuario[$index]) === $opcion) {
                                         $clase = 'caja-incorrecta';
                                     }
-                                }
+                                }*/
                         ?>
                         <div class="opciones_Resultados">
                             <span class="cajas <?php echo $clase; ?>"><?php echo strtoupper($opcion); ?></span>
                             <span class="texto"><?php echo $pregunta['opcion_' . $opcion]; ?></span>
                         </div>
                         <?php endforeach; ?>
-                        <p><strong>Respuesta Correcta:</strong> <?php echo $pregunta['opcion_' . $opcionCorrecta]; ?></p>
+                        <!--p><strong>Respuesta Correcta:</strong> <--?php echo $pregunta['opcion_' . $opcionCorrecta]; ?></p-->
                         <!-- Manejar un condicional si no se contestó la pregunta -->
-                        <p><strong>Tu Respuesta:</strong> 
-                            <?php
+                        <!--p><strong>Tu Respuesta:</strong> 
+                            <--?php
                             if ($respuestasUsuario[$index] == 'no_contestada') {
                                 echo "No respondiste esta pregunta.";
                             } else {
                                 echo $pregunta['opcion_' . strtolower($respuestasUsuario[$index])];
                             }
                             ?>
-                        </p>
+                        </p-->
                     </div>                  
                 <?php endforeach; ?>
             </section>
