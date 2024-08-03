@@ -78,34 +78,12 @@ foreach ($preguntas as $index => $pregunta) {
                                          $clase = $opcion === $opcionCorrecta ? 'caja-correcta' : 'caja-incorrecta';
                                      }
                                  }
-                            /*$opciones = ['a', 'b', 'c', 'd'];
-                            $opcionCorrecta = strtolower($pregunta['correcta']);
-                            foreach ($opciones as $opcion):
-                                $clase = '';
-                                if (isset($respuestasUsuario[$index])) {
-                                    if ($opcion === $opcionCorrecta) {
-                                        $clase = 'caja-correcta';
-                                    } elseif (strtolower($respuestasUsuario[$index]) === $opcion) {
-                                        $clase = 'caja-incorrecta';
-                                    }
-                                }*/
                         ?>
                         <div class="opciones_Resultados">
                             <span class="cajas <?php echo $clase; ?>"><?php echo strtoupper($opcion); ?></span>
                             <span class="texto"><?php echo $pregunta['opcion_' . $opcion]; ?></span>
                         </div>
                         <?php endforeach; ?>
-                        <!--p><strong>Respuesta Correcta:</strong> <--?php echo $pregunta['opcion_' . $opcionCorrecta]; ?></p-->
-                        <!-- Manejar un condicional si no se contestó la pregunta -->
-                        <!--p><strong>Tu Respuesta:</strong> 
-                            <--?php
-                            if ($respuestasUsuario[$index] == 'no_contestada') {
-                                echo "No respondiste esta pregunta.";
-                            } else {
-                                echo $pregunta['opcion_' . strtolower($respuestasUsuario[$index])];
-                            }
-                            ?>
-                        </p-->
                     </div>                  
                 <?php endforeach; ?>
             </section>

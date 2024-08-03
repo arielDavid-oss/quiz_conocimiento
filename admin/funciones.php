@@ -49,6 +49,17 @@ function obtener_equipos_partidas($partida){
     return $partidas;
 }
 
+//Obetenr las respuestas de los jugadores
+function respuestas($equipo,$partida){
+    include("conexion.php");
+    $query = "SELECT respuestas, correcta from resultados where equipo = '$equipo' and partida = '$partida'";
+    $result = mysqli_query($conn, $query);
+    $resultados = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $resultados[] = $row;
+    }
+    return $resultados;
+}
 //Actualiza las partidas como ya jugada
 function actualizar_estado($partida){
     include("conexion.php");

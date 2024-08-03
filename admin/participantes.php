@@ -8,6 +8,7 @@ if (!isset($_SESSION['usuarioLogeado'])) {
 }
 include("funciones.php");
 $nombrePartida = isset($_GET['partida']) ? $_GET['partida'] : '';
+$tema = isset($_GET['tema']) ? $_GET['tema'] : '';
 actualizar_estado($nombrePartida);
 $equipos_participantes = obtener_equipos_partidas($nombrePartida);
 ?>
@@ -22,6 +23,8 @@ $equipos_participantes = obtener_equipos_partidas($nombrePartida);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>QUIZ GAME</title>
+    </head>
+    <body>
     <div class="contenedor">
     <header>
         <h1>QUIZ GAME</h1>
@@ -40,7 +43,8 @@ $equipos_participantes = obtener_equipos_partidas($nombrePartida);
                     <tbody class="text-center">
                         <?php foreach ($equipos_participantes as $equipos): ?>
                             <tr>
-                            <td><a href="resultados.php?equipos=<?php echo urlencode($equipos['nombre_equipo']); ?>"><?php echo htmlspecialchars($equipos['nombre_equipo']); ?></a></td>
+                            <input type="hidden" value="<?php echo $tema?>">
+                            <td><a href="resultados.php?partida=<?php echo urlencode($nombrePartida); ?>&tema=<?php echo urldecode($tema); ?>&equipos=<?php echo urlencode($equipos['nombre_equipo']); ?>"><?php echo htmlspecialchars($equipos['nombre_equipo']); ?></a></td>
                             <td><?php echo $equipos['puntuacion']; ?></td>
                             </tr>
                         <?php endforeach; ?>
@@ -50,8 +54,6 @@ $equipos_participantes = obtener_equipos_partidas($nombrePartida);
             </div>
         </div>
     </div>
-</head>
-<body>
 
 <script src="script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

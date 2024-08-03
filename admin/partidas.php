@@ -45,7 +45,7 @@ $partidas = obtenerPartidas();
                         <?php foreach ($partidas as $partida): ?>
                             <tr>
                                 <td><?php echo obtenerNombreTema($partida['tema']); ?></td>
-                                <td><a href="participantes.php?partida=<?php echo urlencode($partida['nombre']); ?>"><?php echo htmlspecialchars($partida['nombre']); ?></a></td>
+                                <td><a href="participantes.php?partida=<?php echo urlencode($partida['nombre']); ?>&tema=<?php echo urlencode($partida['tema']); ?>"><?php echo htmlspecialchars($partida['nombre']); ?></a></td>
                                 <td><?php echo $partida['fecha']; ?></td>
                             </tr>
                         <?php endforeach; ?>
