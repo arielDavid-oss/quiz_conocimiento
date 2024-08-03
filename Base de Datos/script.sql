@@ -1,19 +1,19 @@
-create database bd_quiz;
-use bd_quiz;
+ create database bd_quiz;
+ use bd_quiz;
 
 CREATE TABLE `config` (
   `id` int(11) primary key NOT NULL auto_increment,
   `usuario` varchar(100) NOT NULL,
-  `password` varchar(10) NOT NULL,
-  `totalPreguntas` int(11),
-   `Tiempo_por_pregunta` int(11)
+  `password` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `equipos` (
-  `id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-  `nombre_equipo` varchar(100) NOT NULL,
-  `estado` boolean default false,
-  INDEX (`nombre_equipo`)
+   `id` INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+   `nombre_equipo` VARCHAR(100) NOT NULL,
+   `partida` VARCHAR(100),
+    puntuacion float,
+   `estado` BOOLEAN DEFAULT FALSE,
+   INDEX (`nombre_equipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `miembros` (
@@ -24,7 +24,13 @@ CREATE TABLE `miembros` (
   FOREIGN KEY (`equipo_id`) REFERENCES `equipos`(`nombre_equipo`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `config` (`usuario`, `password`,`totalPreguntas`,`Tiempo_por_pregunta`) VALUES ('1', 'admin', 'admin','10','10');
+INSERT INTO `config` (`usuario`, `password`) VALUES
+('oscar', '123');
+
+CREATE TABLE `temas` (
+  `id` int(11) primary key auto_increment NOT NULL,
+  `nombre` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `preguntas` (
   `id` int(11) primary key auto_increment NOT NULL,
@@ -34,13 +40,33 @@ CREATE TABLE `preguntas` (
   `opcion_b` text NOT NULL,
   `opcion_c` text NOT NULL,
   `opcion_d` text NOT NULL,
-  `correcta` varchar(1) NOT NULL
+  `correcta` varchar(1) NOT NULL,
+   FOREIGN KEY (`tema`) REFERENCES temas(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `temas` (
-  `id` int(11) primary key auto_increment NOT NULL,
-  `nombre` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+create table partida(
+    id int(11) primary key not null auto_increment,
+    nombre varchar(100) not null,
+    tema int(11) not null,
+    fecha date not null,
+    estado boolean default false,
+	`totalPreguntas` int(11),
+   `Tiempo_por_pregunta` int(11),
+  FOREIGN KEY (tema) REFERENCES temas(id) on delete cascade,
+    INDEX (nombre)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+create table resultados(
+     `id` int(11) primary key auto_increment NOT NULL,
+     tema VARCHAR(100) NOT NULL,
+     equipo VARCHAR(100) NOT NULL,
+     partida VARCHAR(100)not null,
+     respuestas text not null,
+     correcta boolean,
+	FOREIGN KEY (equipo) REFERENCES equipos(nombre_equipo),
+    FOREIGN KEY (partida) REFERENCES partida(nombre) 
+);
 
 INSERT INTO `temas` (`nombre`) VALUES
 ('Introducción a las TIC'),
@@ -95,6 +121,7 @@ INSERT INTO `preguntas` (`tema`, `pregunta`, `opcion_a`, `opcion_b`, `opcion_c`,
 (4, '¿Cuál es la diferencia entre un array unidimensional y un array multidimensional?', 'Unidimensional permite más operaciones que multidimensional.', 'Unidimensional tiene una sola fila; multidimensional tiene múltiples filas y/o columnas.', 'Multidimensional es más eficiente en términos de memoria que unidimensional.', 'Unidimensional solo se usa en lenguajes de bajo nivel, multidimensional en lenguajes de alto nivel.', 'B'),
 (4, '¿Qué es una estructura de datos?', 'Un conjunto de algoritmos utilizados para manipular datos.', 'Es una forma de organizar y almacenar datos, esencial para la eficiencia del programa.', 'Una metodología para diseñar la arquitectura del software.', 'Un componente crucial del hardware que mejora el rendimiento del sistema.', 'B'),
 -- Programacion Orientada a Objetos
+
 (5, '¿Qué es la programación orientada a objetos (POO)?', 'Una metodología de desarrollo ágil.', 'Un tipo de base de datos relacional.', 'Un paradigma de programación basado en el uso de objetos y clases.', 'Un lenguaje de scripting.', 'C'),
 (5, '¿Qué es una clase en POO?', 'Un modelo o plantilla para crear objetos.', 'Una estructura de control.', 'Una base de datos.', 'Un tipo de variable.', 'A'),
 (5, '¿Qué es un objeto en POO?', 'Una función global.', 'Una instancia de una clase.', 'Un tipo de archivo.', 'Un tipo de error.', 'B'),
