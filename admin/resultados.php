@@ -95,7 +95,9 @@ $respuestas = respuestas($nombre_equipo, $partida);
                     </div>
                 <?php endforeach; ?>
             </section>
+            <div class="text-center">
             <button onclick="window.print()" class="btn btn-primary">Imprimir Página</button>
+            </div>
         </div>
     </div>
     </div>
