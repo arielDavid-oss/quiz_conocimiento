@@ -70,7 +70,7 @@ function actualizar_estado($partida){
 //Consulta para obtener todas las partidas
 function obtenerPartidas(){
     include("conexion.php");
-    $query = "SELECT tema, nombre, fecha FROM partida ORDER BY `fecha` DESC";
+    $query = "SELECT tema, nombre, fecha, estado FROM partida ORDER BY `fecha` DESC";
     $result = mysqli_query($conn, $query);
     $partidas = [];
     while ($row = mysqli_fetch_assoc($result)) {
