@@ -92,6 +92,7 @@ foreach ($preguntas as $index => $pregunta) {
     <br>
     <div class="text-center">
         <a type="button" class="btn btn-success" href="crear_equipo.php">Jugar otra vez</a>
+        <a type="button" class="btn btn-primary" onclick="window.print()">Imprimir</a>
     </div>
 </div>
 
