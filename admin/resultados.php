@@ -73,7 +73,10 @@ $respuestas = respuestas($nombre_equipo, $partida);
                         <p class="pregunta"><?php echo $index + 1; ?>. <?php echo htmlspecialchars($pregunta['pregunta']); ?></p>
                         <div class="opciones_Resultados texto">
                         <?php $claseRespuesta = $respuestas[$index]['correcta'] ? 'caja-correcta' : 'caja-incorrecta';?>
-                         <span class="cajas <?php echo $claseRespuesta; ?>"> <?php echo htmlspecialchars($respuestas[$index]['respuestas']); ?></span>
+                        <?php if ($respuestas[$index]['respuestas'] !== 'no_contestada') : ?>
+                        <span class="cajas <?php echo $claseRespuesta; ?>">
+                            
+                        <?php echo htmlspecialchars($respuestas[$index]['respuestas']); ?></span><?php endif; ?>         
                         <?php 
                         $letraSeleccionada = strtolower($respuestas[$index]['respuestas']);
                         switch ($letraSeleccionada) {

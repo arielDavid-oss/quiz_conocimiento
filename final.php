@@ -86,7 +86,7 @@ foreach($_SESSION['idPreguntas'] as $idPregunta){
             <ul class="list-group">
                 <h2 style=" color:white">Ranking de Equipos</h2>
                 <?php foreach ($rankig_equipos as $index => $equipo) : ?>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <li class="list-group-item d-flex justify-content-between align-items-center text-center">
                         <?php 
                         if ($index == 0) {
                             echo ' <i class="bi bi-trophy-fill text-warning"></i>';

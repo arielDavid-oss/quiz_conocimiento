@@ -17,6 +17,9 @@ CREATE TABLE `equipos` (
    INDEX (`nombre_equipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+ALTER TABLE `equipos`
+ADD CONSTRAINT `unique_nombre_equipo` UNIQUE (`nombre_equipo`);
+
 CREATE TABLE `miembros` (
   `id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
   `equipo_id` varchar(100) NOT NULL,

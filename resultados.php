@@ -2,28 +2,32 @@
 session_start();
 
 include ("admin/funciones.php");
+if (!isset($_SESSION['resultados_guardados'])) {
+    // Obtener el nombre de la categoría de tema escogido
+    $tema = $_SESSION['nombreCategoria'];
+    $nombreEquipo = $_SESSION['equipo_id'];
+    $partida = $_SESSION['idPartida'];
+    $miembros = buscar_miembros($nombreEquipo);
+    // Obtener las respuestas del usuario
+    $respuestasUsuario = $_SESSION['respuestas_usuario'];
+    $score = $_SESSION['score'];
+    $scoreFormatted = (intval($score) == $score) ? intval($score) : number_format($score, 1);
+    // Guardar las respuestas del usuario en la base de datos
+    $resultados = $_SESSION['resultados'];
+    $correctas = $resultados['correctas'];
+    $incorrectas = $resultados['incorrectas'];
+    $preguntas = $resultados['preguntas'];
 
-// Obtener el nombre de la categoría de tema escogido
-$tema = $_SESSION['nombreCategoria'];
-$nombreEquipo = $_SESSION['equipo_id'];
-$partida = $_SESSION['idPartida'];
-$miembros = buscar_miembros($nombreEquipo);
-// Obtener las respuestas del usuario
-$respuestasUsuario = $_SESSION['respuestas_usuario'];
-$score = $_SESSION['score'];
-$scoreFormatted = (intval($score) == $score) ? intval($score) : number_format($score, 1);
-// Guardar las respuestas del usuario en la base de datos
-$resultados = $_SESSION['resultados'];
-$correctas = $resultados['correctas'];
-$incorrectas = $resultados['incorrectas'];
-$preguntas = $resultados['preguntas'];
+    foreach ($preguntas as $index => $pregunta) {
+        $respuesta_usuario = isset($respuestasUsuario[$index]) ? $respuestasUsuario[$index] : 'no_contestada';
+        $es_correcta = strtolower($respuesta_usuario) === strtolower($pregunta['correcta']) ? 1 : 0;
 
-foreach ($preguntas as $index => $pregunta) {
-    $respuesta_usuario = isset($respuestasUsuario[$index]) ? $respuestasUsuario[$index] : 'no_contestada';
-    $es_correcta = strtolower($respuesta_usuario) === strtolower($pregunta['correcta']) ? 1 : 0;
+        // Llamar a la función guardar_resultados
+        guardar_resultados($tema, $nombreEquipo, $partida, $respuesta_usuario, $es_correcta);
+    }
 
-    // Llamar a la función guardar_resultados
-    guardar_resultados($tema, $nombreEquipo, $partida, $respuesta_usuario, $es_correcta);
+    // Marcar los resultados como guardados
+    $_SESSION['resultados_guardados'] = true;
 }
 ?>
 <!DOCTYPE html>

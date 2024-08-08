@@ -213,13 +213,6 @@ function obtenerIdsPreguntasPorCategoria($tema) {
     return $result;
 }
 
-// Crea un nuevo equipo con el nombre dado.
-function crearEquipo($nombre_equipo) {
-    include("conexion.php");
-    $query = "INSERT INTO equipos (nombre_equipo) VALUES ('$nombre_equipo')";
-    mysqli_query($conn, $query);
-}
-
 //Ingresar datos de los resultados finales 
 function guardar_resultados($tema, $equipo, $partida, $respuestas, $correcta) {
     include("conexion.php");

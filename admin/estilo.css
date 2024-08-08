@@ -499,3 +499,111 @@ hr {
 .form-eliminar .btn-eliminar:hover {
     background-color: darkred;
 }
+
+@media screen and (max-width:750px) {
+      /* Ajustar el padding general del body */
+      body {
+        padding: 20px 5px;
+    }
+
+    /* Hacer el contenedor de login más ancho en dispositivos pequeños */
+    .contenedor-login {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    /* Hacer que el formulario ocupe toda la pantalla */
+    .contenedor-login .contenedor-form {
+        padding: 15px;
+    }
+
+    /* Ajustar las etiquetas y entradas del formulario para que sean más pequeñas y verticales */
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .form-group input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    /* Ajustar el contenedor general para ocupar más espacio */
+    .contenedor {
+        padding: 15px;
+    }
+
+    /* Hacer que el menú de navegación sea más compacto */
+    .contenedor .contenedor-info .nav {
+        width: 100%;
+        border-right: none;
+        margin-bottom: 20px;
+    }
+
+    .contenedor .contenedor-info .nav ul li {
+        margin: 10px 0;
+    }
+
+    .contenedor .contenedor-info .nav ul li .icono {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+    }
+
+    .contenedor .contenedor-info .nav ul li a {
+        font-size: 14px;
+    }
+
+    /* Hacer que el panel de contenido ocupe todo el ancho de la pantalla */
+    .contenedor .contenedor-info .panel {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    /* Ajustar las tarjetas del dashboard para que ocupen todo el ancho */
+    #dashboard .card {
+        width: 100%;
+        height: auto;
+        margin: 10px 0;
+    }
+
+    /* Ajustar las opciones de la pregunta en nuevaPregunta */
+    #nuevaPregunta .opcion {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #nuevaPregunta .opcion input {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    #nuevaPregunta .correcta {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    /* Hacer que las preguntas ocupen más espacio */
+    #listadoPreguntas .contenedor-pregunta {
+        padding: 10px;
+    }
+
+    /* Ajustar el modal para ocupar la mayor parte de la pantalla */
+    .modal-content {
+        width: 90%;
+        height: auto;
+        padding: 15px;
+    }
+
+    .close {
+        right: -30px;
+        height: 35px;
+        width: 35px;
+    }
+}
