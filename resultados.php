@@ -60,7 +60,7 @@ foreach ($preguntas as $index => $pregunta) {
             <?php // Mostrar los integrantes de este grupo
             foreach ($miembros as $miembroGrupo): ?>
             <h5><?php echo $miembroGrupo['nombre']; ?></h5><?php endforeach; ?>
-            <h5>Calificación: <?php echo $scoreFormatted?></h5>
+            <h5>Calificación: <?php echo $scoreFormatted/10?></h5>
                 </div>
             <section id="listadoPreguntas">
                 <div class="text-center">

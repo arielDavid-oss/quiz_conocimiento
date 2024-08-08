@@ -9,7 +9,7 @@ if (!isset($_SESSION['usuarioLogeado'])) {
 include("funciones.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST['nombre'];
+    $nombre = $_POST['id'];
     if (!borar_partidas($nombre)) {
         $mensaje_exito = "Partida eliminada con éxito";
         header("Location: partidas.php?mensaje_exito=" . urlencode($mensaje_exito));
@@ -34,10 +34,6 @@ $partidas = obtenerPartidas();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>QUIZ GAME</title>
-    <style>
-        .activo { background-color: green; color: white; }
-        .inactivo { background-color: red; color: white; }
-    </style>
 </head>
 <body>
     <div class="contenedor">
@@ -59,14 +55,14 @@ $partidas = obtenerPartidas();
                     </thead>
                     <tbody class="text-center">
                         <?php foreach ($partidas as $partida): ?>
-                            <tr class="<?php echo $partida['estado'] == 1 ? 'activo' : 'inactivo'; ?>">
+                            <tr>
                                 <td><?php echo obtenerNombreTema($partida['tema']); ?></td>
                                 <td><a href="participantes.php?partida=<?php echo urlencode($partida['nombre']); ?>&tema=<?php echo urlencode($partida['tema']); ?>"><?php echo htmlspecialchars($partida['nombre']); ?></a></td>
                                 <td><?php echo $partida['fecha']; ?></td>
                                 <td>
-                                    <form id="form_data_eliminar" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                                        <input type="hidden" name="nombre" value="<?php echo htmlspecialchars($partida['nombre']); ?>">
-                                        <button id="btn_eliminar" class="btn btn-danger" name="eliminar">Eliminar</button>
+                                    <form class="form_data_eliminar" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($partida['id']); ?>">
+                                        <button id="btn_eliminar" class="btn btn-danger eliminar-partida-btn" name="eliminar">Eliminar</button>
                                     </form>
                                 </td>
                             </tr>

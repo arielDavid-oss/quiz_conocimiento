@@ -44,8 +44,8 @@ $equipos_participantes = obtener_equipos_partidas($nombrePartida);
                         <?php foreach ($equipos_participantes as $equipos): ?>
                             <tr>
                             <input type="hidden" value="<?php echo $tema?>">
-                            <td><a href="resultados.php?partida=<?php echo urlencode($nombrePartida); ?>&tema=<?php echo urldecode($tema); ?>&equipos=<?php echo urlencode($equipos['nombre_equipo']); ?>"><?php echo htmlspecialchars($equipos['nombre_equipo']); ?></a></td>
-                            <td><?php echo $equipos['puntuacion']; ?></td>
+                            <td><a href="resultados.php?partida=<?php echo urlencode($nombrePartida); ?>&tema=<?php echo urldecode($tema); ?>&calificacion=<?php echo urldecode($equipos['puntuacion']); ?>&equipos=<?php echo urlencode($equipos['nombre_equipo']); ?>"><?php echo htmlspecialchars($equipos['nombre_equipo']); ?></a></td>
+                            <td><?php echo $equipos['puntuacion']/10; ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

@@ -67,16 +67,16 @@ function actualizar_estado($partida){
     mysqli_query($conn, $query);
 }
 
-function borar_partidas($partida){
+function borar_partidas($id){
     include("conexion.php");
-    $query = "DELETE FROM `partida` WHERE nombre = '$partida'";
+    $query = "DELETE FROM `partida` WHERE id = '$id'";
     $result = mysqli_query($conn,$query);
 }
 
 //Consulta para obtener todas las partidas
 function obtenerPartidas(){
     include("conexion.php");
-    $query = "SELECT tema, nombre, fecha, estado FROM partida ORDER BY `fecha` DESC";
+    $query = "SELECT id, tema, nombre, fecha, estado FROM partida ORDER BY `fecha` DESC";
     $result = mysqli_query($conn, $query);
     $partidas = [];
     while ($row = mysqli_fetch_assoc($result)) {

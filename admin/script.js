@@ -5,15 +5,18 @@ function agregarTema() {
     modalTema = document.getElementById("modalTema");
     modalTema.style.display = "block";
 }
+
 function eliminarTema() {
     modalTema = document.getElementById("eliminaTema");
     modalTema.style.display = "block";
 }
+
 // Cierra el modal del tema.
 function cerrarTema() {
     modalTema = document.getElementById("modalTema");
     modalTema.style.display = "none";
 }
+
 function cerrar_Tema() {
     modalTema = document.getElementById("eliminaTema");
     modalTema.style.display = "none";
@@ -52,24 +55,6 @@ function paginaActiva(id) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    if (mensajeError) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: mensajeError
-        });
-    }
-
-    if (mensajeExito) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Éxito',
-            text: mensajeExito
-        });
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const mensajeExito = urlParams.get('mensaje_exito');
     const mensajeError = urlParams.get('mensaje_error');
@@ -91,23 +76,43 @@ document.addEventListener('DOMContentLoaded', function() {
             confirmButtonText: 'OK'
         });
     }
-});
 
-// Mensaje de confirmación para la creación de una partida
-document.querySelector('button[name="Alta"]').addEventListener('click', function(event) {
-    event.preventDefault();
-    Swal.fire({
-        title: '¿Estás seguro?',
-        text: "¿Quieres crear esta nueva partida?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, crearla'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            document.getElementById('crear-partida-form').submit();
-        }
+    var altaButton = document.querySelector('button[name="Alta"]');
+    if (altaButton) {
+        altaButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¿Quieres crear esta nueva partida?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, crearla'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('crear-partida-form').submit();
+                }
+            });
+        });
+    }
+
+    document.querySelectorAll('.eliminar-partida-btn').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "No podrás revertir esto",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminarla'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.closest('form').submit();
+                }
+            });
+        });
     });
-
 });

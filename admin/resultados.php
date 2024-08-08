@@ -10,6 +10,7 @@ include("funciones.php");
 $nombre_equipo = isset($_GET['equipos']) ? $_GET['equipos'] : '';
 $partida = isset($_GET['partida']) ? $_GET['partida'] : '';
 $tema = isset($_GET['tema']) ? $_GET['tema'] : '';
+$calif = isset($_GET['calificacion']) ? $_GET['calificacion'] : '';
 $miembros = buscar_miembros($nombre_equipo);
 // Devuelve todas las preguntas del tema, las opciones y la respuesta correcta
 $preguntas = obtenerPreguntasPorTema($tema);
@@ -59,6 +60,7 @@ $respuestas = respuestas($nombre_equipo, $partida);
                             endif; 
                         endforeach; ?>
                     </li>
+                    <li class="list-group-item">Calificación: <?php echo $calif/10?></li>
                     <?php foreach ($miembros as $miembroGrupo): ?>
                         <li class="list-group-item"><?php echo htmlspecialchars($miembroGrupo['nombre']); ?></li>
                     <?php endforeach; ?>
