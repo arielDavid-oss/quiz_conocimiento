@@ -10,7 +10,8 @@ $partida = $_SESSION['idPartida'];
 $miembros = buscar_miembros($nombreEquipo);
 // Obtener las respuestas del usuario
 $respuestasUsuario = $_SESSION['respuestas_usuario'];
-
+$score = $_SESSION['score'];
+$scoreFormatted = (intval($score) == $score) ? intval($score) : number_format($score, 1);
 // Guardar las respuestas del usuario en la base de datos
 $resultados = $_SESSION['resultados'];
 $correctas = $resultados['correctas'];
@@ -59,6 +60,7 @@ foreach ($preguntas as $index => $pregunta) {
             <?php // Mostrar los integrantes de este grupo
             foreach ($miembros as $miembroGrupo): ?>
             <h5><?php echo $miembroGrupo['nombre']; ?></h5><?php endforeach; ?>
+            <h5>Calificación: <?php echo $scoreFormatted?></h5>
                 </div>
             <section id="listadoPreguntas">
                 <div class="text-center">

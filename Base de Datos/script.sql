@@ -1,4 +1,5 @@
- create database bd_quiz;
+-- create database bd_quiz;
+-- drop database bd_quiz;
  use bd_quiz;
 
 CREATE TABLE `config` (
@@ -56,7 +57,6 @@ create table partida(
     INDEX (nombre)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
 create table resultados(
      `id` int(11) primary key auto_increment NOT NULL,
      tema VARCHAR(100) NOT NULL,
@@ -64,8 +64,8 @@ create table resultados(
      partida VARCHAR(100)not null,
      respuestas text not null,
      correcta boolean,
-	FOREIGN KEY (equipo) REFERENCES equipos(nombre_equipo),
-    FOREIGN KEY (partida) REFERENCES partida(nombre) 
+	FOREIGN KEY (equipo) REFERENCES equipos(nombre_equipo) ON DELETE CASCADE,
+    FOREIGN KEY (partida) REFERENCES partida(nombre) ON DELETE CASCADE
 );
 
 INSERT INTO `temas` (`nombre`) VALUES
@@ -73,7 +73,10 @@ INSERT INTO `temas` (`nombre`) VALUES
 ('Introducción a Redes'),
 ('Programación estructurado'),
 ('Estructura de datos'),
-('Programación Orientada a Objetos');
+('Programación Orientada a Objetos'),
+('Lenguaje HTML, CSS'),
+('Javascript Eventos y Formatos'),
+('Programación Web');
 
 INSERT INTO `preguntas` (`tema`, `pregunta`, `opcion_a`, `opcion_b`, `opcion_c`, `opcion_d`, `correcta`) VALUES
 -- Introducción a las TIC
@@ -132,3 +135,44 @@ INSERT INTO `preguntas` (`tema`, `pregunta`, `opcion_a`, `opcion_b`, `opcion_c`,
 (5, '¿Qué es la abstracción en POO?', 'La creación de múltiples formas de una función.', 'La representación simplificada de una entidad mediante la ocultación de los detalles complejos.', 'La herencia de características de otra clase.', 'La definición de variables y métodos.', 'B'),
 (5, '¿Qué es un método en POO?', 'Una variable global.', 'Una función definida dentro de una clase.', 'Un tipo de objeto.', 'Un archivo ejecutable.', 'B'),
 (5, '¿Qué es un constructor en POO?', 'Una función especial que se llama automáticamente al crear un objeto.', 'Un tipo de bucle.', 'Una estructura condicional.', 'Un operador matemático.', 'A');
+
+INSERT INTO `preguntas` (`tema`, `pregunta`, `opcion_a`, `opcion_b`, `opcion_c`, `opcion_d`, `correcta`)
+VALUES
+(6, '¿Qué significa HTML en desarrollo web?', 'Home Text Markup Language', 'High-Level Text Management Language', 'Hyper Transfer Markup Language', 'HyperText Markup Language', 'D'),
+(6, '¿Cuál es el propósito principal de HTML en una página web?', 'Controlar el comportamiento interactivo de la página', 'Estilizar la página con colores y fuentes', 'Definir la estructura y el contenido de la página', 'Gestionar bases de datos', 'C'),
+(6, '¿Cuál es la etiqueta correcta para crear un enlace en HTML?', '<div class="container">Contenido</div>', '<link rel="stylesheet" href="styles.css">', '<img src="imagen.jpg" alt="Imagen">', '<a href="https://www.example.com">Enlace</a>', 'D'),
+(6, '¿Qué significa la etiqueta <div> en HTML?', 'Controla el estilo de la página', 'Representa una imagen en la página', 'Define un enlace', 'Define una división o sección genérica en el documento', 'D'),
+(6, '¿Cuál es la función de la etiqueta <img> en HTML?', 'Crear listas ordenadas', 'Crear formularios interactivos', 'Definir estilos de texto', 'Mostrar imágenes en la página web', 'D'),
+(6, '¿Cómo se crea una lista desordenada en HTML?', 'Con la etiqueta <ol> y elementos <li>', 'Con la etiqueta <p> y elementos <span>', 'Con la etiqueta <table> y elementos <tr>', 'Con la etiqueta <ul> y elementos <li>', 'D'),
+(6, '¿Qué es un atributo en HTML?', 'Controla el estilo de un elemento', 'Define una acción de script en la página', 'Gestiona bases de datos', 'Proporciona información adicional sobre un elemento HTML', 'D'),
+(6, '¿Qué significa la sigla CSS en desarrollo web?', 'Cascading Style Sheets', 'Computer Style Sheets', 'Creative Style Sheets', 'Complete Style Sheets', 'A'),
+(6, '¿Cuál es la función principal de CSS en una página web?', 'Estilizar y presentar visualmente el contenido HTML', 'Definir la estructura del contenido', 'Crear interactividad con el usuario', 'Gestionar la base de datos del sitio', 'A'),
+(6, '¿Cuál es la forma correcta de incluir CSS en un documento HTML?', 'Mediante la etiqueta <style> dentro del <head>', 'Mediante la etiqueta <link> con el atributo href', 'Mediante la etiqueta <script> con el atributo src', 'Mediante la etiqueta <meta> con el atributo charset', 'B');
+
+-- Submódulo II: JavaScript para manejar eventos y validar formatos
+INSERT INTO `preguntas` (`tema`, `pregunta`, `opcion_a`, `opcion_b`, `opcion_c`, `opcion_d`, `correcta`)
+VALUES
+(7, '¿Qué es JavaScript en desarrollo web?', 'Un sistema operativo', 'Un lenguaje de programación para el desarrollo de aplicaciones interactivas en el navegador', 'Un estilo de hoja de estilos', 'Una herramienta para la creación de bases de datos', 'B'),
+(7, '¿Cómo se agrega JavaScript a una página web?', 'Mediante la etiqueta <link> en el encabezado HTML', 'Mediante la etiqueta <meta> en el encabezado HTML', 'Mediante la etiqueta <script> en el cuerpo o en el encabezado HTML', 'Mediante la etiqueta <style> en el cuerpo HTML', 'C'),
+(7, '¿Qué es un evento en JavaScript?', 'Una acción que ocurre en la página web que puede ser detectada y manejada', 'Un tipo de variable en JavaScript', 'Una etiqueta HTML', 'Una función matemática', 'A'),
+(7, '¿Cuál es la función del método addEventListener en JavaScript?', 'Asociar un evento a un elemento y especificar la función que se ejecutará cuando ocurra el evento', 'Crear un nuevo elemento HTML en la página', 'Definir un estilo CSS para un elemento', 'Validar un formulario', 'A'),
+(7, '¿Cómo se maneja un evento de clic en JavaScript?', 'Con el método addEventListener y el evento click', 'Con el método querySelector y el evento mouseover', 'Con el método appendChild y el evento load', 'Con el método getElementById y el evento submit', 'A'),
+(7, '¿Qué significa la sigla DOM en JavaScript?', 'Document Object Model', 'Dynamic Object Model', 'Data Object Management', 'Display Object Model', 'A'),
+(7, '¿Qué es el DOM en JavaScript?', 'Una representación estructurada y jerárquica de documentos HTML', 'Una base de datos en línea', 'Un sistema operativo para navegadores web', 'Un tipo de variable en JavaScript', 'A'),
+(7, '¿Cómo se selecciona un elemento en el DOM usando JavaScript?', 'Con métodos como getElementById, querySelector, etc.', 'Con métodos como addEventListener, removeEventListener, etc.', 'Con métodos como push, pop, shift, etc.', 'Con métodos como createElement, appendChild, etc.', 'A'),
+(7, '¿Qué es la validación de formatos en desarrollo web?', 'Asegurarse de que los datos ingresados cumplan con ciertos criterios específicos', 'La creación de eventos interactivos', 'La conversión de formatos de archivos', 'La instalación de nuevos estilos en una página', 'A'),
+(7, '¿Qué es una expresión regular (RegExp) en JavaScript?', 'Un patrón utilizado para buscar y manipular texto', 'Una estructura de datos en JavaScript', 'Un formato de archivo para imágenes', 'Un tipo de variable en JavaScript', 'A');
+
+-- Submódulo III: Programación web para realizar operaciones de datos (CRUD)
+INSERT INTO `preguntas` (`tema`, `pregunta`, `opcion_a`, `opcion_b`, `opcion_c`, `opcion_d`, `correcta`)
+VALUES
+(8, '¿Qué significa CRUD en desarrollo web?', 'Create, Resize, Update, Delete', 'Create, Read, Upload, Delete', 'Copy, Resize, Update, Delete', 'Create, Read, Update, Delete', 'D'),
+(8, '¿Cuáles son las operaciones básicas de un sistema CRUD?', 'Crear, redimensionar, actualizar y eliminar datos', 'Crear, leer, subir y eliminar datos', 'Copiar, redimensionar, actualizar y eliminar datos', 'Crear, leer, actualizar y eliminar datos', 'D'),
+(8, '¿Qué lenguaje de programación se utiliza comúnmente en el lado del servidor para implementar operaciones CRUD?', 'HTML y CSS solamente', 'PHP, Python, Node.js, entre otros', 'JavaScript solamente', 'C++ y Java solamente', 'B'),
+(8, '¿Qué es una base de datos en el contexto de CRUD?', 'Un sistema para almacenar y gestionar datos de manera estructurada', 'Una herramienta para diseñar interfaces de usuario', 'Una forma de estilo en la página', 'Una función de validación de formularios', 'A'),
+(8, '¿Qué función desempeña el método HTTP POST en operaciones CRUD?', 'Actualizar datos existentes en el servidor', 'Recuperar datos del servidor', 'Eliminar datos del servidor', 'Enviar datos al servidor para crear nuevos registros', 'D'),
+(8, '¿Cuál es la diferencia entre GET y POST en operaciones CRUD?', 'GET se utiliza para recuperar datos y POST para enviar datos al servidor', 'GET se utiliza para enviar datos y POST para recuperar datos', 'Ambos métodos son idénticos en su función', 'POST se utiliza para actualizar datos y GET para eliminar datos', 'A'),
+(8, '¿Qué es una transacción en el contexto de bases de datos?', 'Una operación que garantiza que un conjunto de operaciones se realice de forma completa y consistente', 'Un archivo que almacena los datos de la aplicación', 'Una función para eliminar datos de una tabla', 'Una herramienta para crear nuevas tablas en una base de datos', 'A'),
+(8, '¿Qué comando SQL se utiliza para actualizar registros en una base de datos?', 'SELECT', 'INSERT', 'UPDATE', 'DELETE', 'C'),
+(8, '¿Cómo se realiza una consulta para eliminar todos los registros de una tabla sin eliminar la tabla en SQL?', 'DROP TABLE', 'DELETE FROM table_name', 'TRUNCATE TABLE table_name', 'REMOVE FROM table_name', 'C'),
+(8, '¿Qué es una clave primaria en una base de datos?', 'Un campo que identifica de manera única cada registro en una tabla', 'Un campo que se utiliza para almacenar datos temporales', 'Un campo que se utiliza para relacionar dos tablas', 'Un campo que almacena datos de texto', 'A');
