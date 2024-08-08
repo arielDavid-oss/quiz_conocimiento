@@ -143,14 +143,14 @@ INSERT INTO `preguntas` (`tema`, `pregunta`, `opcion_a`, `opcion_b`, `opcion_c`,
 VALUES
 (6, '¿Qué significa HTML en desarrollo web?', 'Home Text Markup Language', 'High-Level Text Management Language', 'Hyper Transfer Markup Language', 'HyperText Markup Language', 'D'),
 (6, '¿Cuál es el propósito principal de HTML en una página web?', 'Controlar el comportamiento interactivo de la página', 'Estilizar la página con colores y fuentes', 'Definir la estructura y el contenido de la página', 'Gestionar bases de datos', 'C'),
-(6, '¿Cuál es la etiqueta correcta para crear un enlace en HTML?', '<div class="container">Contenido</div>', '<link rel="stylesheet" href="styles.css">', '<img src="imagen.jpg" alt="Imagen">', '<a href="https://www.example.com">Enlace</a>', 'D'),
-(6, '¿Qué significa la etiqueta <div> en HTML?', 'Controla el estilo de la página', 'Representa una imagen en la página', 'Define un enlace', 'Define una división o sección genérica en el documento', 'D'),
-(6, '¿Cuál es la función de la etiqueta <img> en HTML?', 'Crear listas ordenadas', 'Crear formularios interactivos', 'Definir estilos de texto', 'Mostrar imágenes en la página web', 'D'),
-(6, '¿Cómo se crea una lista desordenada en HTML?', 'Con la etiqueta <ol> y elementos <li>', 'Con la etiqueta <p> y elementos <span>', 'Con la etiqueta <table> y elementos <tr>', 'Con la etiqueta <ul> y elementos <li>', 'D'),
+(6, '¿Cuál es la etiqueta correcta para crear un enlace en HTML?', '&lt;div class="container"&gt;Contenido&lt;/div&gt;', '&lt;link rel="stylesheet" href="styles.css"&gt;', '&lt;img src="imagen.jpg" alt="Imagen"&gt;', '&lt;a href="https://www.example.com"&gt;Enlace&lt;/a&gt;', 'D'),
+(6, '¿Qué significa la etiqueta &lt;div&gt; en HTML?', 'Controla el estilo de la página', 'Representa una imagen en la página', 'Define un enlace', 'Define una división o sección genérica en el documento', 'D'),
+(6, '¿Cuál es la función de la etiqueta &lt;img&gt; en HTML?', 'Crear listas ordenadas', 'Crear formularios interactivos', 'Definir estilos de texto', 'Mostrar imágenes en la página web', 'D'),
+(6, '¿Cómo se crea una lista desordenada en HTML?', 'Con la etiqueta &lt;ol&gt; y elementos &lt;li&gt;', 'Con la etiqueta &lt;p&gt; y elementos &lt;span&gt;', 'Con la etiqueta &lt;table&gt; y elementos &lt;tr&gt;', 'Con la etiqueta &lt;ul&gt; y elementos &lt;li&gt;', 'D'),
 (6, '¿Qué es un atributo en HTML?', 'Controla el estilo de un elemento', 'Define una acción de script en la página', 'Gestiona bases de datos', 'Proporciona información adicional sobre un elemento HTML', 'D'),
 (6, '¿Qué significa la sigla CSS en desarrollo web?', 'Cascading Style Sheets', 'Computer Style Sheets', 'Creative Style Sheets', 'Complete Style Sheets', 'A'),
 (6, '¿Cuál es la función principal de CSS en una página web?', 'Estilizar y presentar visualmente el contenido HTML', 'Definir la estructura del contenido', 'Crear interactividad con el usuario', 'Gestionar la base de datos del sitio', 'A'),
-(6, '¿Cuál es la forma correcta de incluir CSS en un documento HTML?', 'Mediante la etiqueta <style> dentro del <head>', 'Mediante la etiqueta <link> con el atributo href', 'Mediante la etiqueta <script> con el atributo src', 'Mediante la etiqueta <meta> con el atributo charset', 'B');
+(6, '¿Cuál es la forma correcta de incluir CSS en un documento HTML?', 'Mediante la etiqueta &lt;style&gt; dentro del &lt;head&gt;', 'Mediante la etiqueta &lt;link&gt; con el atributo href', 'Mediante la etiqueta &lt;script&gt; con el atributo src', 'Mediante la etiqueta &lt;meta&gt; con el atributo charset', 'B');
 
 -- Submódulo II: JavaScript para manejar eventos y validar formatos
 INSERT INTO `preguntas` (`tema`, `pregunta`, `opcion_a`, `opcion_b`, `opcion_c`, `opcion_d`, `correcta`)
