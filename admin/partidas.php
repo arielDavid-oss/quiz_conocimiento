@@ -8,6 +8,18 @@ if (!isset($_SESSION['usuarioLogeado'])) {
 }
 include("funciones.php");
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = $_POST['nombre'];
+    if (!borar_partidas($nombre)) {
+        $mensaje_exito = "Partida eliminada con éxito";
+        header("Location: partidas.php?mensaje_exito=" . urlencode($mensaje_exito));
+    } else {
+        $mensaje_error = "No se pudo borrar la partida";
+        header("Location: partidas.php?mensaje_error=" . urlencode($mensaje_error));
+    }
+    exit();
+}
+
 $partidas = obtenerPartidas();
 ?>
 <!DOCTYPE html>
@@ -42,6 +54,7 @@ $partidas = obtenerPartidas();
                             <th>Tema</th>
                             <th>Partida</th>
                             <th>Fecha</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
@@ -50,6 +63,12 @@ $partidas = obtenerPartidas();
                                 <td><?php echo obtenerNombreTema($partida['tema']); ?></td>
                                 <td><a href="participantes.php?partida=<?php echo urlencode($partida['nombre']); ?>&tema=<?php echo urlencode($partida['tema']); ?>"><?php echo htmlspecialchars($partida['nombre']); ?></a></td>
                                 <td><?php echo $partida['fecha']; ?></td>
+                                <td>
+                                    <form id="form_data_eliminar" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                                        <input type="hidden" name="nombre" value="<?php echo htmlspecialchars($partida['nombre']); ?>">
+                                        <button id="btn_eliminar" class="btn btn-danger" name="eliminar">Eliminar</button>
+                                    </form>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -61,5 +80,9 @@ $partidas = obtenerPartidas();
     <script src="script.js"></script>
     <script>paginaActiva(3);</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+       const mensajeError = "<?php echo isset($_GET['mensaje_error']) ? $_GET['mensaje_error'] : ''; ?>";
+        const mensajeExito = "<?php echo isset($_GET['mensaje_exito']) ? $_GET['mensaje_exito'] : ''; ?>";
+    </script>
 </body>
 </html>

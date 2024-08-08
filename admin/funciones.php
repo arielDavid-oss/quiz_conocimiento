@@ -67,6 +67,12 @@ function actualizar_estado($partida){
     mysqli_query($conn, $query);
 }
 
+function borar_partidas($partida){
+    include("conexion.php");
+    $query = "DELETE FROM `partida` WHERE nombre = '$partida'";
+    $result = mysqli_query($conn,$query);
+}
+
 //Consulta para obtener todas las partidas
 function obtenerPartidas(){
     include("conexion.php");
